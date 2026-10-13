@@ -1,3 +1,4 @@
+import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { act, cleanup, fireEvent, render } from "@testing-library/react";
 import {
   afterEach,
@@ -60,10 +61,16 @@ function Harness({
   );
 }
 
-function renderView(layout: TaskLayout = "board", canMove = true) {
+function renderView(
+  layout: TaskLayout = "board",
+  canMove = true,
+  direction: "ltr" | "rtl" = "ltr",
+) {
   render(
     <ShortcutTestWrapper>
-      <Harness layout={layout} canMove={canMove} />
+      <DirectionProvider direction={direction}>
+        <Harness layout={layout} canMove={canMove} />
+      </DirectionProvider>
     </ShortcutTestWrapper>,
   );
 }
@@ -89,6 +96,17 @@ afterEach(() => {
 });
 
 describe("useTaskViewShortcuts", () => {
+  it("mirrors board focus and movement shortcuts in RTL", async () => {
+    renderView("board", true, "rtl");
+    focus("a");
+    press({ key: "ArrowLeft", code: "ArrowLeft" });
+    expect(focused()).toBe("d");
+    press({ key: "ArrowRight", code: "ArrowRight" });
+    expect(focused()).toBe("a");
+    press({ key: "ArrowLeft", code: "ArrowLeft", altKey: true });
+    expect(callbacks.onMove).toHaveBeenCalledWith("a", "doing");
+    await nextFrame();
+  });
   it("moves focus through a board and focuses the card", async () => {
     renderView();
 

@@ -14,7 +14,11 @@ import {
   type TaskCardProps,
 } from "../components/task-card";
 import { colors } from "../components/tokens";
-import { emailHtmlLang, resolveEmailLocale } from "./resolve-locale";
+import {
+  emailHtmlDir,
+  emailHtmlLang,
+  resolveEmailLocale,
+} from "./resolve-locale";
 
 void React;
 
@@ -56,61 +60,18 @@ const messages = {
       low: "Low priority",
     },
   },
-  de: {
-    preview: "Du hast eine neue Kaneo-Benachrichtigung",
-    subtitle:
-      "Eine Benachrichtigung entspricht deinen Zustellungs-Einstellungen.",
-    footer: "Kaneo Benachrichtigung",
-    actionLabel: "In Kaneo öffnen",
-    openTask: "Aufgabe öffnen",
-    manage: "Benachrichtigungen verwalten",
+  fa: {
+    preview: "اعلان تازه‌ای از Kaneo دارید",
+    subtitle: "اعلانی با تنظیمات دریافت اعلان شما مطابقت دارد.",
+    footer: "اعلان Kaneo",
+    actionLabel: "باز کردن در Kaneo",
+    openTask: "باز کردن تسک",
+    manage: "مدیریت اعلان‌ها",
     priority: {
-      urgent: "Dringende Priorität",
-      high: "Hohe Priorität",
-      medium: "Mittlere Priorität",
-      low: "Niedrige Priorität",
-    },
-  },
-  vi: {
-    preview: "Bạn có thông báo mới từ Kaneo",
-    subtitle: "Một thông báo khớp với tùy chọn nhận thông báo của bạn.",
-    footer: "Thông báo Kaneo",
-    actionLabel: "Mở trong Kaneo",
-    openTask: "Mở công việc",
-    manage: "Quản lý thông báo",
-    priority: {
-      urgent: "Ưu tiên khẩn cấp",
-      high: "Ưu tiên cao",
-      medium: "Ưu tiên trung bình",
-      low: "Ưu tiên thấp",
-    },
-  },
-  ja: {
-    preview: "Kaneo の新しい通知",
-    subtitle: "配信設定に一致する通知がありました。",
-    footer: "Kaneo 通知",
-    actionLabel: "Kaneo で開く",
-    openTask: "タスクを開く",
-    manage: "通知を管理",
-    priority: {
-      urgent: "優先度: 緊急",
-      high: "優先度: 高",
-      medium: "優先度: 中",
-      low: "優先度: 低",
-    },
-  },
-  "zh-tw": {
-    preview: "你有一則新的 Kaneo 通知",
-    subtitle: "有一則通知符合你的通知設定。",
-    footer: "Kaneo 通知",
-    actionLabel: "在 Kaneo 中開啟",
-    openTask: "開啟任務",
-    manage: "管理通知",
-    priority: {
-      urgent: "緊急優先",
-      high: "高優先",
-      medium: "中優先",
-      low: "低優先",
+      urgent: "اولویت فوری",
+      high: "اولویت بالا",
+      medium: "اولویت متوسط",
+      low: "اولویت پایین",
     },
   },
 } as const;
@@ -142,6 +103,7 @@ const NotificationEmail = ({
       title={title}
       preview={`${message} ${copy.preview}`}
       lang={lang}
+      dir={emailHtmlDir(emailLocale)}
     >
       <EmailIntro title={title} subtitle={message} />
       {breadcrumb ? (

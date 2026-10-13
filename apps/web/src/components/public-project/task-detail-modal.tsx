@@ -58,15 +58,15 @@ export function PublicTaskDetailModal({
     : task?.description;
 
   const getPRStatus = useMemo(
-    () => (pr: { metadata?: { merged?: boolean; draft?: boolean } | null }) => {
-      if (pr.metadata?.merged) {
+    () => (pe: { metadata?: { merged?: boolean; draft?: boolean } | null }) => {
+      if (pe.metadata?.merged) {
         return {
           icon: <GitMerge className="w-3.5 h-3.5" />,
           label: t("publicProject:taskDetail.prStatusMerged"),
           className: "text-info-foreground",
         };
       }
-      if (pr.metadata?.draft) {
+      if (pe.metadata?.draft) {
         return {
           icon: <GitPullRequest className="w-3.5 h-3.5" />,
           label: t("publicProject:taskDetail.prStatusDraft"),
@@ -126,7 +126,7 @@ export function PublicTaskDetailModal({
 
           <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
             <div className="space-y-3">
-              <h2 className="pr-8 text-2xl font-heading font-semibold leading-tight text-foreground">
+              <h2 className="pe-8 text-2xl font-heading font-semibold leading-tight text-foreground">
                 {task.title}
               </h2>
 
@@ -213,16 +213,16 @@ export function PublicTaskDetailModal({
 
                 {pullRequests.length > 0 && (
                   <div className="space-y-2">
-                    {pullRequests.map((pr) => {
-                      const status = getPRStatus(pr);
-                      const repoMatch = pr.url.match(
+                    {pullRequests.map((pe) => {
+                      const status = getPRStatus(pe);
+                      const repoMatch = pe.url.match(
                         /github\.com\/([^/]+\/[^/]+)\/pull/,
                       );
                       const repoName = repoMatch ? repoMatch[1] : null;
                       return (
                         <a
-                          key={pr.id}
-                          href={pr.url}
+                          key={pe.id}
+                          href={pe.url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center justify-between p-3 bg-muted/50 hover:bg-muted rounded-md border border-border/50 transition-colors group"
@@ -230,10 +230,10 @@ export function PublicTaskDetailModal({
                           <div className="flex items-center gap-2.5 flex-1 min-w-0">
                             <div className="flex flex-col gap-0.5 flex-1 min-w-0">
                               <span className="text-sm font-medium text-foreground truncate">
-                                {pr.title || t("tasks:pr.label")}
+                                {pe.title || t("tasks:pe.label")}
                               </span>
                               <span className="text-xs text-muted-foreground">
-                                {repoName}#{pr.externalId}
+                                {repoName}#{pe.externalId}
                               </span>
                             </div>
                           </div>

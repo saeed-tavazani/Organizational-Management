@@ -50,7 +50,7 @@ export function TrialCard() {
           type="button"
           onClick={dismiss}
           aria-label={t("settings:billing.trialCard.dismiss")}
-          className="absolute top-1.5 right-1.5 rounded p-0.5 opacity-60 transition-opacity hover:opacity-100"
+          className="absolute top-1.5 end-1.5 rounded p-0.5 opacity-60 transition-opacity hover:opacity-100"
         >
           <X className="size-3" />
         </button>

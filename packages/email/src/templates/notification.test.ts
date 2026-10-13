@@ -4,30 +4,18 @@ import { describe, expect, it } from "vite-plus/test";
 import NotificationEmail from "./notification";
 
 describe("NotificationEmail", () => {
-  it("renders Japanese chrome for a Japanese locale", async () => {
+  it("renders Persian chrome in right-to-left direction", async () => {
     const html = await render(
       createElement(NotificationEmail, {
-        title: "タスクが割り当てられました",
-        message: "デザイン案の確認をお願いします。",
+        title: "تسکی به شما اختصاص داده شد",
+        message: "لطفاً طرح را بررسی کنید.",
         actionUrl: "https://kaneo.example/task/1",
-        locale: "ja-JP",
+        locale: "fa-IR",
       }),
     );
-    expect(html).toContain("Kaneo で開く");
-    expect(html).toContain("配信設定に一致する通知がありました。");
-  });
-
-  it("renders Traditional Chinese chrome for a zh-TW locale", async () => {
-    const html = await render(
-      createElement(NotificationEmail, {
-        title: "你被指派了一項任務",
-        message: "請確認設計稿。",
-        actionUrl: "https://kaneo.example/task/1",
-        locale: "zh-TW",
-      }),
-    );
-    expect(html).toContain("在 Kaneo 中開啟");
-    expect(html).toContain("有一則通知符合你的通知設定。");
+    expect(html).toContain("باز کردن در Kaneo");
+    expect(html).toContain("اعلانی با تنظیمات دریافت اعلان شما مطابقت دارد.");
+    expect(html).toContain('dir="rtl"');
   });
 
   it("renders the task card with localized priority and due date", async () => {

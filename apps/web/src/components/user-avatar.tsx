@@ -78,14 +78,14 @@ export function UserAvatar() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52 p-0" side="bottom" align="start">
         <div className="px-2.5 py-2">
-          <div className="flex items-center gap-2 text-left text-sm">
+          <div className="flex items-center gap-2 text-start text-sm">
             <Avatar className="h-7 w-7 rounded-full">
               <AvatarImage src={user.image ?? ""} alt={user.name || ""} />
               <AvatarFallback className="rounded-full border border-border/30">
                 {initials}
               </AvatarFallback>
             </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
+            <div className="grid flex-1 text-start text-sm leading-tight">
               <span className="truncate font-medium">
                 {user.name || t("navigation:userMenu.unnamedUser")}
               </span>

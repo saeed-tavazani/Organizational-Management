@@ -203,9 +203,6 @@ jobs:
       - name: Build monorepo
         run: pnpm build
 
-      - name: Check site metadata and internal links
-        run: pnpm --filter @kaneo/site seo:check
-
   integration:
     timeout-minutes: 15
     runs-on: blacksmith-4vcpu-ubuntu-2404

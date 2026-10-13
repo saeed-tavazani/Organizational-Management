@@ -30,9 +30,13 @@ export function formatDate(
   options?: Intl.DateTimeFormatOptions,
   locale?: string,
 ) {
-  return new Intl.DateTimeFormat(getLocale(locale), options).format(
-    toDate(value),
-  );
+  const resolvedLocale = getLocale(locale);
+  // Project grids use Gregorian months; localize their labels consistently.
+  const calendar = resolvedLocale.startsWith("fa") ? "gregory" : undefined;
+  return new Intl.DateTimeFormat(resolvedLocale, {
+    calendar,
+    ...options,
+  }).format(toDate(value));
 }
 
 export function formatDateShort(value: DateInput, locale?: string) {

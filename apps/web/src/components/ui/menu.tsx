@@ -267,7 +267,7 @@ function MenuSubTrigger({
       {...props}
     >
       {children}
-      <ChevronRightIcon className="-me-0.5 ms-auto opacity-80" />
+      <ChevronRightIcon className="-me-0.5 ms-auto opacity-80 rtl:rotate-180" />
     </MenuPrimitive.SubmenuTrigger>
   );
 }

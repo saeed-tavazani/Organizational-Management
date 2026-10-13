@@ -51,7 +51,7 @@ export function SequenceHint() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed bottom-4 left-4 z-[200] w-60 overflow-hidden rounded-xl border bg-popover p-1.5 text-popover-foreground shadow-lg/10"
+      className="fixed bottom-4 start-4 z-[200] w-60 overflow-hidden rounded-xl border bg-popover p-1.5 text-popover-foreground shadow-lg/10"
     >
       <div className="flex items-center gap-2 px-1.5 pt-0.5 pb-1.5 text-muted-foreground text-xs">
         <Kbd size="md">{pendingKey.toUpperCase()}</Kbd>

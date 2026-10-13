@@ -226,17 +226,17 @@ export function NavProjects() {
       <Collapsible defaultOpen className="group/collapsible">
         <SidebarGroup className="group-data-[collapsible=icon]:hidden gap-1 p-2 pt-1">
           <CollapsibleTrigger
-            className="data-panel-open:[&_svg]:rotate-90"
+            className="data-panel-open:[&_svg]:rotate-90 rtl:data-panel-open:[&_svg]:rotate-90"
             render={
               <SidebarGroupLabel className="h-7 cursor-pointer justify-start gap-1 px-0 text-sidebar-accent-foreground" />
             }
           >
             <span>{t("navigation:sidebar.projects")}</span>
-            <ChevronRight className="h-3.5 w-3.5 text-sidebar-foreground/60 transition-transform duration-200" />
+            <ChevronRight className="h-3.5 w-3.5 text-sidebar-foreground/60 transition-transform duration-200 rtl:rotate-180" />
           </CollapsibleTrigger>
           {canCreate && (
             <SidebarGroupAction
-              className="top-2 right-2 text-sidebar-foreground/70"
+              className="top-2 end-2 text-sidebar-foreground/70"
               title={t("navigation:projectList.addProject")}
               onClick={() => setIsCreateProjectModalOpen(true)}
             >
@@ -304,7 +304,7 @@ export function NavProjects() {
                                   onPointerDown={(event) =>
                                     event.stopPropagation()
                                   }
-                                  className="absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-lg p-0 text-sidebar-foreground outline-hidden ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground after:-inset-2 after:absolute md:after:hidden peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-popup-open:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
+                                  className="absolute top-1.5 end-1 flex aspect-square w-5 items-center justify-center rounded-lg p-0 text-sidebar-foreground outline-hidden ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground after:-inset-2 after:absolute md:after:hidden peer-data-[size=sm]/menu-button:top-1 peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 group-data-[collapsible=icon]:hidden group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-popup-open:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0"
                                 />
                               }
                             >

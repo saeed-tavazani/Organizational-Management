@@ -1,4 +1,4 @@
-const supportedLocales = ["en", "de", "vi", "ja", "zh-tw"] as const;
+const supportedLocales = ["en", "fa"] as const;
 
 export type EmailLocale = (typeof supportedLocales)[number];
 
@@ -6,10 +6,12 @@ const defaultLocale: EmailLocale = "en";
 
 const htmlLangs: Record<EmailLocale, string> = {
   en: "en",
-  de: "de",
-  vi: "vi",
-  ja: "ja",
-  "zh-tw": "zh-TW",
+  fa: "fa-IR",
+};
+
+const htmlDirs: Record<EmailLocale, "ltr" | "rtl"> = {
+  en: "ltr",
+  fa: "rtl",
 };
 
 export function resolveEmailLocale(locale?: string | null): EmailLocale {
@@ -29,4 +31,8 @@ export function resolveEmailLocale(locale?: string | null): EmailLocale {
 
 export function emailHtmlLang(locale: EmailLocale): string {
   return htmlLangs[locale];
+}
+
+export function emailHtmlDir(locale: EmailLocale): "ltr" | "rtl" {
+  return htmlDirs[locale];
 }

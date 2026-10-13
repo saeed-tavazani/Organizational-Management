@@ -11,7 +11,11 @@ import {
   RequestDetails,
 } from "../components/request-details";
 import { passwordResetReason } from "../components/security-reasons";
-import { emailHtmlLang, resolveEmailLocale } from "./resolve-locale";
+import {
+  emailHtmlDir,
+  emailHtmlLang,
+  resolveEmailLocale,
+} from "./resolve-locale";
 
 void React;
 
@@ -37,66 +41,20 @@ const messages = {
       "You can ignore this email. Your password stays the same until someone opens this link and sets a new one.",
     footer: "Kaneo security email",
   },
-  de: {
+  fa: {
     preview:
-      "Über den Link darin wählst du ein neues Passwort. Er läuft in 1 Stunde ab.",
-    title: "Passwort zurücksetzen",
+      "برای انتخاب گذرواژهٔ تازه از پیوند داخل ایمیل استفاده کنید. پیوند پس از یک ساعت منقضی می‌شود.",
+    title: "بازنشانی گذرواژه",
     subtitleWithName: (name: string) =>
-      `Hallo ${name}, verwende die Schaltfläche unten, um ein neues Passwort festzulegen. Der Link funktioniert nur einmal und läuft in 1 Stunde ab.`,
+      `${name} عزیز، برای انتخاب گذرواژهٔ تازه دکمهٔ زیر را بزنید. پیوند یک‌بار قابل استفاده است و پس از یک ساعت منقضی می‌شود.`,
     subtitleDefault:
-      "Verwende die Schaltfläche unten, um ein neues Passwort festzulegen. Der Link funktioniert nur einmal und läuft in 1 Stunde ab.",
-    cta: "Passwort zurücksetzen",
-    fallback:
-      "Schaltfläche funktioniert nicht? Füge diesen Link in deinen Browser ein:",
-    ignoreTitle: "Du hast das nicht angefordert?",
+      "برای انتخاب گذرواژهٔ تازه دکمهٔ زیر را بزنید. پیوند یک‌بار قابل استفاده است و پس از یک ساعت منقضی می‌شود.",
+    cta: "بازنشانی گذرواژه",
+    fallback: "دکمه کار نمی‌کند؟ این پیوند را در مرورگر باز کنید:",
+    ignoreTitle: "این درخواست را نداده‌اید؟",
     ignore:
-      "Dann kannst du diese E-Mail ignorieren. Dein Passwort bleibt gleich, bis jemand diesen Link öffnet und ein neues festlegt.",
-    footer: "Kaneo Sicherheits-E-Mail",
-  },
-  vi: {
-    preview:
-      "Dùng liên kết bên trong để đặt mật khẩu mới. Liên kết hết hạn sau 1 giờ.",
-    title: "Đặt lại mật khẩu",
-    subtitleWithName: (name: string) =>
-      `Chào ${name}, hãy dùng nút bên dưới để đặt mật khẩu mới. Liên kết chỉ dùng được một lần và hết hạn sau 1 giờ.`,
-    subtitleDefault:
-      "Hãy dùng nút bên dưới để đặt mật khẩu mới. Liên kết chỉ dùng được một lần và hết hạn sau 1 giờ.",
-    cta: "Đặt lại mật khẩu",
-    fallback: "Nút không hoạt động? Dán liên kết này vào trình duyệt:",
-    ignoreTitle: "Bạn không yêu cầu điều này?",
-    ignore:
-      "Bạn có thể bỏ qua email này. Mật khẩu của bạn sẽ giữ nguyên cho đến khi có người mở liên kết này và đặt mật khẩu mới.",
-    footer: "Email bảo mật Kaneo",
-  },
-  ja: {
-    preview:
-      "メール内のリンクから新しいパスワードを設定してください。有効期限は1時間です。",
-    title: "パスワードのリセット",
-    subtitleWithName: (name: string) =>
-      `${name} さん、下のボタンから新しいパスワードを設定してください。リンクは1回のみ有効で、1時間で有効期限が切れます。`,
-    subtitleDefault:
-      "下のボタンから新しいパスワードを設定してください。リンクは1回のみ有効で、1時間で有効期限が切れます。",
-    cta: "パスワードをリセット",
-    fallback:
-      "ボタンが機能しない場合は、このリンクをブラウザに貼り付けてください：",
-    ignoreTitle: "心当たりがありませんか？",
-    ignore:
-      "このメールは無視してかまいません。誰かがこのリンクを開いて新しいパスワードを設定しない限り、パスワードは変更されません。",
-    footer: "Kaneo セキュリティメール",
-  },
-  "zh-tw": {
-    preview: "使用信中的連結設定新密碼。連結將在 1 小時後失效。",
-    title: "重設密碼",
-    subtitleWithName: (name: string) =>
-      `${name} 你好，請點選下方按鈕設定新密碼。連結只能使用一次，並將在 1 小時後失效。`,
-    subtitleDefault:
-      "請點選下方按鈕設定新密碼。連結只能使用一次，並將在 1 小時後失效。",
-    cta: "重設密碼",
-    fallback: "按鈕無法使用？請將此連結貼到瀏覽器：",
-    ignoreTitle: "沒有提出這項要求？",
-    ignore:
-      "你可以忽略這封郵件。在有人開啟此連結並設定新密碼之前，你的密碼都不會變更。",
-    footer: "Kaneo 安全性通知",
+      "می‌توانید این ایمیل را نادیده بگیرید. گذرواژهٔ شما تا زمانی که کسی این پیوند را باز و گذرواژه‌ای تازه انتخاب نکند، تغییر نمی‌کند.",
+    footer: "ایمیل امنیتی Kaneo",
   },
 } as const;
 
@@ -117,6 +75,7 @@ const PasswordResetEmail = ({
       title={copy.title}
       preview={copy.preview}
       lang={emailHtmlLang(emailLocale)}
+      dir={emailHtmlDir(emailLocale)}
     >
       <EmailIntro
         title={copy.title}

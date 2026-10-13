@@ -20,7 +20,6 @@ Treat this guide as a set of defaults. The developer's request takes precedence.
 - `apps/web` — React UI, fetchers, TanStack Query hooks, and realtime cache updates.
 - `packages/libs` — typed Hono client and URL helpers; `packages/permissions` — permission vocabulary and built-in roles.
 - `packages/mcp` — published stdio MCP package.
-- `apps/docs` — product and API docs; `apps/site` — public site and docs host.
 - `charts/kaneo` — Helm chart; `tests/api` and `tests/api-integration` — API tests.
 
 ## Follow a change through
@@ -31,7 +30,7 @@ The common mistake is finishing one path while leaving another stale. Check the 
 - Client: Use `@kaneo/libs`, fetchers in `apps/web/src/fetchers/`, and TanStack Query hooks. Update invalidation and visible loading, error, and current states.
 - Realtime: If a mutation drives activity, notifications, integrations, or live UI, use `publishEvent()` and check WebSocket delivery and cache updates. Redis fan-out must remain optional.
 - Data: Put schema and relations in `apps/api/src/database/`. Generate a migration with `pnpm --filter @kaneo/api db:generate`, inspect its SQL, and account for existing installations.
-- Public contracts: Keep Zod validation and OpenAPI descriptions accurate. After route or schema changes, run `pnpm openapi:check:fix`; `apps/docs/openapi.json` is committed.
+- Public contracts: Keep Zod validation and OpenAPI descriptions accurate. After route or schema changes, run `pnpm openapi:check:fix`; `apps/api/openapi.json` is committed.
 - UI: Put user-facing copy in static i18n keys, with `i18n/en-US.json` as the source. Check accessibility and the reverse action: assign/unassign, connect/disconnect, enable/disable.
 - Other entry points: Consider MCP, API keys, webhooks, Docker, Helm, and docs when the behavior reaches them.
 

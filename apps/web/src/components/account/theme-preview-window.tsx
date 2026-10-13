@@ -16,14 +16,14 @@ export function ThemePreviewWindow({
   return (
     <span
       className={cn(
-        "flex h-full pt-2.5 pl-2.5",
+        "flex h-full pt-2.5 ps-2.5",
         dark ? "bg-neutral-950" : "bg-neutral-100",
         className,
       )}
     >
       <span
         className={cn(
-          "flex flex-1 gap-2 rounded-tl-md border-t border-l p-2.5",
+          "flex flex-1 gap-2 rounded-tl-md border-t border-s p-2.5",
           dark ? "border-white/10 bg-neutral-900" : "border-black/5 bg-white",
         )}
       >

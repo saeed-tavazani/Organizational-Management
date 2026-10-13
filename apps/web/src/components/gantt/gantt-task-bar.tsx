@@ -1,3 +1,4 @@
+import { useDirection } from "@base-ui/react/direction-provider";
 import { addDays, differenceInCalendarDays, startOfDay } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,6 +64,8 @@ export function GanttTaskBar({
   onOpenTask,
 }: GanttTaskBarProps) {
   const { t } = useTranslation();
+  const direction = useDirection();
+  const dayDirection = direction === "rtl" ? -1 : 1;
   const { mutateAsync: updateTask } = useUpdateTask();
   const [dragDisplay, setDragDisplay] = useState<{
     start: Date;
@@ -137,7 +140,9 @@ export function GanttTaskBar({
     const endIdx = differenceInCalendarDays(initialEnd, timeline.rangeStart);
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextStartIdx = startIdx + deltaDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, endIdx));
       const nextStart = timeline.days[nextStartIdx] ?? initialStart;
@@ -153,7 +158,9 @@ export function GanttTaskBar({
         setDragDisplay(null);
         return;
       }
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextStartIdx = startIdx + deltaDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, endIdx));
       const nextStart = timeline.days[nextStartIdx] ?? initialStart;
@@ -187,7 +194,9 @@ export function GanttTaskBar({
     const endIdx = differenceInCalendarDays(initialEnd, timeline.rangeStart);
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextEndIdx = endIdx + deltaDays;
       nextEndIdx = Math.max(startIdx, Math.min(nextEndIdx, trackCount - 1));
       const nextEnd = timeline.days[nextEndIdx] ?? initialEnd;
@@ -203,7 +212,9 @@ export function GanttTaskBar({
         setDragDisplay(null);
         return;
       }
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextEndIdx = endIdx + deltaDays;
       nextEndIdx = Math.max(startIdx, Math.min(nextEndIdx, trackCount - 1));
       const nextEnd = timeline.days[nextEndIdx] ?? initialEnd;
@@ -241,7 +252,9 @@ export function GanttTaskBar({
     );
 
     const onMove = (ev: PointerEvent) => {
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextStartIdx = startIdx + deltaDays;
       const maxStart = trackCount - 1 - durationDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, maxStart));
@@ -259,7 +272,9 @@ export function GanttTaskBar({
         return;
       }
       const moved = Math.abs(ev.clientX - originX);
-      const deltaDays = Math.round((ev.clientX - originX) / pxPerDay);
+      const deltaDays = Math.round(
+        ((ev.clientX - originX) * dayDirection) / pxPerDay,
+      );
       let nextStartIdx = startIdx + deltaDays;
       const maxStart = trackCount - 1 - durationDays;
       nextStartIdx = Math.max(0, Math.min(nextStartIdx, maxStart));
@@ -311,7 +326,7 @@ export function GanttTaskBar({
     >
       <div
         style={{ gridColumn: `${lineStart} / ${lineEnd}` }}
-        className="group pointer-events-auto relative mx-1 flex min-h-[44px] min-w-0 items-stretch overflow-hidden rounded-md border border-primary/25 bg-background text-left text-sm font-medium leading-none text-foreground shadow-sm transition-colors hover:border-primary/40 sm:h-11 sm:min-h-0"
+        className="group pointer-events-auto relative mx-1 flex min-h-[44px] min-w-0 items-stretch overflow-hidden rounded-md border border-primary/25 bg-background text-start text-sm font-medium leading-none text-foreground shadow-sm transition-colors hover:border-primary/40 sm:h-11 sm:min-h-0"
       >
         {showResizeHandles && (
           <button
@@ -320,7 +335,7 @@ export function GanttTaskBar({
             disabled={!startIsVisible}
             onPointerDown={handleResizeLeftPointerDown}
             className={cn(
-              "relative z-20 shrink-0 cursor-ew-resize touch-none border-r border-primary/15 bg-primary/8 hover:bg-primary/18",
+              "relative z-20 shrink-0 cursor-ew-resize touch-none border-e border-primary/15 bg-primary/8 hover:bg-primary/18",
               "min-h-[44px] w-6 sm:min-h-0 sm:w-2",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
             )}
@@ -329,7 +344,7 @@ export function GanttTaskBar({
         <button
           type="button"
           aria-label={t("tasks:gantt.taskAriaLabel", { title: task.title })}
-          className="relative z-10 min-h-[44px] min-w-0 flex-1 cursor-grab touch-manipulation overflow-hidden px-2 text-left active:cursor-grabbing sm:min-h-0 sm:px-2.5"
+          className="relative z-10 min-h-[44px] min-w-0 flex-1 cursor-grab touch-manipulation overflow-hidden px-2 text-start active:cursor-grabbing sm:min-h-0 sm:px-2.5"
           onPointerDown={handleMovePointerDown}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -355,7 +370,7 @@ export function GanttTaskBar({
             disabled={!endIsVisible}
             onPointerDown={handleResizeRightPointerDown}
             className={cn(
-              "relative z-20 shrink-0 cursor-ew-resize touch-none border-l border-primary/15 bg-primary/8 hover:bg-primary/18",
+              "relative z-20 shrink-0 cursor-ew-resize touch-none border-s border-primary/15 bg-primary/8 hover:bg-primary/18",
               "min-h-[44px] w-6 sm:min-h-0 sm:w-2",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
             )}
@@ -366,7 +381,7 @@ export function GanttTaskBar({
         <span
           aria-hidden="true"
           style={{ gridColumn: `${lineEnd} / ${trackCount + 1}` }}
-          className="min-w-0 truncate pl-1 text-xs font-medium text-foreground/80"
+          className="min-w-0 truncate ps-1 text-xs font-medium text-foreground/80"
         >
           {task.title}
         </span>

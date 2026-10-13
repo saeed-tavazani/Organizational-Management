@@ -1,22 +1,5 @@
 import { validatePlan } from "./core.mjs";
 
-export function checkSupportedSurface(files) {
-  if (
-    files.some(
-      ({ path }) =>
-        path.startsWith("apps/site/") || path.startsWith("apps/docs/"),
-    ) &&
-    !files.some(
-      ({ path }) =>
-        path.startsWith("apps/web/src/") && !path.endsWith("/main.tsx"),
-    )
-  ) {
-    throw new Error(
-      "This PR changes the marketing site or docs. Peekareq currently previews apps/web only; refusing unrelated app screenshots.",
-    );
-  }
-}
-
 export function customFieldPlan(collapsible) {
   const route =
     "/dashboard/workspace/ui-review-workspace/project/ui-review-project/task/ui-review-task";

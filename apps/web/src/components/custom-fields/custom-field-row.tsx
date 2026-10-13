@@ -69,7 +69,7 @@ export function CustomFieldRow({
           field={field}
           value={value}
           onChange={onChange}
-          side="left"
+          side="inline-start"
         >
           {button}
         </CustomFieldPopover>

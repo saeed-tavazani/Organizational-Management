@@ -55,7 +55,7 @@ export function FilterListboxItem({
         </span>
       )}
       {entry.opensSubject && (
-        <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
+        <ChevronRight className="size-3.5 shrink-0 text-muted-foreground rtl:rotate-180" />
       )}
     </Autocomplete.Item>
   );

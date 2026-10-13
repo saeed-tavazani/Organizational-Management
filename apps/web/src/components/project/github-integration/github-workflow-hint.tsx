@@ -18,7 +18,7 @@ export function GithubWorkflowHint({ projectId }: GithubWorkflowHintProps) {
         className="inline-flex items-center gap-1 font-medium text-foreground hover:underline"
       >
         {t("settings:githubIntegration.workflowLink")}
-        <ArrowRightIcon aria-hidden="true" className="size-3" />
+        <ArrowRightIcon aria-hidden="true" className="size-3 rtl:rotate-180" />
       </Link>
     </p>
   );

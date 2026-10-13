@@ -31,7 +31,7 @@ export function InboxListItem({
         aria-current={isSelected ? "true" : undefined}
         onClick={() => onSelect(notification)}
         className={cn(
-          "flex w-full cursor-pointer gap-2.5 rounded-lg px-3 py-2.5 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+          "flex w-full cursor-pointer gap-2.5 rounded-lg px-3 py-2.5 text-start outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
           isSelected ? "bg-accent" : "hover:bg-accent/50",
         )}
       >

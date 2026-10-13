@@ -152,7 +152,7 @@ function InvitationsPage() {
       <Layout>
         <Layout.Header>
           <div className="flex items-center gap-1 w-full">
-            <SidebarTrigger className="-ml-1 h-6 w-6" />
+            <SidebarTrigger className="-ms-1 h-6 w-6" />
             <Separator
               orientation="vertical"
               className="mx-1.5 data-[orientation=vertical]:h-2.5"
@@ -235,7 +235,7 @@ function InvitationsPage() {
                               </span>
                             )}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-end">
                             <div className="flex items-center justify-end gap-1">
                               <Button
                                 variant="ghost"

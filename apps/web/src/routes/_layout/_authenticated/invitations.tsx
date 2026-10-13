@@ -252,7 +252,7 @@ function InvitationsPage() {
                               </span>
                             )}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-end">
                             <div className="flex items-center justify-end gap-1">
                               <Button
                                 variant="ghost"

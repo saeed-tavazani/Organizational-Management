@@ -41,7 +41,7 @@ export function SubscriptionPlanRow({ billing }: SubscriptionPlanRowProps) {
       }
     >
       {renews ? (
-        <div className="sm:text-right">
+        <div className="sm:text-end">
           <p className="text-xs text-muted-foreground">
             {billing.canceledAt
               ? t("settings:billing.accessEnds")

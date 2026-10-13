@@ -8,7 +8,7 @@ export function ColumnListHeader() {
       aria-hidden="true"
       className="flex h-8 items-center gap-2.5 px-4 text-xs text-muted-foreground"
     >
-      <span className="flex-1 pl-6">
+      <span className="flex-1 ps-6">
         {t("settings:columnEditor.columnHeader")}
       </span>
       <span className="w-13 shrink-0 text-center">

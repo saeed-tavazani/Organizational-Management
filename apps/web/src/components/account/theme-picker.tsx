@@ -42,7 +42,7 @@ export function ThemePicker({ value, onChange }: ThemePickerProps) {
               {theme.value === "system" ? (
                 <span className="grid h-full grid-cols-2">
                   <ThemePreviewWindow tone="light" />
-                  <ThemePreviewWindow tone="dark" className="pl-0" />
+                  <ThemePreviewWindow tone="dark" className="ps-0" />
                 </span>
               ) : (
                 <ThemePreviewWindow tone={theme.value} />

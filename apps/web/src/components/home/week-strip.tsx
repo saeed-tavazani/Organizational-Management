@@ -64,7 +64,10 @@ export function WeekStrip({ tasks, workspaceId }: WeekStripProps) {
                     {formatDate(day.date, { weekday: "short" })}
                   </span>
                   <span className="text-muted-foreground/80 tabular-nums">
-                    {formatDate(day.date, { day: "numeric" })}
+                    {formatDate(day.date, {
+                      calendar: "persian",
+                      day: "numeric",
+                    })}
                   </span>
                 </>
               )}

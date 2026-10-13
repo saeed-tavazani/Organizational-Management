@@ -47,7 +47,7 @@ const ListColumnSection = memo(function ListColumnSection({
     <div
       className={cn(
         "border-b border-border/50 transition-colors duration-150 overflow-auto",
-        showDropIndicator && "border-l-4 border-l-ring bg-accent/35",
+        showDropIndicator && "border-s-4 border-s-ring bg-accent/35",
       )}
     >
       <div className="flex items-center justify-between py-2 px-4 bg-muted/60 border-b border-border/50">
@@ -62,14 +62,14 @@ const ListColumnSection = memo(function ListColumnSection({
         >
           <ChevronRight
             className={cn(
-              "w-3 h-3 transition-transform duration-150 ease-out",
-              isExpanded && "rotate-90",
+              "w-3 h-3 transition-transform duration-150 ease-out rtl:rotate-180",
+              isExpanded && "rotate-90 rtl:rotate-90",
             )}
           />
           <div className="flex items-center gap-2 h-4">
             {getColumnIcon(column.id, column.isFinal, column.icon)}
             <div className="flex items-center gap-1">
-              <span className="mt-1 mr-1">{column.name}</span>
+              <span className="mt-1 me-1">{column.name}</span>
               <span className="text-xs text-muted-foreground mt-0.5">
                 {column.tasks.length}
               </span>

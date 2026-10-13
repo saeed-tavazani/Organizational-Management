@@ -29,7 +29,7 @@ export function RepositoryPickerRow({
         onClick={onSelect}
         onDoubleClick={onConfirm}
         className={cn(
-          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left outline-none transition-colors hover:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring",
+          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-start outline-none transition-colors hover:bg-accent/60 focus-visible:ring-2 focus-visible:ring-ring",
           selected && "bg-accent",
         )}
       >

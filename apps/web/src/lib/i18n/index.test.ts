@@ -33,7 +33,17 @@ vi.mock("@i18n/resources", async (importOriginal) => {
   };
 });
 
-const { i18n, preloadNamespaces } = await import("./index");
+const { i18n, preloadNamespaces, resolveLocale } = await import("./index");
+
+describe("Persian locale", () => {
+  it("resolves regional, language-only and browser preferences", () => {
+    expect(resolveLocale("fa-IR", "en-US")).toBe("fa-IR");
+    expect(resolveLocale("FA-ir", null)).toBe("fa-IR");
+    expect(resolveLocale("fa", null)).toBe("fa-IR");
+    expect(resolveLocale(null, "fa-AF")).toBe("fa-IR");
+    expect(resolveLocale("en-US", "fa-IR")).toBe("en-US");
+  });
+});
 
 function staleChunkError() {
   return new TypeError(
@@ -95,35 +105,35 @@ describe("stale-chunk reload recovery", () => {
     setItemSpy = vi.spyOn(Storage.prototype, "setItem");
 
     loadLocaleMock.mockImplementation(async (locale: string) => {
-      if (locale === "fr-FR") throw staleChunkError();
+      if (locale === "fa-IR") throw staleChunkError();
       return defaultResources;
     });
 
-    // First "page load": the default locale succeeds while fr-FR persistently
+    // First "page load": the default locale succeeds while fa-IR persistently
     // fails with a stale-chunk error.
     const firstLoad = await import("./index");
     await firstLoad.preloadNamespaces("en-US");
 
-    firstLoad.preloadNamespaces("fr-FR");
+    firstLoad.preloadNamespaces("fa-IR");
     await flushMicrotasks();
 
-    // The stale-chunk failure set the fr-FR guard right before reloading.
-    expect(sessionStorage.getItem("locale-chunk-reload:fr-FR")).toBe("1");
+    // The stale-chunk failure set the fa-IR guard right before reloading.
+    expect(sessionStorage.getItem("locale-chunk-reload:fa-IR")).toBe("1");
     expect(reloadFlagWrites()).toBe(1);
 
     // Simulate the reload: a fresh module instance, but the same sessionStorage
-    // still holds the fr-FR guard.
+    // still holds the fa-IR guard.
     vi.resetModules();
     const secondLoad = await import("./index");
     await secondLoad.preloadNamespaces("en-US");
 
     // The successful default locale must only clear its own guard, leaving the
     // failing locale's guard untouched.
-    expect(sessionStorage.getItem("locale-chunk-reload:fr-FR")).toBe("1");
+    expect(sessionStorage.getItem("locale-chunk-reload:fa-IR")).toBe("1");
 
-    // fr-FR fails again. The guard must still be set, so the page must NOT
+    // fa-IR fails again. The guard must still be set, so the page must NOT
     // reload a second time and the error must propagate instead.
-    await expect(secondLoad.preloadNamespaces("fr-FR")).rejects.toThrow(
+    await expect(secondLoad.preloadNamespaces("fa-IR")).rejects.toThrow(
       "Failed to fetch dynamically imported module",
     );
     expect(reloadFlagWrites()).toBe(1);
@@ -135,7 +145,7 @@ describe("stale-chunk reload recovery", () => {
 
     loadLocaleMock.mockImplementation(async (locale: string) => {
       if (locale === "en-US") throw new Error("network offline");
-      if (locale === "de-DE")
+      if (locale === "fa-IR")
         throw new TypeError("NetworkError when attempting to fetch resource.");
       return defaultResources;
     });
@@ -145,7 +155,7 @@ describe("stale-chunk reload recovery", () => {
     await expect(mod.preloadNamespaces("en-US")).rejects.toThrow(
       "network offline",
     );
-    await expect(mod.preloadNamespaces("de-DE")).rejects.toThrow(
+    await expect(mod.preloadNamespaces("fa-IR")).rejects.toThrow(
       "NetworkError",
     );
     expect(reloadFlagWrites()).toBe(0);
@@ -182,12 +192,12 @@ describe("stale-chunk reload recovery", () => {
     // place of the original import error.
     vi.resetModules();
     loadLocaleMock.mockImplementation(async (locale: string) => {
-      if (locale === "de-DE") throw staleChunkError();
+      if (locale === "fa-IR") throw staleChunkError();
       return defaultResources;
     });
     const secondLoad = await import("./index");
 
-    const failing = secondLoad.preloadNamespaces("de-DE");
+    const failing = secondLoad.preloadNamespaces("fa-IR");
 
     // The page is reloading, so the pending promise stays pending rather than
     // rejecting with a storage error.

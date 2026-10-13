@@ -47,7 +47,7 @@ beforeEach(async () => {
         name: "Reset user",
         email: address,
         password,
-        locale: "de-DE",
+        locale: "fa-IR",
       })
     ).status,
   ).toBe(200);
@@ -66,7 +66,7 @@ async function requestReset() {
   const props = vi.mocked(email.sendPasswordResetEmail).mock.calls.at(-1)?.[2];
   expect(props).toEqual(
     expect.objectContaining({
-      locale: "de-DE",
+      locale: "fa-IR",
       userName: "Reset user",
       device: { browser: "Firefox", os: "Linux" },
       requestedAt: expect.any(Date),
@@ -76,7 +76,7 @@ async function requestReset() {
   expect(link.origin).toBe("http://localhost:1337");
   expect(link.searchParams.get("callbackURL")).toBe(redirectTo);
   expect(vi.mocked(email.sendPasswordResetEmail).mock.calls.at(-1)?.[1]).toBe(
-    "Kaneo-Passwort zurücksetzen",
+    "بازنشانی گذرواژهٔ Kaneo",
   );
   return { link, token: link.pathname.split("/").at(-1) };
 }

@@ -67,7 +67,7 @@ export function ColumnIconPicker({
             placeholder={t("settings:columnEditor.searchIconsPlaceholder")}
             aria-label={t("settings:columnEditor.searchIconsPlaceholder")}
           />
-          <div className="grid max-h-70 grid-cols-6 gap-1 overflow-y-auto pr-1">
+          <div className="grid max-h-70 grid-cols-6 gap-1 overflow-y-auto pe-1">
             {icons.map(([name, Icon]) => (
               <Button
                 key={name}

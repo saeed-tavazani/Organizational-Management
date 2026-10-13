@@ -127,7 +127,7 @@ export default function TaskDetailsSheet({
               taskId={currentTaskId}
               projectId={projectId}
               workspaceId={workspaceId}
-              className="hidden w-73 shrink-0 overflow-y-auto border-border border-l lg:flex"
+              className="hidden w-73 shrink-0 overflow-y-auto border-border border-s lg:flex"
             />
           </div>
         )}

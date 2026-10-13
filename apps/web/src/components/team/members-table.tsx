@@ -383,7 +383,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 <TableCell className="py-3 text-sm text-muted-foreground tabular-nums">
                   {member.createdAt ? formatDateMedium(member.createdAt) : "–"}
                 </TableCell>
-                <TableCell className="pe-6 py-3 text-right">
+                <TableCell className="pe-6 py-3 text-end">
                   {!isSelf && canRemove ? (
                     <Menu>
                       <MenuTrigger
@@ -459,7 +459,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
               <TableCell className="py-3 text-sm text-muted-foreground">
                 –
               </TableCell>
-              <TableCell className="pe-6 py-3 text-right">
+              <TableCell className="pe-6 py-3 text-end">
                 {canInvite ? (
                   <Menu>
                     <MenuTrigger
@@ -555,7 +555,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 />
               }
             >
-              <TrashIcon className="mr-2 size-4" />
+              <TrashIcon className="me-2 size-4" />
               {t("team:membersTable.removeMember")}
             </AlertDialogClose>
           </AlertDialogFooter>
@@ -595,7 +595,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                 />
               }
             >
-              <TrashIcon className="mr-2 size-4" />
+              <TrashIcon className="me-2 size-4" />
               {t("team:membersTable.cancelInvitation")}
             </AlertDialogClose>
           </AlertDialogFooter>

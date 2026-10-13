@@ -76,7 +76,7 @@ function SearchComponent() {
             aria-label={t("workspace:search.backToDashboard")}
           >
             <Button variant="ghost" size="sm" className="gap-2" tabIndex={-1}>
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
               <span className="hidden sm:inline">
                 {t("workspace:search.backToDashboard")}
               </span>
@@ -92,7 +92,7 @@ function SearchComponent() {
                 placeholder={t("workspace:search.placeholder")}
                 value={searchInput}
                 onChange={(e) => handleInputChange(e.target.value)}
-                className="h-12 text-base sm:text-lg [&_[data-slot=input]]:pl-10"
+                className="h-12 text-base sm:text-lg [&_[data-slot=input]]:ps-10"
                 autoFocus
               />
               {showLoading && (
@@ -138,7 +138,7 @@ function SearchComponent() {
                           });
                         }
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-3 sm:gap-3 sm:px-4 rounded-lg border border-border bg-background hover:bg-accent/60 transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-3 sm:gap-3 sm:px-4 rounded-lg border border-border bg-background hover:bg-accent/60 transition-colors text-start"
                     >
                       <div className="flex-shrink-0 first:[&_svg]:h-4 first:[&_svg]:w-4">
                         {getPriorityIcon(result.priority ?? "")}

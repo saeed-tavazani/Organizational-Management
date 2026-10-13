@@ -95,7 +95,7 @@ export default function MonthAgenda({
                       })}
                       data-task-status={task.status}
                       className={cn(
-                        "flex min-h-11 w-full flex-col justify-center gap-0.5 rounded-md border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        "flex min-h-11 w-full flex-col justify-center gap-0.5 rounded-md border px-3 py-2 text-start transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                         getCalendarTaskStatusClass(task.status),
                       )}
                     >

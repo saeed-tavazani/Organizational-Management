@@ -1,3 +1,4 @@
+import { useDirection } from "@base-ui/react/direction-provider";
 import { useNavigate } from "@tanstack/react-router";
 import { LinkIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -42,6 +43,7 @@ export function useTaskViewShortcuts({
   onToggleAllGroups,
 }: TaskViewShortcutsOptions) {
   const { t } = useTranslation();
+  const direction = useDirection();
   const navigate = useNavigate();
   const focused = () => selection.getState().focusedTaskId;
 
@@ -80,8 +82,16 @@ export function useTaskViewShortcuts({
 
   useShortcut("nextTask", () => step("down"), active);
   useShortcut("previousTask", () => step("up"), active);
-  useShortcut("focusRight", () => step("right"), board);
-  useShortcut("focusLeft", () => step("left"), board);
+  useShortcut(
+    "focusRight",
+    () => step(direction === "rtl" ? "left" : "right"),
+    board,
+  );
+  useShortcut(
+    "focusLeft",
+    () => step(direction === "rtl" ? "right" : "left"),
+    board,
+  );
 
   useShortcut(
     "peekTask",
@@ -149,8 +159,16 @@ export function useTaskViewShortcuts({
   useShortcut("moveTaskUp", () => move("up"), movable);
   useShortcut("moveTaskDown", () => move("down"), movable);
   useShortcut("moveTaskBottom", () => move("bottom"), movable);
-  useShortcut("moveTaskLeft", () => move("left"), boardMovable);
-  useShortcut("moveTaskRight", () => move("right"), boardMovable);
+  useShortcut(
+    "moveTaskLeft",
+    () => move(direction === "rtl" ? "right" : "left"),
+    boardMovable,
+  );
+  useShortcut(
+    "moveTaskRight",
+    () => move(direction === "rtl" ? "left" : "right"),
+    boardMovable,
+  );
 
   useShortcut(
     "toggleGroup",

@@ -65,7 +65,7 @@ export function TaskPullRequests({
             <PullRequestStatusIcon
               status={getPullRequestsStatus(pullRequests)}
             />
-            <span>{t("tasks:pr.count", { count: pullRequests.length })}</span>
+            <span>{t("tasks:pe.count", { count: pullRequests.length })}</span>
           </button>
         )}
       </HoverCardTrigger>
@@ -78,8 +78,8 @@ export function TaskPullRequests({
         onTouchEnd={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >
-        {pullRequests.map((pr) => (
-          <PullRequestRow key={pr.id} pullRequest={pr} />
+        {pullRequests.map((pe) => (
+          <PullRequestRow key={pe.id} pullRequest={pe} />
         ))}
       </HoverCardContent>
     </HoverCard>

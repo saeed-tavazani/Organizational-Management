@@ -13,10 +13,7 @@ describe("OtpEmail", () => {
 
   it.each([
     ["en-US", "This code expires in 5 minutes."],
-    ["de-DE", "Dieser Code läuft in 5 Minuten ab."],
-    ["vi-VN", "Mã này sẽ hết hạn sau 5 phút."],
-    ["ja-JP", "このコードの有効期限は5分です。"],
-    ["zh-TW", "此驗證碼將在 5 分鐘後失效。"],
+    ["fa-IR", "این کد پس از ۵ دقیقه منقضی می‌شود."],
   ])("describes the server expiry in %s", async (locale, expiry) => {
     expect(OTP_EXPIRY_SECONDS).toBe(300);
     const html = await render(
@@ -25,12 +22,13 @@ describe("OtpEmail", () => {
     expect(html).toContain(expiry);
     expect(html).not.toContain("15 minute");
   });
-  it("renders Japanese copy for a Japanese locale", async () => {
+  it("renders Persian copy for a Persian locale", async () => {
     const html = await render(
-      createElement(OtpEmail, { otp: "123456", locale: "ja-JP" }),
+      createElement(OtpEmail, { otp: "123456", locale: "fa-IR" }),
     );
-    expect(html).toContain("確認コード");
-    expect(html).toContain("Kaneo セキュリティメール");
+    expect(html).toContain("کد تأیید");
+    expect(html).toContain("ایمیل امنیتی Kaneo");
+    expect(html).toContain('dir="rtl"');
   });
 
   it("renders the request details in the recipient's language", async () => {
@@ -47,10 +45,21 @@ describe("OtpEmail", () => {
     expect(english).toContain("Oct 11, 2026");
     expect(english).toContain("kaneo.example");
 
-    const german = await render(
-      createElement(OtpEmail, { ...context, locale: "de-DE" }),
+    const persian = await render(
+      createElement(OtpEmail, { ...context, locale: "fa-IR" }),
     );
-    expect(german).toContain("Safari auf iPhone");
+    expect(persian).toContain("جزئیات درخواست");
+    expect(persian).toContain("Safari در iPhone");
+    expect(persian).toContain('dir="rtl"');
+  });
+
+  it("falls back to English for removed locale preferences", async () => {
+    const html = await render(
+      createElement(OtpEmail, { otp: "123456", locale: "de-DE" }),
+    );
+    expect(html).toContain("Sign in to Kaneo");
+    expect(html).toContain('lang="en"');
+    expect(html).toContain('dir="ltr"');
   });
 
   it("hides the request details when nothing is known", async () => {

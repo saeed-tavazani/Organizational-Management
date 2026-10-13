@@ -67,7 +67,7 @@ export default function TaskLayout({
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <SidebarTrigger className="-ml-1 h-7 w-7 cursor-pointer text-foreground/85 hover:text-foreground" />
+                      <SidebarTrigger className="-ms-1 h-7 w-7 cursor-pointer text-foreground/85 hover:text-foreground" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p className="flex items-center gap-2 text-[10px]">
@@ -89,7 +89,7 @@ export default function TaskLayout({
                         params: { workspaceId, projectId },
                       })
                     }
-                    className="max-w-40 truncate text-left text-xs text-foreground hover:underline"
+                    className="max-w-40 truncate text-start text-xs text-foreground hover:underline"
                   >
                     {project?.name || t("navigation:sidebar.projects")}
                   </button>
@@ -123,7 +123,7 @@ export default function TaskLayout({
           </Layout.Content>
         </div>
         {unavailableReason ? null : (
-          <div className="hidden border-border/80 border-l lg:flex lg:h-full lg:overflow-y-auto">
+          <div className="hidden border-border/80 border-s lg:flex lg:h-full lg:overflow-y-auto">
             {rail}
           </div>
         )}

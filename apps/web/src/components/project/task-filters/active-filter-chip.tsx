@@ -8,7 +8,7 @@ export function ActiveFilterChip({ subject }: { subject: FilterSubject }) {
   const { t } = useTranslation();
 
   return (
-    <div className="inline-flex h-7 max-w-full origin-left items-stretch overflow-hidden rounded-md border border-border bg-background text-xs shadow-xs/5 transition-[opacity,scale] duration-150 ease-out *:border-border *:not-last:border-r starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100 dark:bg-input/32">
+    <div className="inline-flex h-7 max-w-full origin-left items-stretch overflow-hidden rounded-md border border-border bg-background text-xs shadow-xs/5 transition-[opacity,scale] duration-150 ease-out *:border-border *:not-last:border-e starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100 dark:bg-input/32">
       <span className="flex shrink-0 items-center gap-1.5 px-2 text-muted-foreground [&>svg]:size-3.5">
         {subject.icon}
         {subject.label}

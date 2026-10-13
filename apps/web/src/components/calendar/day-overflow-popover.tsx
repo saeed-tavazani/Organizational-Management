@@ -42,7 +42,7 @@ export default function DayOverflowPopover({
     <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger
         aria-label={t("tasks:calendar.dayTasksAriaLabel", { date: dayLabel })}
-        className="touch-hitbox relative w-full truncate rounded-sm px-1.5 pb-1 text-left text-[10px] leading-tight text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="touch-hitbox relative w-full truncate rounded-sm px-1.5 pb-1 text-start text-[10px] leading-tight text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {t("tasks:calendar.moreTasks", { count: hiddenCount })}
       </PopoverTrigger>
@@ -57,7 +57,7 @@ export default function DayOverflowPopover({
                 key={task.id}
                 type="button"
                 onClick={() => handleSelectTask(task.id)}
-                className="flex w-full min-w-0 flex-col items-start gap-0.5 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex w-full min-w-0 flex-col items-start gap-0.5 rounded-md px-2 py-1.5 text-start transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {projectSlug && task.number != null ? (
                   <span className="truncate text-[10px] text-muted-foreground">

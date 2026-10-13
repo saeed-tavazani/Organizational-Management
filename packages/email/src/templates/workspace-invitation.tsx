@@ -10,7 +10,11 @@ import { type DateInput, formatDate } from "../components/format-date";
 import { Frame } from "../components/frame";
 import { InvitationCard } from "../components/invitation-card";
 import { Spacer } from "../components/spacer";
-import { resolveEmailLocale } from "./resolve-locale";
+import {
+  emailHtmlDir,
+  emailHtmlLang,
+  resolveEmailLocale,
+} from "./resolve-locale";
 
 void React;
 
@@ -83,7 +87,8 @@ const WorkspaceInvitationEmail = ({
   copy = DEFAULT_COPY,
 }: WorkspaceInvitationEmailProps) => {
   const values = { workspaceName, inviterName, inviterEmail };
-  const lang = locale ?? "en";
+  const emailLocale = resolveEmailLocale(locale);
+  const lang = emailHtmlLang(emailLocale);
   const details = copy.details;
   const detailRows = details
     ? [
@@ -102,6 +107,7 @@ const WorkspaceInvitationEmail = ({
       title={interpolate(copy.title, values)}
       preview={interpolate(copy.preview, values)}
       lang={lang}
+      dir={emailHtmlDir(emailLocale)}
     >
       <EmailIntro
         title={interpolate(copy.title, values)}
@@ -122,10 +128,7 @@ const WorkspaceInvitationEmail = ({
         </>
       ) : null}
       <EmailNote>{copy.ignore}</EmailNote>
-      <EmailFooter
-        title={copy.footer}
-        links={footerLinks(resolveEmailLocale(locale))}
-      />
+      <EmailFooter title={copy.footer} links={footerLinks(emailLocale)} />
     </EmailShell>
   );
 };

@@ -199,7 +199,7 @@ Kaneo uses [i18next](https://www.i18next.com/) with [react-i18next](https://reac
 
 - Use translation keys for all user-facing strings instead of hardcoded copy
 - In React components, call `t("namespace:key.path")` from `useTranslation()`
-- Translation files live in [`i18n/`](./i18n) and use locale-style filenames such as `en-US.json` and `de-DE.json`
+- Translation files live in [`i18n/`](./i18n); the supported locale files are `en-US.json` and `fa-IR.json`
 - [`i18n/en-US.json`](./i18n/en-US.json) is the source of truth for translation keys
 - Locale selection comes from the signed-in user's saved preference when available, otherwise from the browser locale
 
@@ -209,15 +209,15 @@ The root `package.json` includes scripts to keep locale files in sync:
 
 | Command | Description |
 | ------- | ----------- |
-| `pnpm i18n:check [locale]` | Compares `en-US.json` with the other locale files and reports missing or extra keys. You can filter by locale, for example `pnpm i18n:check de-DE`. |
-| `pnpm i18n:check:fix [locale]` | Adds missing keys to other locale files using the English source text from `en-US.json`. |
+| `pnpm i18n:check [locale]` | Compares `en-US.json` with the supported translation files and reports missing or extra keys. |
+| `pnpm i18n:check:fix [locale]` | Adds missing keys to `fa-IR.json` using the English source text from `en-US.json`. |
 | `pnpm i18n:report` | Scans `.ts` and `.tsx` files in the React app and reports missing keys, unused locale keys, and dynamic translation calls that static analysis cannot verify. |
 | `pnpm i18n:report:fix` | Removes unused keys from `en-US.json` and the other locale files. |
 | `pnpm i18n:schema` | Generates [`i18n/schema.json`](./i18n/schema.json) from `en-US.json` for editor and tooling validation. |
 
 #### Adding a new locale
 
-1. Create a new file in [`i18n/`](./i18n) using a locale code filename such as `fr-FR.json`.
+1. Create a new file in [`i18n/`](./i18n) using a locale code filename.
 2. Copy [`i18n/en-US.json`](./i18n/en-US.json) and translate the values.
 3. Register the locale in [`i18n/resources.ts`](./i18n/resources.ts) by updating `supportedLocales` and `resources`.
 4. If the locale should be selectable in the UI, add it to the language picker in [`apps/web/src/routes/_layout/_authenticated/dashboard/settings/account/preferences.tsx`](./apps/web/src/routes/_layout/_authenticated/dashboard/settings/account/preferences.tsx).

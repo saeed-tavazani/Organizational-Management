@@ -4,25 +4,14 @@ import { describe, expect, it } from "vite-plus/test";
 import MagicLinkEmail from "./magic-link";
 
 describe("MagicLinkEmail", () => {
-  it("renders Japanese copy for a Japanese locale", async () => {
+  it("renders Persian copy with right-to-left direction", async () => {
     const html = await render(
       createElement(MagicLinkEmail, {
         magicLink: "https://kaneo.example/auth",
-        locale: "ja-JP",
+        locale: "fa-IR",
       }),
     );
-    expect(html).toContain("Kaneo にサインイン");
-    expect(html).toContain("Kaneo セキュリティメール");
-  });
-
-  it("renders Traditional Chinese copy for a zh-TW locale", async () => {
-    const html = await render(
-      createElement(MagicLinkEmail, {
-        magicLink: "https://kaneo.example/auth",
-        locale: "zh-TW",
-      }),
-    );
-    expect(html).toContain("登入 Kaneo");
-    expect(html).toContain("Kaneo 安全性通知");
+    expect(html).toContain("ورود به Kaneo");
+    expect(html).toContain('dir="rtl"');
   });
 });

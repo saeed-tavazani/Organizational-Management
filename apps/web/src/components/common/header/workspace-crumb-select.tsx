@@ -20,7 +20,7 @@ export default function WorkspaceCrumbSelect() {
         });
       }}
     >
-      <span className="truncate text-left">
+      <span className="truncate text-start">
         {workspace?.name || t("navigation:workspaceSwitcher.selectWorkspace")}
       </span>
     </Button>

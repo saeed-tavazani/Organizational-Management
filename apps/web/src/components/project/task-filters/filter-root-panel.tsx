@@ -1,3 +1,4 @@
+import { useDirection } from "@base-ui/react/direction-provider";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Popover, PopoverContent } from "@/components/ui/popover";
@@ -10,6 +11,7 @@ const HOVER_DELAY_MS = 120;
 
 export function FilterRootPanel({ subjects }: { subjects: FilterSubject[] }) {
   const { t } = useTranslation();
+  const direction = useDirection();
   const [query, setQuery] = useState("");
   const [nested, setNested] = useState<{
     subjectId: string;
@@ -67,7 +69,10 @@ export function FilterRootPanel({ subjects }: { subjects: FilterSubject[] }) {
           );
         }}
         onInputKeyDown={(event, highlighted) => {
-          if (event.key === "ArrowRight" && highlighted?.entry.opensSubject) {
+          if (
+            event.key === (direction === "rtl" ? "ArrowLeft" : "ArrowRight") &&
+            highlighted?.entry.opensSubject
+          ) {
             event.preventDefault();
             openNested(highlighted.entry, highlighted.element);
           }
@@ -81,7 +86,7 @@ export function FilterRootPanel({ subjects }: { subjects: FilterSubject[] }) {
       >
         <PopoverContent
           anchor={nested?.anchor}
-          side="left"
+          side="inline-start"
           align="start"
           sideOffset={6}
           alignOffset={-5}

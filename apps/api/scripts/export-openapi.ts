@@ -14,5 +14,5 @@ if (!response.ok) {
 const spec = await response.json();
 const outputPath = process.argv[2]
   ? resolve(process.argv[2])
-  : resolve(import.meta.dirname, "../../docs/openapi.json");
+  : resolve(import.meta.dirname, "../openapi.json");
 await writeFile(outputPath, `${JSON.stringify(spec, null, 2)}\n`);

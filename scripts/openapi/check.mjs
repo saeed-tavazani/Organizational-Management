@@ -10,7 +10,7 @@ import {
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const COMMITTED = resolve("apps/docs/openapi.json");
+const COMMITTED = resolve("apps/api/openapi.json");
 const FIX = process.argv.includes("--fix");
 // Invoke pnpm through Node so Windows paths and arguments never pass through cmd.exe.
 const packageManager = process.env.npm_execpath;
@@ -59,19 +59,19 @@ function run() {
     const read = (path) => readFileSync(path, "utf8").replace(/\r\n/g, "\n");
     const committed = existsSync(COMMITTED) ? read(COMMITTED) : null;
     if (committed === read(generated)) {
-      console.log("apps/docs/openapi.json is up to date");
+      console.log("apps/api/openapi.json is up to date");
       return 0;
     }
 
     if (FIX) {
       copyFileSync(generated, COMMITTED);
-      console.log("apps/docs/openapi.json regenerated");
+      console.log("apps/api/openapi.json regenerated");
       return 0;
     }
 
     console.error(
-      `apps/docs/openapi.json is ${committed === null ? "missing" : "out of date"}.\n` +
-        "The docs site serves this file, so it has to be regenerated and committed\n" +
+      `apps/api/openapi.json is ${committed === null ? "missing" : "out of date"}.\n` +
+        "This API contract has to be regenerated and committed\n" +
         "whenever a route, request schema, or response schema changes.\n\n" +
         "  pnpm openapi:check:fix\n",
     );

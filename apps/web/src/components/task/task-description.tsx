@@ -1249,7 +1249,7 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
           role="status"
           aria-live="polite"
           className={cn(
-            "absolute right-0 -top-6 flex h-6 items-center gap-2 text-muted-foreground text-xs",
+            "absolute end-0 -top-6 flex h-6 items-center gap-2 text-muted-foreground text-xs",
             saveState === "saved" && "sr-only",
           )}
         >

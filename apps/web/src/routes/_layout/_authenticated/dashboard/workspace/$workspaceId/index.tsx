@@ -60,6 +60,7 @@ function RouteComponent() {
               <div className="flex flex-col gap-1.5">
                 <p className="font-medium text-[13px] text-muted-foreground">
                   {formatDate(new Date(day), {
+                    calendar: "persian",
                     weekday: "long",
                     month: "long",
                     day: "numeric",

@@ -155,7 +155,7 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
                     placeholder={t("common:modals.createProject.searchIcons")}
                     className="h-8 text-base sm:text-xs"
                   />
-                  <div className="max-h-[280px] overflow-y-auto pr-1">
+                  <div className="max-h-[280px] overflow-y-auto pe-1">
                     <div className="grid grid-cols-6 gap-1.5">
                       {filteredIcons.map(([iconName, Icon]) => {
                         const isSelected = selectedIcon === iconName;

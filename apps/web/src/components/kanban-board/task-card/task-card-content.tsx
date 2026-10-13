@@ -147,7 +147,7 @@ function TaskCardContent({
             )}
 
             {showAssignees && (
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-3 inset-e-3">
                 {task.userId ? (
                   <Avatar className="h-5 w-5">
                     <AvatarImage
@@ -171,7 +171,7 @@ function TaskCardContent({
               </div>
             )}
 
-            <div className={cn("pr-6", !taskIsCompleted && "mb-2.5")}>
+            <div className={cn("pe-6", !taskIsCompleted && "mb-2.5")}>
               <div
                 className={cn(
                   "overflow-hidden break-words leading-5 font-medium text-[15px]",

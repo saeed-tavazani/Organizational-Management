@@ -62,7 +62,7 @@ export function WorkspacePreview({
     <div
       aria-hidden="true"
       className={cn(
-        "relative hidden min-w-0 flex-1 border-border border-l bg-sidebar lg:block",
+        "relative hidden min-w-0 flex-1 border-border border-s bg-sidebar lg:block",
         zoom ? "z-10 overflow-visible" : "overflow-hidden",
       )}
     >

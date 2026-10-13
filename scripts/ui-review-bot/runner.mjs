@@ -28,11 +28,7 @@ import { installFixtures } from "./fixtures.mjs";
 import { captureFrame, targetLocator } from "./framing.mjs";
 import { readScreenshot } from "./images.mjs";
 import { ATTRIBUTION } from "./publish.mjs";
-import {
-  checkSupportedSurface,
-  customFieldPlan,
-  timeTrackingPlan,
-} from "./scenarios.mjs";
+import { customFieldPlan, timeTrackingPlan } from "./scenarios.mjs";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const exists = (p) =>
@@ -447,7 +443,6 @@ export async function planRun(run, token, signal, log) {
     throw new Error(
       "Capture-only preset is prepared for PR #1719. Use AI review for another UI PR.",
     );
-  checkSupportedSurface(run.pr.files);
   const revisions = await fetchRevisions(run.pr, log, signal);
   const snapshots = {
     before: { sha: revisions.before },

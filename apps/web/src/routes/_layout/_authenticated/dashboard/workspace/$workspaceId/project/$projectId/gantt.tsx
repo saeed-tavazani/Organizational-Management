@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { addDays, format, isSameMonth, isToday, isWeekend } from "date-fns";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { formatDate } from "@/lib/format";
 import {
   useCallback,
   useEffect,
@@ -169,7 +170,7 @@ function RouteComponent() {
     [timeline],
   );
 
-  // The task rail is `position: sticky; left: 0`, so it stays pinned over the
+  // The task rail is `position: sticky; inset-inline-start: 0`, so it stays pinned over the
   // left edge of the scroll container's viewport rather than scrolling away
   // with the timeline underneath it. `scrollIntoView({ inline: "center" })`
   // has no way to know that, and centers the target against the *whole*
@@ -178,7 +179,7 @@ function RouteComponent() {
   // browser's own scroll-alignment math to treat the rail's width as inset
   // from the viewport, so "center" (and any future "start"/"end" alignment)
   // resolves against the space actually visible next to it.
-  const scrollPaddingLeftRem = showTaskRail
+  const scrollPaddingStartRem = showTaskRail
     ? isMobile
       ? taskColumnWidthRem
       : 20
@@ -288,7 +289,7 @@ function RouteComponent() {
                     showDate(addDays(timeline.rangeStart, -GANTT_WINDOW_DAYS))
                   }
                 >
-                  <ChevronLeft className="size-4" />
+                  <ChevronLeft className="size-4 rtl:rotate-180" />
                 </Button>
                 <input
                   type="date"
@@ -314,7 +315,7 @@ function RouteComponent() {
                     showDate(addDays(timeline.rangeStart, GANTT_WINDOW_DAYS))
                   }
                 >
-                  <ChevronRight className="size-4" />
+                  <ChevronRight className="size-4 rtl:rotate-180" />
                 </Button>
               </>
             )}
@@ -341,9 +342,9 @@ function RouteComponent() {
               onClick={() => setIsTaskRailOpen((current) => !current)}
             >
               {showTaskRail ? (
-                <ChevronLeft className="size-3.5" />
+                <ChevronLeft className="size-3.5 rtl:rotate-180" />
               ) : (
-                <ChevronRight className="size-3.5" />
+                <ChevronRight className="size-3.5 rtl:rotate-180" />
               )}
               {showTaskRail
                 ? t("tasks:gantt.hideTasks")
@@ -378,13 +379,13 @@ function RouteComponent() {
           <div
             data-testid="gantt-scroll-container"
             className="min-h-0 flex-1 overflow-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
-            style={{ scrollPaddingLeft: `${scrollPaddingLeftRem}rem` }}
+            style={{ scrollPaddingInlineStart: `${scrollPaddingStartRem}rem` }}
           >
             <div className="relative min-w-max touch-pan-x touch-pan-y">
               <div className="sticky top-0 z-20 flex border-b border-border bg-background/95 backdrop-blur">
                 {showTaskRail ? (
                   <div
-                    className="sticky left-0 z-30 shrink-0 border-r border-border bg-background px-2 py-2.5 sm:w-80 sm:px-4 sm:py-3"
+                    className="sticky start-0 z-30 shrink-0 border-e border-border bg-background px-2 py-2.5 sm:w-80 sm:px-4 sm:py-3"
                     style={{
                       width: isMobile ? `${taskColumnWidthRem}rem` : undefined,
                     }}
@@ -413,12 +414,12 @@ function RouteComponent() {
                         key={day.toISOString()}
                         ref={isCurrentDay ? todayCellRef : undefined}
                         className={cn(
-                          "border-r border-border/70 px-0.5 py-2 text-center sm:px-1",
+                          "border-e border-border/70 px-0.5 py-2 text-center sm:px-1",
                           isWeekend(day) && "bg-muted/25",
                         )}
                       >
                         <div className="h-4 text-[10px] font-medium text-muted-foreground">
-                          {showMonth ? format(day, "MMM") : ""}
+                          {showMonth ? formatDate(day, { month: "short" }) : ""}
                         </div>
                         <div
                           className={cn(
@@ -427,7 +428,7 @@ function RouteComponent() {
                               "bg-primary text-primary-foreground",
                           )}
                         >
-                          {format(day, "d")}
+                          {formatDate(day, { day: "numeric" })}
                         </div>
                       </div>
                     );
@@ -440,7 +441,7 @@ function RouteComponent() {
                   ref={timelineTrackRef}
                   className="absolute inset-y-0 z-0 grid"
                   style={{
-                    left: showTaskRail
+                    insetInlineStart: showTaskRail
                       ? isMobile
                         ? `${taskColumnWidthRem}rem`
                         : "20rem"
@@ -453,7 +454,7 @@ function RouteComponent() {
                     <div
                       key={`bg-line-${day.toISOString()}`}
                       className={cn(
-                        "h-full min-h-0 border-r border-border/60",
+                        "h-full min-h-0 border-e border-border/60",
                         isWeekend(day) && "bg-muted/25",
                       )}
                     />
@@ -475,10 +476,10 @@ function RouteComponent() {
                         }}
                       >
                         {showTaskRail ? (
-                          <div className="sticky left-0 z-[11] h-full border-r border-border bg-background">
+                          <div className="sticky start-0 z-[11] h-full border-e border-border bg-background">
                             <button
                               type="button"
-                              className="flex min-h-[44px] w-full min-w-0 flex-col items-start justify-center gap-0.5 px-2 py-2 text-left transition-colors hover:bg-muted sm:min-h-0 sm:px-3 sm:py-1.5"
+                              className="flex min-h-[44px] w-full min-w-0 flex-col items-start justify-center gap-0.5 px-2 py-2 text-start transition-colors hover:bg-muted sm:min-h-0 sm:px-3 sm:py-1.5"
                               onClick={() =>
                                 navigate({
                                   to: ".",

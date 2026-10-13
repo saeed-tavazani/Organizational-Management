@@ -44,7 +44,7 @@ export default function TaskCrumbSelect({
           />
         }
       >
-        <span className="truncate text-left">
+        <span className="truncate text-start">
           {taskLabel || t("tasks:common.selectTask")}
         </span>
         <ChevronsUpDown className="size-3.5 text-muted-foreground" />

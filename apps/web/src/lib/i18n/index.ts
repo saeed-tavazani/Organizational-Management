@@ -8,6 +8,7 @@ import {
 import i18n from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
+import { syncDocumentLocale } from "./direction";
 
 function getLanguageCode(locale: string) {
   return locale.toLowerCase().split("-")[0];
@@ -125,6 +126,11 @@ export function preloadNamespaces(locale: AppLocale): Promise<void> {
 }
 
 const initialLocale = resolveLocale(null, getBrowserLocale());
+
+syncDocumentLocale(initialLocale);
+i18n.on("languageChanged", (language) => {
+  syncDocumentLocale(resolveLocale(language, null));
+});
 
 void i18n
   .use(

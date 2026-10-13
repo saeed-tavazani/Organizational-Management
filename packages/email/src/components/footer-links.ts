@@ -3,10 +3,7 @@ import type { FooterLink } from "./email-footer";
 
 const labels: Record<EmailLocale, { help: string; privacy: string }> = {
   en: { help: "Help", privacy: "Privacy" },
-  de: { help: "Hilfe", privacy: "Datenschutz" },
-  vi: { help: "Trợ giúp", privacy: "Quyền riêng tư" },
-  ja: { help: "ヘルプ", privacy: "プライバシー" },
-  "zh-tw": { help: "說明", privacy: "隱私權" },
+  fa: { help: "راهنما", privacy: "حریم خصوصی" },
 };
 
 export function footerLinks(

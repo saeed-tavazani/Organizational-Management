@@ -45,7 +45,7 @@ function RouteComponent() {
           {/* One pane at a time below lg: the list, or the opened notification. */}
           <div
             className={cn(
-              "w-full shrink-0 border-border/60 lg:block lg:w-[26rem] lg:border-r",
+              "w-full shrink-0 border-border/60 lg:block lg:w-[26rem] lg:border-e",
               selected && "hidden",
               wentBack &&
                 "max-lg:transition-[translate,opacity] max-lg:duration-200 max-lg:ease-out max-lg:starting:-translate-x-6 max-lg:starting:opacity-0 motion-reduce:max-lg:starting:translate-x-0",

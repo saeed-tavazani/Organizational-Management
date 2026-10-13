@@ -106,7 +106,7 @@ export default function ProjectLayout({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <SidebarTrigger className="-ml-1 h-7 w-7 shrink-0 cursor-pointer text-foreground/85 hover:text-foreground" />
+                <SidebarTrigger className="-ms-1 h-7 w-7 shrink-0 cursor-pointer text-foreground/85 hover:text-foreground" />
               </TooltipTrigger>
               <TooltipContent>
                 <p className="flex items-center gap-2 text-[10px]">
@@ -160,7 +160,7 @@ export default function ProjectLayout({
               />
             )}
             {summary}
-            <div className="ml-auto flex shrink-0 items-center gap-1">
+            <div className="ms-auto flex shrink-0 items-center gap-1">
               {toolbar}
             </div>
           </div>

@@ -15,9 +15,9 @@ export function PullRequestRow({ pullRequest }: PullRequestRowProps) {
   const status = getPullRequestStatus(pullRequest);
   const repoName = getPullRequestRepoName(pullRequest.url);
   const statusLabel = {
-    merged: t("tasks:pr.merged"),
-    draft: t("tasks:pr.draft"),
-    open: t("tasks:pr.open"),
+    merged: t("tasks:pe.merged"),
+    draft: t("tasks:pe.draft"),
+    open: t("tasks:pe.open"),
   }[status];
 
   return (
@@ -31,7 +31,7 @@ export function PullRequestRow({ pullRequest }: PullRequestRowProps) {
       <PullRequestStatusIcon status={status} className="size-3.5" />
       <span className="sr-only">{statusLabel}</span>
       <span className="min-w-0 flex-1 truncate text-foreground">
-        {pullRequest.title || t("tasks:pr.label")}
+        {pullRequest.title || t("tasks:pe.label")}
       </span>
       <span className="shrink-0 tabular-nums text-muted-foreground">
         #{pullRequest.externalId}

@@ -1,4 +1,4 @@
-import { format, isSameMonth, isToday, isWeekend } from "date-fns";
+import { isSameMonth, isToday, isWeekend } from "date-fns";
 import { type JSX, useMemo } from "react";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/format";
@@ -35,7 +35,7 @@ export default function MonthGrid({
         {weekdayTemplate.map((day) => (
           <div
             key={`weekday-${day.toISOString()}`}
-            className="border-r border-border/60 px-1 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
+            className="border-e border-border/60 px-1 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
           >
             {formatDate(day, { weekday: "short" })}
           </div>
@@ -61,7 +61,7 @@ export default function MonthGrid({
                   key={`cell-${day.toISOString()}`}
                   style={{ gridColumn: dayIndex + 1, gridRow: "1 / -1" }}
                   className={cn(
-                    "min-w-0 border-r border-border/60",
+                    "min-w-0 border-e border-border/60",
                     isWeekend(day) && "bg-muted/25",
                   )}
                 />
@@ -81,7 +81,7 @@ export default function MonthGrid({
                       isToday(day) && "bg-primary text-primary-foreground",
                     )}
                   >
-                    {format(day, "d")}
+                    {formatDate(day, { day: "numeric" })}
                   </span>
                 </div>
               ))}

@@ -39,8 +39,8 @@ export function SettingsNavProject({
         <ChevronRight
           aria-hidden="true"
           className={cn(
-            "ml-auto size-3.5! text-sidebar-foreground/60 transition-transform duration-150 ease-out",
-            open && "rotate-90",
+            "ms-auto size-3.5! text-sidebar-foreground/60 transition-transform duration-150 ease-out rtl:rotate-180",
+            open && "rotate-90 rtl:rotate-90",
           )}
         />
       </SidebarMenuButton>

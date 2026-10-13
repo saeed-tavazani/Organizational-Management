@@ -1,3 +1,4 @@
+import { useDirection } from "@base-ui/react/direction-provider";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { subjectFilterEntries } from "./filter-entries";
@@ -14,6 +15,7 @@ export function FilterSubjectPanel({
   onBack,
 }: FilterSubjectPanelProps) {
   const { t } = useTranslation();
+  const direction = useDirection();
   const [query, setQuery] = useState("");
 
   return (
@@ -37,7 +39,8 @@ export function FilterSubjectPanel({
           if (
             onBack &&
             query === "" &&
-            (event.key === "ArrowLeft" || event.key === "Backspace")
+            (event.key === (direction === "rtl" ? "ArrowRight" : "ArrowLeft") ||
+              event.key === "Backspace")
           ) {
             event.preventDefault();
             onBack();

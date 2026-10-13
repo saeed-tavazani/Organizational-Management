@@ -2,60 +2,26 @@ import { render } from "@react-email/render";
 import { createElement } from "react";
 import { describe, expect, it } from "vite-plus/test";
 import enUS from "../../../../i18n/en-US.json";
-import frFR from "../../../../i18n/fr-FR.json";
-import jaJP from "../../../../i18n/ja-JP.json";
-import zhTW from "../../../../i18n/zh-TW.json";
+import faIR from "../../../../i18n/fa-IR.json";
 import WorkspaceInvitationEmail from "./workspace-invitation";
 
 describe("WorkspaceInvitationEmail", () => {
-  it("renders the invitation in French for a French locale", async () => {
+  it("renders the invitation in Persian for a Persian locale", async () => {
     const html = await render(
       createElement(WorkspaceInvitationEmail, {
-        workspaceName: "Équipe Produit",
-        inviterName: "Camille",
-        inviterEmail: "camille@example.com",
+        workspaceName: "تیم محصول",
+        inviterName: "سارا",
+        inviterEmail: "sara@example.com",
         invitationLink: "https://kaneo.example/invite/abc",
         to: "invite@example.com",
-        copy: frFR.invitations.email,
+        locale: "fa-IR",
+        copy: faIR.invitations.email,
       }),
     );
 
-    expect(html).toContain("Rejoindre Équipe Produit");
-    expect(html).toContain("Accepter l’invitation");
-    expect(html).toContain("Camille (camille@example.com)");
-  });
-
-  it("renders the invitation in Japanese for a Japanese locale", async () => {
-    const html = await render(
-      createElement(WorkspaceInvitationEmail, {
-        workspaceName: "プロダクト",
-        inviterName: "アリス",
-        inviterEmail: "alice@example.com",
-        invitationLink: "https://kaneo.example/invite/abc",
-        to: "invite@example.com",
-        copy: jaJP.invitations.email,
-      }),
-    );
-
-    expect(html).toContain("「プロダクト」に参加");
-    expect(html).toContain("招待を承諾");
-    expect(html).toContain("アリス (alice@example.com)");
-  });
-
-  it("renders the invitation in Traditional Chinese for a zh-TW locale", async () => {
-    const html = await render(
-      createElement(WorkspaceInvitationEmail, {
-        workspaceName: "產品團隊",
-        inviterName: "Alice",
-        inviterEmail: "alice@example.com",
-        invitationLink: "https://kaneo.example/invite/abc",
-        to: "invite@example.com",
-        copy: zhTW.invitations.email,
-      }),
-    );
-
-    expect(html).toContain("加入 產品團隊");
-    expect(html).toContain("接受邀請");
+    expect(html).toContain("پیوستن به تیم محصول");
+    expect(html).toContain("پذیرش دعوت‌نامه");
+    expect(html).toContain("سارا (sara@example.com)");
   });
 });
 
@@ -99,23 +65,22 @@ describe("WorkspaceInvitationEmail default copy", () => {
     expect(html).toBe(withEnUs);
   });
 
-  it("renders the role and expiry with translated labels", async () => {
+  it("renders the Persian role and expiry labels", async () => {
     const html = await render(
       createElement(WorkspaceInvitationEmail, {
-        workspaceName: "Équipe Produit",
-        inviterName: "Camille",
-        inviterEmail: "camille@example.com",
+        workspaceName: "تیم محصول",
+        inviterName: "سارا",
+        inviterEmail: "sara@example.com",
         invitationLink: "https://kaneo.example/invite/abc",
         to: "invite@example.com",
-        locale: "fr-FR",
-        role: "Membre",
+        locale: "fa-IR",
+        role: "عضو",
         expiresAt: new Date("2026-10-13T12:00:00Z"),
-        copy: frFR.invitations.email,
+        copy: faIR.invitations.email,
       }),
     );
 
-    expect(html).toContain("Détails de l’invitation");
-    expect(html).toContain("Membre");
-    expect(html).toContain("13 oct. 2026");
+    expect(html).toContain("جزئیات دعوت‌نامه");
+    expect(html).toContain("عضو");
   });
 });

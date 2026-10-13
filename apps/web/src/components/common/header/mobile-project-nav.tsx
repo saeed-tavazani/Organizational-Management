@@ -74,7 +74,7 @@ export default function MobileProjectNav({
                     type="button"
                     onClick={select(() => onSelectProject(project.id))}
                     className={cn(
-                      "flex h-10 w-full items-center gap-2 rounded-md px-2.5 text-left text-sm transition-colors",
+                      "flex h-10 w-full items-center gap-2 rounded-md px-2.5 text-start text-sm transition-colors",
                       isCurrentProject
                         ? "bg-accent text-foreground"
                         : "text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -92,7 +92,7 @@ export default function MobileProjectNav({
           <button
             type="button"
             onClick={select(onAddProject)}
-            className="flex h-10 w-full items-center gap-2 rounded-md border border-border px-2.5 text-left text-sm text-foreground transition-colors hover:bg-accent"
+            className="flex h-10 w-full items-center gap-2 rounded-md border border-border px-2.5 text-start text-sm text-foreground transition-colors hover:bg-accent"
           >
             <Plus className="size-4" />
             {t("navigation:projectList.addProject")}

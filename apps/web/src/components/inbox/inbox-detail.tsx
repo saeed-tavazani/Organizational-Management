@@ -35,7 +35,7 @@ export function InboxDetail({
           onClick={onBack}
           className="text-muted-foreground lg:hidden"
         >
-          <ArrowLeft />
+          <ArrowLeft className="rtl:rotate-180" />
           {t("notifications:inbox.back")}
         </Button>
         <span className="hidden text-muted-foreground text-xs lg:block">

@@ -18,6 +18,7 @@ type EmailShellProps = {
   title: string;
   preview: string;
   lang: string;
+  dir: "ltr" | "rtl";
   children: React.ReactNode;
 };
 
@@ -25,10 +26,11 @@ export function EmailShell({
   title,
   preview,
   lang,
+  dir,
   children,
 }: EmailShellProps) {
   return (
-    <Html lang={lang} dir="ltr">
+    <Html lang={lang} dir={dir}>
       <Head>
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,7 +49,7 @@ export function EmailShell({
           aria-roledescription="email"
           aria-label={title}
           lang={lang}
-          dir="ltr"
+          dir={dir}
           className="k-bg"
           style={page}
         >

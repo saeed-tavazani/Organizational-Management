@@ -76,7 +76,7 @@ export function ColumnHeader({
             type="button"
             disabled={disableCollectionActions}
             onClick={() => setIsArchiveModalOpen(true)}
-            className="flex items-center rounded-md px-2 py-1 text-left text-muted-foreground transition-colors hover:bg-accent/50"
+            className="flex items-center rounded-md px-2 py-1 text-start text-muted-foreground transition-colors hover:bg-accent/50"
             title={t("tasks:listView.archiveAllTooltip")}
             aria-label={t("tasks:listView.archiveAllTooltip")}
           >
@@ -87,7 +87,7 @@ export function ColumnHeader({
           <button
             type="button"
             onClick={() => setIsTaskModalOpen(true)}
-            className="flex items-center rounded-md px-2 py-1 text-left text-muted-foreground transition-colors hover:bg-accent/50"
+            className="flex items-center rounded-md px-2 py-1 text-start text-muted-foreground transition-colors hover:bg-accent/50"
             title={t("tasks:kanban.addTask")}
           >
             <Plus className="w-4 h-4 text-muted-foreground" />

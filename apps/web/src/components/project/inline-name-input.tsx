@@ -58,7 +58,7 @@ export function InlineNameInput({
       onBlur={() => void commit()}
       onKeyDown={handleKeyDown}
       className={cn(
-        "-ml-2 h-7.5 min-w-0 flex-1 rounded-md border border-transparent bg-transparent px-2 text-sm text-foreground outline-none transition-[border-color,box-shadow]",
+        "-ms-2 h-7.5 min-w-0 flex-1 rounded-md border border-transparent bg-transparent px-2 text-sm text-foreground outline-none transition-[border-color,box-shadow]",
         !readOnly &&
           "hover:border-input focus-visible:border-ring focus-visible:bg-background focus-visible:ring-[3px] focus-visible:ring-ring/24 dark:focus-visible:bg-input/32",
         className,

@@ -71,6 +71,7 @@ const TrialReminderEmail = ({
       title={title(daysLeft)}
       preview={preview(workspaceName, daysLeft)}
       lang="en"
+      dir="ltr"
     >
       <EmailIntro title={title(daysLeft)} subtitle={subtitle(daysLeft)} />
       <Frame

@@ -63,7 +63,7 @@ export function ShortcutsPanel() {
         <DialogPrimitive.Popup
           data-shortcuts="allow"
           initialFocus={searchRef}
-          className="fixed inset-y-2 right-2 z-50 flex w-[408px] max-w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-xl/10 outline-none transition-[translate,opacity] duration-200 ease-out data-ending-style:translate-x-3 data-ending-style:opacity-0 data-starting-style:translate-x-3 data-starting-style:opacity-0 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-starting-style:translate-x-0"
+          className="fixed inset-y-2 end-2 z-50 flex w-[408px] max-w-[calc(100vw-1rem)] flex-col overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-xl/10 outline-none transition-[translate,opacity] duration-200 ease-out data-ending-style:translate-x-3 data-ending-style:opacity-0 data-starting-style:translate-x-3 data-starting-style:opacity-0 rtl:data-ending-style:-translate-x-3 rtl:data-starting-style:-translate-x-3 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-starting-style:translate-x-0"
         >
           <div className="flex h-13 shrink-0 items-center justify-between ps-4 pe-2">
             <DialogPrimitive.Title className="font-semibold text-sm">

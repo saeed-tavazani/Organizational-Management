@@ -1,12 +1,15 @@
 "use client";
 
+import { useDirection } from "@base-ui/react/direction-provider";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsUpDownIcon,
 } from "lucide-react";
 import type * as React from "react";
-import { DayPicker } from "react-day-picker";
+// import { DayPicker } from "react-day-picker";
+import { DayPicker as GregorianDayPicker } from "@daypicker/react";
+import { DayPicker as PersianDayPicker, faIR } from "@daypicker/persian";
 
 import { cn } from "@/lib/cn";
 import { useUserPreferencesStore } from "@/store/user-preferences";
@@ -21,7 +24,8 @@ function Calendar({
   components: userComponents,
   weekStartsOn: weekStartsOnProp,
   ...props
-}: React.ComponentProps<typeof DayPicker>) {
+}: React.ComponentProps<typeof PersianDayPicker>) {
+  const direction = useDirection();
   const preferredWeekStartsOn = useUserPreferencesStore(
     (state) => state.weekStartsOn,
   );
@@ -119,8 +123,13 @@ function Calendar({
     ...userComponents,
   };
 
+  const DayPicker = direction === "rtl" ? PersianDayPicker : GregorianDayPicker;
+
   return (
     <DayPicker
+      dir={direction}
+      locale={direction === "rtl" ? faIR : undefined}
+      numerals={direction === "rtl" ? "arabext" : undefined}
       className={cn(
         "w-fit [--cell-size:--spacing(10)] sm:[--cell-size:--spacing(9)]",
         className,

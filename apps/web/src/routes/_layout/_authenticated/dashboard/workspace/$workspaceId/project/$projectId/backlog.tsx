@@ -157,7 +157,7 @@ function RouteComponent() {
                 onClick={handleMoveAllPlannedToTodo}
                 title={t("tasks:backlog.moveAllTooltip")}
               >
-                <ArrowRight />
+                <ArrowRight className="rtl:rotate-180" />
                 <span className="hidden sm:inline">
                   {t("tasks:backlog.moveAll")}
                 </span>

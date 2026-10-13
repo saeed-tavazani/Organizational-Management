@@ -61,7 +61,7 @@ export function AddColumnRow({ onCreate }: AddColumnRowProps) {
       <button
         type="button"
         onClick={() => setEditing(true)}
-        className="flex h-11 w-full items-center gap-2.5 px-4 text-left text-sm text-muted-foreground outline-none transition-colors hover:bg-accent/40 hover:text-foreground focus-visible:bg-accent/40 focus-visible:text-foreground"
+        className="flex h-11 w-full items-center gap-2.5 px-4 text-start text-sm text-muted-foreground outline-none transition-colors hover:bg-accent/40 hover:text-foreground focus-visible:bg-accent/40 focus-visible:text-foreground"
       >
         <span aria-hidden="true" className="w-3.5 shrink-0" />
         <span className="flex size-7 shrink-0 items-center justify-center">
@@ -95,7 +95,7 @@ export function AddColumnRow({ onCreate }: AddColumnRowProps) {
         onKeyDown={handleKeyDown}
         placeholder={t("settings:columnEditor.newColumnPlaceholder")}
         aria-label={t("settings:columnEditor.newColumnPlaceholder")}
-        className="-ml-2 h-7.5 min-w-0 flex-1 rounded-md border border-input bg-background px-2 text-sm outline-none placeholder:text-muted-foreground/72 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/24 dark:bg-input/32"
+        className="-ms-2 h-7.5 min-w-0 flex-1 rounded-md border border-input bg-background px-2 text-sm outline-none placeholder:text-muted-foreground/72 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/24 dark:bg-input/32"
       />
       <span aria-hidden="true" className="w-13 shrink-0" />
       <span aria-hidden="true" className="w-7 shrink-0" />

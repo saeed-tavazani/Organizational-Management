@@ -21,7 +21,6 @@ export function useLocale() {
     }
 
     const resolved = resolveLocale(nextLocale, null);
-    document.documentElement.lang = resolved;
     await queryClient.invalidateQueries({ queryKey: ["session"] });
     await i18n.changeLanguage(resolved);
   };
