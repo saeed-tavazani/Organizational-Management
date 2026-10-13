@@ -160,6 +160,12 @@ export function buildSettingsNav({
               icon: Server,
             },
             {
+              id: "admin-attendance",
+              label: t("attendance:settings"),
+              to: "/dashboard/settings/admin/attendance",
+              icon: CreditCard,
+            },
+            {
               id: "admin-workspaces",
               label: t("settings:adminWorkspaces.title"),
               to: "/dashboard/settings/admin/workspaces",

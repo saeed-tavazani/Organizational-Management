@@ -1,7 +1,14 @@
 import { config } from "dotenv-mono";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
+import * as attendanceSchema from "./attendance-schema";
 import {
+  attendanceAuditTableRelations,
+  attendanceBankTableRelations,
+  attendanceEmployeeTableRelations,
+  attendanceEntryTableRelations,
+  attendanceRateTableRelations,
+  attendanceRequestTableRelations,
   accountTableRelations,
   activityTableRelations,
   apikeyTableRelations,
@@ -87,6 +94,7 @@ import {
 config();
 
 export const schema = {
+  ...attendanceSchema,
   dataMigrationTable,
   storageCleanupTable,
   accountTable,
@@ -132,6 +140,12 @@ export const schema = {
   workspaceTable,
   workspaceUserTable,
   accountTableRelations,
+  attendanceAuditTableRelations,
+  attendanceBankTableRelations,
+  attendanceEmployeeTableRelations,
+  attendanceEntryTableRelations,
+  attendanceRateTableRelations,
+  attendanceRequestTableRelations,
   assetTableRelations,
   activityTableRelations,
   apikeyTableRelations,

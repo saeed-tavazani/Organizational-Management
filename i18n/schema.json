@@ -14702,6 +14702,639 @@
 				"copyUrl",
 				"branding"
 			]
+		},
+		"attendance": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"notification": {
+					"type": "string"
+				},
+				"auditActions": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"timer_started": {
+							"type": "string"
+						},
+						"timer_stopped": {
+							"type": "string"
+						},
+						"request_submitted": {
+							"type": "string"
+						},
+						"request_approved": {
+							"type": "string"
+						},
+						"request_rejected": {
+							"type": "string"
+						},
+						"request_cancelled": {
+							"type": "string"
+						},
+						"entry_corrected": {
+							"type": "string"
+						},
+						"entry_removed": {
+							"type": "string"
+						},
+						"entry_reviewed": {
+							"type": "string"
+						},
+						"leave_cancelled": {
+							"type": "string"
+						},
+						"bank_updated": {
+							"type": "string"
+						},
+						"role_updated": {
+							"type": "string"
+						},
+						"settings_updated": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"timer_started",
+						"timer_stopped",
+						"request_submitted",
+						"request_approved",
+						"request_rejected",
+						"request_cancelled",
+						"entry_corrected",
+						"entry_removed",
+						"entry_reviewed",
+						"leave_cancelled",
+						"bank_updated",
+						"role_updated",
+						"settings_updated"
+					]
+				},
+				"history": {
+					"type": "string"
+				},
+				"oldInterval": {
+					"type": "string"
+				},
+				"newInterval": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				},
+				"tasksPanel": {
+					"type": "string"
+				},
+				"panels": {
+					"type": "string"
+				},
+				"tracker": {
+					"type": "string"
+				},
+				"myReports": {
+					"type": "string"
+				},
+				"leaves": {
+					"type": "string"
+				},
+				"myFinance": {
+					"type": "string"
+				},
+				"employees": {
+					"type": "string"
+				},
+				"requests": {
+					"type": "string"
+				},
+				"settings": {
+					"type": "string"
+				},
+				"companyWide": {
+					"type": "string"
+				},
+				"trackerHint": {
+					"type": "string"
+				},
+				"project": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"descriptionPlaceholder": {
+					"type": "string"
+				},
+				"start": {
+					"type": "string"
+				},
+				"stop": {
+					"type": "string"
+				},
+				"running": {
+					"type": "string"
+				},
+				"needsReview": {
+					"type": "string"
+				},
+				"timerReviewHint": {
+					"type": "string"
+				},
+				"noProjects": {
+					"type": "string"
+				},
+				"noEntries": {
+					"type": "string"
+				},
+				"noRequests": {
+					"type": "string"
+				},
+				"loading": {
+					"type": "string"
+				},
+				"retry": {
+					"type": "string"
+				},
+				"previous": {
+					"type": "string"
+				},
+				"next": {
+					"type": "string"
+				},
+				"save": {
+					"type": "string"
+				},
+				"saved": {
+					"type": "string"
+				},
+				"leaveMode": {
+					"type": "string"
+				},
+				"hourly": {
+					"type": "string"
+				},
+				"daily": {
+					"type": "string"
+				},
+				"startDate": {
+					"type": "string"
+				},
+				"endDate": {
+					"type": "string"
+				},
+				"endDateInclusive": {
+					"type": "string"
+				},
+				"startTime": {
+					"type": "string"
+				},
+				"endTime": {
+					"type": "string"
+				},
+				"reason": {
+					"type": "string"
+				},
+				"requestRemoval": {
+					"type": "string"
+				},
+				"hourlyRate": {
+					"type": "string"
+				},
+				"rateHint": {
+					"type": "string"
+				},
+				"timezoneHint": {
+					"type": "string"
+				},
+				"submitRequest": {
+					"type": "string"
+				},
+				"approvalHint": {
+					"type": "string"
+				},
+				"reportHint": {
+					"type": "string"
+				},
+				"period": {
+					"type": "string"
+				},
+				"periodAnchor": {
+					"type": "string"
+				},
+				"reportScope": {
+					"type": "string"
+				},
+				"allEmployees": {
+					"type": "string"
+				},
+				"selectedEmployee": {
+					"type": "string"
+				},
+				"export": {
+					"type": "string"
+				},
+				"employee": {
+					"type": "string"
+				},
+				"workHours": {
+					"type": "string"
+				},
+				"pendingHours": {
+					"type": "string"
+				},
+				"unknownRateHours": {
+					"type": "string"
+				},
+				"hourlyLeave": {
+					"type": "string"
+				},
+				"dailyLeave": {
+					"type": "string"
+				},
+				"lateMinutes": {
+					"type": "string"
+				},
+				"gross": {
+					"type": "string"
+				},
+				"penalty": {
+					"type": "string"
+				},
+				"net": {
+					"type": "string"
+				},
+				"currency": {
+					"type": "string"
+				},
+				"estimateHint": {
+					"type": "string"
+				},
+				"filters": {
+					"type": "string"
+				},
+				"projectId": {
+					"type": "string"
+				},
+				"workspaceId": {
+					"type": "string"
+				},
+				"filterHint": {
+					"type": "string"
+				},
+				"allProjects": {
+					"type": "string"
+				},
+				"allWorkspaces": {
+					"type": "string"
+				},
+				"withdraw": {
+					"type": "string"
+				},
+				"approve": {
+					"type": "string"
+				},
+				"reject": {
+					"type": "string"
+				},
+				"entryReference": {
+					"type": "string"
+				},
+				"financeHint": {
+					"type": "string"
+				},
+				"rateUnknown": {
+					"type": "string"
+				},
+				"bankDetails": {
+					"type": "string"
+				},
+				"role": {
+					"type": "string"
+				},
+				"actions": {
+					"type": "string"
+				},
+				"details": {
+					"type": "string"
+				},
+				"employeesHint": {
+					"type": "string"
+				},
+				"employeeDetailsHint": {
+					"type": "string"
+				},
+				"companyPolicy": {
+					"type": "string"
+				},
+				"policyHint": {
+					"type": "string"
+				},
+				"timeZone": {
+					"type": "string"
+				},
+				"companyStart": {
+					"type": "string"
+				},
+				"graceMinutes": {
+					"type": "string"
+				},
+				"penaltyPerMinute": {
+					"type": "string"
+				},
+				"maxTimerHours": {
+					"type": "string"
+				},
+				"enablePenalty": {
+					"type": "string"
+				},
+				"rolePermissions": {
+					"type": "string"
+				},
+				"selfApprovalHint": {
+					"type": "string"
+				},
+				"settingsHint": {
+					"type": "string"
+				},
+				"companyWeekHint": {
+					"type": "string"
+				},
+				"roles": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"admin": {
+							"type": "string"
+						},
+						"employee": {
+							"type": "string"
+						},
+						"hr": {
+							"type": "string"
+						},
+						"finance": {
+							"type": "string"
+						}
+					},
+					"required": ["admin", "employee", "hr", "finance"]
+				},
+				"permissions": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"reports": {
+							"type": "string"
+						},
+						"finance": {
+							"type": "string"
+						},
+						"bank": {
+							"type": "string"
+						},
+						"leave": {
+							"type": "string"
+						},
+						"corrections": {
+							"type": "string"
+						},
+						"rates": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"reports",
+						"finance",
+						"bank",
+						"leave",
+						"corrections",
+						"rates"
+					]
+				},
+				"periods": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"week": {
+							"type": "string"
+						},
+						"month": {
+							"type": "string"
+						},
+						"year": {
+							"type": "string"
+						},
+						"custom": {
+							"type": "string"
+						}
+					},
+					"required": ["week", "month", "year", "custom"]
+				},
+				"requestKinds": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"leave": {
+							"type": "string"
+						},
+						"correction": {
+							"type": "string"
+						},
+						"rate": {
+							"type": "string"
+						},
+						"review": {
+							"type": "string"
+						},
+						"cancel": {
+							"type": "string"
+						}
+					},
+					"required": ["leave", "correction", "rate", "review", "cancel"]
+				},
+				"statuses": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"pending": {
+							"type": "string"
+						},
+						"approved": {
+							"type": "string"
+						},
+						"rejected": {
+							"type": "string"
+						},
+						"cancelled": {
+							"type": "string"
+						}
+					},
+					"required": ["pending", "approved", "rejected", "cancelled"]
+				},
+				"bankFields": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"holder": {
+							"type": "string"
+						},
+						"iban": {
+							"type": "string"
+						},
+						"bank": {
+							"type": "string"
+						},
+						"card": {
+							"type": "string"
+						},
+						"account": {
+							"type": "string"
+						}
+					},
+					"required": ["holder", "iban", "bank", "card", "account"]
+				},
+				"errors": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"load": {
+							"type": "string"
+						},
+						"save": {
+							"type": "string"
+						},
+						"interval": {
+							"type": "string"
+						},
+						"project": {
+							"type": "string"
+						},
+						"bank": {
+							"type": "string"
+						},
+						"permission": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"load",
+						"save",
+						"interval",
+						"project",
+						"bank",
+						"permission"
+					]
+				},
+				"viewRequests": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"notification",
+				"auditActions",
+				"history",
+				"oldInterval",
+				"newInterval",
+				"title",
+				"tasksPanel",
+				"panels",
+				"tracker",
+				"myReports",
+				"leaves",
+				"myFinance",
+				"employees",
+				"requests",
+				"settings",
+				"companyWide",
+				"trackerHint",
+				"project",
+				"description",
+				"descriptionPlaceholder",
+				"start",
+				"stop",
+				"running",
+				"needsReview",
+				"timerReviewHint",
+				"noProjects",
+				"noEntries",
+				"noRequests",
+				"loading",
+				"retry",
+				"previous",
+				"next",
+				"save",
+				"saved",
+				"leaveMode",
+				"hourly",
+				"daily",
+				"startDate",
+				"endDate",
+				"endDateInclusive",
+				"startTime",
+				"endTime",
+				"reason",
+				"requestRemoval",
+				"hourlyRate",
+				"rateHint",
+				"timezoneHint",
+				"submitRequest",
+				"approvalHint",
+				"reportHint",
+				"period",
+				"periodAnchor",
+				"reportScope",
+				"allEmployees",
+				"selectedEmployee",
+				"export",
+				"employee",
+				"workHours",
+				"pendingHours",
+				"unknownRateHours",
+				"hourlyLeave",
+				"dailyLeave",
+				"lateMinutes",
+				"gross",
+				"penalty",
+				"net",
+				"currency",
+				"estimateHint",
+				"filters",
+				"projectId",
+				"workspaceId",
+				"filterHint",
+				"allProjects",
+				"allWorkspaces",
+				"withdraw",
+				"approve",
+				"reject",
+				"entryReference",
+				"financeHint",
+				"rateUnknown",
+				"bankDetails",
+				"role",
+				"actions",
+				"details",
+				"employeesHint",
+				"employeeDetailsHint",
+				"companyPolicy",
+				"policyHint",
+				"timeZone",
+				"companyStart",
+				"graceMinutes",
+				"penaltyPerMinute",
+				"maxTimerHours",
+				"enablePenalty",
+				"rolePermissions",
+				"selfApprovalHint",
+				"settingsHint",
+				"companyWeekHint",
+				"roles",
+				"permissions",
+				"periods",
+				"requestKinds",
+				"statuses",
+				"bankFields",
+				"errors",
+				"viewRequests"
+			]
 		}
 	},
 	"required": [
@@ -14715,6 +15348,7 @@
 		"invitations",
 		"workspace",
 		"team",
-		"publicProject"
+		"publicProject",
+		"attendance"
 	]
 }

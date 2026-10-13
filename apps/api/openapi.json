@@ -14625,6 +14625,3652 @@
         }
       }
     },
+    "/attendance/timer": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceTimer",
+        "summary": "Read only the current timer for the task sidebar",
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "projectName": {
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "needsReview": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "projectName",
+                    "startTime",
+                    "needsReview"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "startAttendanceTimer",
+        "summary": "Start the user's single company-wide timer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 2000,
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "projectId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "projectName": {
+                      "type": "string"
+                    },
+                    "workspaceName": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "endTime": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "hourlyRate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "policy": {
+                      "type": "object",
+                      "properties": {
+                        "weekStartsOn": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                0
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                6
+                              ]
+                            }
+                          ]
+                        },
+                        "timeZone": {
+                          "type": "string",
+                          "maxLength": 100
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                        },
+                        "graceMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1440
+                        },
+                        "penaltyPerMinute": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10000000
+                        },
+                        "maxTimerHours": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 168
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "weekStartsOn",
+                        "timeZone",
+                        "startTime",
+                        "graceMinutes",
+                        "penaltyPerMinute",
+                        "maxTimerHours",
+                        "enabled"
+                      ]
+                    },
+                    "reviewStatus": {
+                      "type": "string",
+                      "enum": [
+                        "valid",
+                        "pending",
+                        "approved"
+                      ]
+                    },
+                    "needsReview": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "userId",
+                    "projectId",
+                    "workspaceId",
+                    "projectName",
+                    "workspaceName",
+                    "description",
+                    "startTime",
+                    "endTime",
+                    "hourlyRate",
+                    "policy",
+                    "reviewStatus",
+                    "needsReview",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/history": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceHistory",
+        "summary": "Read an authorized audit timeline without financial or bank values",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "action": {
+                            "type": "string"
+                          },
+                          "actorName": {
+                            "type": "string"
+                          },
+                          "resourceId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "startBefore": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "endBefore": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "startAfter": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "endAfter": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "action",
+                          "actorName",
+                          "resourceId",
+                          "createdAt",
+                          "startBefore",
+                          "endBefore",
+                          "startAfter",
+                          "endAfter"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/report/projects": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceReportProjects",
+        "summary": "List project filters visible in authorized attendance reports",
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "workspaceId": {
+                        "type": "string"
+                      },
+                      "workspaceName": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "workspaceId",
+                      "workspaceName"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/settings": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceSettings",
+        "summary": "Read shared company settings",
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "policy": {
+                      "type": "object",
+                      "properties": {
+                        "weekStartsOn": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                0
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                6
+                              ]
+                            }
+                          ]
+                        },
+                        "timeZone": {
+                          "type": "string",
+                          "maxLength": 100
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                        },
+                        "graceMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1440
+                        },
+                        "penaltyPerMinute": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10000000
+                        },
+                        "maxTimerHours": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 168
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "weekStartsOn",
+                        "timeZone",
+                        "startTime",
+                        "graceMinutes",
+                        "penaltyPerMinute",
+                        "maxTimerHours",
+                        "enabled"
+                      ]
+                    },
+                    "grants": {
+                      "type": "object",
+                      "properties": {
+                        "employee": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        },
+                        "hr": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        },
+                        "finance": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        }
+                      },
+                      "required": [
+                        "employee",
+                        "hr",
+                        "finance"
+                      ]
+                    },
+                    "configured": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "policy",
+                    "grants",
+                    "configured"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "updateAttendanceSettings",
+        "summary": "Schedule company policy and update role grants",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "weekStartsOn": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              6
+                            ]
+                          }
+                        ]
+                      },
+                      "timeZone": {
+                        "type": "string",
+                        "maxLength": 100
+                      },
+                      "startTime": {
+                        "type": "string",
+                        "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                      },
+                      "graceMinutes": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 1440
+                      },
+                      "penaltyPerMinute": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10000000
+                      },
+                      "maxTimerHours": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 168
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "weekStartsOn",
+                      "timeZone",
+                      "startTime",
+                      "graceMinutes",
+                      "penaltyPerMinute",
+                      "maxTimerHours",
+                      "enabled"
+                    ]
+                  },
+                  "grants": {
+                    "type": "object",
+                    "properties": {
+                      "employee": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "reports",
+                            "finance",
+                            "bank",
+                            "leave",
+                            "corrections",
+                            "rates",
+                            "settings",
+                            "roles"
+                          ]
+                        },
+                        "maxItems": 8
+                      },
+                      "hr": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "reports",
+                            "finance",
+                            "bank",
+                            "leave",
+                            "corrections",
+                            "rates",
+                            "settings",
+                            "roles"
+                          ]
+                        },
+                        "maxItems": 8
+                      },
+                      "finance": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "reports",
+                            "finance",
+                            "bank",
+                            "leave",
+                            "corrections",
+                            "rates",
+                            "settings",
+                            "roles"
+                          ]
+                        },
+                        "maxItems": 8
+                      }
+                    },
+                    "required": [
+                      "employee",
+                      "hr",
+                      "finance"
+                    ]
+                  }
+                },
+                "required": [
+                  "policy",
+                  "grants"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "policy": {
+                      "type": "object",
+                      "properties": {
+                        "weekStartsOn": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                0
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                6
+                              ]
+                            }
+                          ]
+                        },
+                        "timeZone": {
+                          "type": "string",
+                          "maxLength": 100
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                        },
+                        "graceMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1440
+                        },
+                        "penaltyPerMinute": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10000000
+                        },
+                        "maxTimerHours": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 168
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "weekStartsOn",
+                        "timeZone",
+                        "startTime",
+                        "graceMinutes",
+                        "penaltyPerMinute",
+                        "maxTimerHours",
+                        "enabled"
+                      ]
+                    },
+                    "grants": {
+                      "type": "object",
+                      "properties": {
+                        "employee": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        },
+                        "hr": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        },
+                        "finance": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reports",
+                              "finance",
+                              "bank",
+                              "leave",
+                              "corrections",
+                              "rates",
+                              "settings",
+                              "roles"
+                            ]
+                          },
+                          "maxItems": 8
+                        }
+                      },
+                      "required": [
+                        "employee",
+                        "hr",
+                        "finance"
+                      ]
+                    },
+                    "configured": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "policy",
+                    "grants",
+                    "configured"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/profile": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceProfile",
+        "summary": "Read attendance profile with field-level permissions",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "admin",
+                        "employee",
+                        "hr",
+                        "finance"
+                      ]
+                    },
+                    "permissions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "reports",
+                          "finance",
+                          "bank",
+                          "leave",
+                          "corrections",
+                          "rates",
+                          "settings",
+                          "roles"
+                        ]
+                      }
+                    },
+                    "rate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "bank": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "holder": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 150
+                        },
+                        "iban": {
+                          "type": "string"
+                        },
+                        "bank": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "default": ""
+                        },
+                        "card": {
+                          "type": "string",
+                          "pattern": "^(\\d{16})?$",
+                          "default": ""
+                        },
+                        "account": {
+                          "type": "string",
+                          "pattern": "^\\d{0,30}$",
+                          "default": ""
+                        }
+                      },
+                      "required": [
+                        "holder",
+                        "iban"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "userId",
+                    "role",
+                    "permissions",
+                    "rate",
+                    "bank"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/projects": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceProjects",
+        "summary": "List accessible projects across member workspaces",
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "workspaceId": {
+                        "type": "string"
+                      },
+                      "workspaceName": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "workspaceId",
+                      "workspaceName"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/entries": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceEntries",
+        "summary": "Page through a person's work records",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "entries": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "userId": {
+                            "type": "string"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          },
+                          "projectName": {
+                            "type": "string"
+                          },
+                          "workspaceName": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "startTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "endTime": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time"
+                          },
+                          "hourlyRate": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "policy": {
+                            "type": "object",
+                            "properties": {
+                              "weekStartsOn": {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "enum": [
+                                      0
+                                    ]
+                                  },
+                                  {
+                                    "type": "number",
+                                    "enum": [
+                                      1
+                                    ]
+                                  },
+                                  {
+                                    "type": "number",
+                                    "enum": [
+                                      6
+                                    ]
+                                  }
+                                ]
+                              },
+                              "timeZone": {
+                                "type": "string",
+                                "maxLength": 100
+                              },
+                              "startTime": {
+                                "type": "string",
+                                "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                              },
+                              "graceMinutes": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 1440
+                              },
+                              "penaltyPerMinute": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 10000000
+                              },
+                              "maxTimerHours": {
+                                "type": "number",
+                                "minimum": 1,
+                                "maximum": 168
+                              },
+                              "enabled": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "weekStartsOn",
+                              "timeZone",
+                              "startTime",
+                              "graceMinutes",
+                              "penaltyPerMinute",
+                              "maxTimerHours",
+                              "enabled"
+                            ]
+                          },
+                          "reviewStatus": {
+                            "type": "string",
+                            "enum": [
+                              "valid",
+                              "pending",
+                              "approved"
+                            ]
+                          },
+                          "needsReview": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "userId",
+                          "projectId",
+                          "workspaceId",
+                          "projectName",
+                          "workspaceName",
+                          "description",
+                          "startTime",
+                          "endTime",
+                          "hourlyRate",
+                          "policy",
+                          "reviewStatus",
+                          "needsReview",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "running": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string"
+                        },
+                        "projectId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "projectName": {
+                          "type": "string"
+                        },
+                        "workspaceName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "endTime": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
+                        },
+                        "hourlyRate": {
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "policy": {
+                          "type": "object",
+                          "properties": {
+                            "weekStartsOn": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "enum": [
+                                    0
+                                  ]
+                                },
+                                {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                {
+                                  "type": "number",
+                                  "enum": [
+                                    6
+                                  ]
+                                }
+                              ]
+                            },
+                            "timeZone": {
+                              "type": "string",
+                              "maxLength": 100
+                            },
+                            "startTime": {
+                              "type": "string",
+                              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                            },
+                            "graceMinutes": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 1440
+                            },
+                            "penaltyPerMinute": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 10000000
+                            },
+                            "maxTimerHours": {
+                              "type": "number",
+                              "minimum": 1,
+                              "maximum": 168
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "weekStartsOn",
+                            "timeZone",
+                            "startTime",
+                            "graceMinutes",
+                            "penaltyPerMinute",
+                            "maxTimerHours",
+                            "enabled"
+                          ]
+                        },
+                        "reviewStatus": {
+                          "type": "string",
+                          "enum": [
+                            "valid",
+                            "pending",
+                            "approved"
+                          ]
+                        },
+                        "needsReview": {
+                          "type": "boolean"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "userId",
+                        "projectId",
+                        "workspaceId",
+                        "projectName",
+                        "workspaceName",
+                        "description",
+                        "startTime",
+                        "endTime",
+                        "hourlyRate",
+                        "policy",
+                        "reviewStatus",
+                        "needsReview",
+                        "createdAt"
+                      ]
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "entries",
+                    "running",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/entries/{id}/stop": {
+      "post": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "stopAttendanceTimer",
+        "summary": "Stop an owned timer even after project access is revoked",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "projectName": {
+                      "type": "string"
+                    },
+                    "workspaceName": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "endTime": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "hourlyRate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "policy": {
+                      "type": "object",
+                      "properties": {
+                        "weekStartsOn": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                0
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                6
+                              ]
+                            }
+                          ]
+                        },
+                        "timeZone": {
+                          "type": "string",
+                          "maxLength": 100
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                        },
+                        "graceMinutes": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 1440
+                        },
+                        "penaltyPerMinute": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 10000000
+                        },
+                        "maxTimerHours": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 168
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "weekStartsOn",
+                        "timeZone",
+                        "startTime",
+                        "graceMinutes",
+                        "penaltyPerMinute",
+                        "maxTimerHours",
+                        "enabled"
+                      ]
+                    },
+                    "reviewStatus": {
+                      "type": "string",
+                      "enum": [
+                        "valid",
+                        "pending",
+                        "approved"
+                      ]
+                    },
+                    "needsReview": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "userId",
+                    "projectId",
+                    "workspaceId",
+                    "projectName",
+                    "workspaceName",
+                    "description",
+                    "startTime",
+                    "endTime",
+                    "hourlyRate",
+                    "policy",
+                    "reviewStatus",
+                    "needsReview",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/requests": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceRequests",
+        "summary": "List own and authorized approval requests",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "userId": {
+                            "type": "string"
+                          },
+                          "userName": {
+                            "type": "string"
+                          },
+                          "payload": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "leave"
+                                    ]
+                                  },
+                                  "mode": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hourly",
+                                      "daily"
+                                    ]
+                                  },
+                                  "startTime": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "endTime": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "mode",
+                                  "startTime",
+                                  "endTime"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "rate"
+                                    ]
+                                  },
+                                  "amount": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 100000000
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "amount"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "correction"
+                                    ]
+                                  },
+                                  "entryId": {
+                                    "type": "string"
+                                  },
+                                  "projectId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "startTime": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "endTime": {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  },
+                                  "description": {
+                                    "type": "string",
+                                    "maxLength": 2000,
+                                    "default": ""
+                                  },
+                                  "remove": {
+                                    "type": "boolean",
+                                    "default": false
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "projectId",
+                                  "startTime",
+                                  "endTime"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "cancel"
+                                    ]
+                                  },
+                                  "requestId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "requestId"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "review"
+                                    ]
+                                  },
+                                  "entryId": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "kind",
+                                  "entryId"
+                                ]
+                              }
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "approved",
+                              "rejected",
+                              "cancelled"
+                            ]
+                          },
+                          "reason": {
+                            "type": "string"
+                          },
+                          "decidedBy": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "decidedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "userId",
+                          "userName",
+                          "payload",
+                          "status",
+                          "reason",
+                          "decidedBy",
+                          "decidedAt",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "requests",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "createAttendanceRequest",
+        "summary": "Request leave, a rate, a time correction or review",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "payload": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "leave"
+                            ]
+                          },
+                          "mode": {
+                            "type": "string",
+                            "enum": [
+                              "hourly",
+                              "daily"
+                            ]
+                          },
+                          "startTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "endTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "mode",
+                          "startTime",
+                          "endTime"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "rate"
+                            ]
+                          },
+                          "amount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "amount"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "correction"
+                            ]
+                          },
+                          "entryId": {
+                            "type": "string"
+                          },
+                          "projectId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "startTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "endTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "description": {
+                            "type": "string",
+                            "maxLength": 2000,
+                            "default": ""
+                          },
+                          "remove": {
+                            "type": "boolean",
+                            "default": false
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "projectId",
+                          "startTime",
+                          "endTime"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "cancel"
+                            ]
+                          },
+                          "requestId": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "requestId"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "review"
+                            ]
+                          },
+                          "entryId": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "entryId"
+                        ]
+                      }
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "userId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "payload",
+                  "reason"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "userName": {
+                      "type": "string"
+                    },
+                    "payload": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "leave"
+                              ]
+                            },
+                            "mode": {
+                              "type": "string",
+                              "enum": [
+                                "hourly",
+                                "daily"
+                              ]
+                            },
+                            "startTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "endTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "mode",
+                            "startTime",
+                            "endTime"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "rate"
+                              ]
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 100000000
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "amount"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "correction"
+                              ]
+                            },
+                            "entryId": {
+                              "type": "string"
+                            },
+                            "projectId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "startTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "endTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "description": {
+                              "type": "string",
+                              "maxLength": 2000,
+                              "default": ""
+                            },
+                            "remove": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "projectId",
+                            "startTime",
+                            "endTime"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "cancel"
+                              ]
+                            },
+                            "requestId": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "requestId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "review"
+                              ]
+                            },
+                            "entryId": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "entryId"
+                          ]
+                        }
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "approved",
+                        "rejected",
+                        "cancelled"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "decidedBy": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "decidedAt": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "userId",
+                    "userName",
+                    "payload",
+                    "status",
+                    "reason",
+                    "decidedBy",
+                    "decidedAt",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/requests/{id}": {
+      "put": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "decideAttendanceRequest",
+        "summary": "Decide another person's request or withdraw an own pending request",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "decision": {
+                    "type": "string",
+                    "enum": [
+                      "approved",
+                      "rejected",
+                      "cancelled"
+                    ]
+                  }
+                },
+                "required": [
+                  "decision"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "userName": {
+                      "type": "string"
+                    },
+                    "payload": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "leave"
+                              ]
+                            },
+                            "mode": {
+                              "type": "string",
+                              "enum": [
+                                "hourly",
+                                "daily"
+                              ]
+                            },
+                            "startTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "endTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "mode",
+                            "startTime",
+                            "endTime"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "rate"
+                              ]
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 100000000
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "amount"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "correction"
+                              ]
+                            },
+                            "entryId": {
+                              "type": "string"
+                            },
+                            "projectId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "startTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "endTime": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "description": {
+                              "type": "string",
+                              "maxLength": 2000,
+                              "default": ""
+                            },
+                            "remove": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "projectId",
+                            "startTime",
+                            "endTime"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "cancel"
+                              ]
+                            },
+                            "requestId": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "requestId"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "review"
+                              ]
+                            },
+                            "entryId": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "entryId"
+                          ]
+                        }
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "approved",
+                        "rejected",
+                        "cancelled"
+                      ]
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "decidedBy": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "decidedAt": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "format": "date-time"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "userId",
+                    "userName",
+                    "payload",
+                    "status",
+                    "reason",
+                    "decidedBy",
+                    "decidedAt",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/employees": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceEmployees",
+        "summary": "Page through unique company employees",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "admin",
+                              "employee",
+                              "hr",
+                              "finance"
+                            ]
+                          },
+                          "rate": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "userId",
+                          "name",
+                          "email",
+                          "role",
+                          "rate"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "users",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/employees/{id}/role": {
+      "put": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "updateAttendanceRole",
+        "summary": "Assign an attendance role without granting workspace permissions",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "employee",
+                      "hr",
+                      "finance"
+                    ]
+                  }
+                },
+                "required": [
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "employee",
+                        "hr",
+                        "finance"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "userId",
+                    "role"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/bank": {
+      "put": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "updateAttendanceBank",
+        "summary": "Update the current user's bank account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "holder": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
+                  },
+                  "iban": {
+                    "type": "string"
+                  },
+                  "bank": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "default": ""
+                  },
+                  "card": {
+                    "type": "string",
+                    "pattern": "^(\\d{16})?$",
+                    "default": ""
+                  },
+                  "account": {
+                    "type": "string",
+                    "pattern": "^\\d{0,30}$",
+                    "default": ""
+                  }
+                },
+                "required": [
+                  "holder",
+                  "iban"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "holder": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "iban": {
+                      "type": "string"
+                    },
+                    "bank": {
+                      "type": "string",
+                      "maxLength": 100,
+                      "default": ""
+                    },
+                    "card": {
+                      "type": "string",
+                      "pattern": "^(\\d{16})?$",
+                      "default": ""
+                    },
+                    "account": {
+                      "type": "string",
+                      "pattern": "^\\d{0,30}$",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "holder",
+                    "iban"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/attendance/report": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "operationId": "getAttendanceReport",
+        "summary": "Aggregate work, leave, lateness and permitted earnings over an explicit period",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "me",
+                "all"
+              ]
+            },
+            "required": false,
+            "name": "scope",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "userId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "projectId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "workspaceId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "seconds": {
+                        "type": "number"
+                      },
+                      "pendingSeconds": {
+                        "type": "number"
+                      },
+                      "unknownRateSeconds": {
+                        "type": "number"
+                      },
+                      "leaveSeconds": {
+                        "type": "number"
+                      },
+                      "leaveDays": {
+                        "type": "number"
+                      },
+                      "lateMinutes": {
+                        "type": "number"
+                      },
+                      "gross": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "penalty": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "net": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "userId",
+                      "name",
+                      "seconds",
+                      "pendingSeconds",
+                      "unknownRateSeconds",
+                      "leaveSeconds",
+                      "leaveDays",
+                      "lateMinutes",
+                      "gross",
+                      "penalty",
+                      "net"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid attendance input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User session required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Attendance permission required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Attendance state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
     "/label/task/{taskId}": {
       "get": {
         "operationId": "getTaskLabels",

@@ -1,3 +1,4 @@
+import { useAttendanceSettings } from "@/hooks/queries/attendance/use-attendance";
 import { useTranslation } from "react-i18next";
 import { SettingsRow } from "@/components/settings/settings-row";
 import {
@@ -16,6 +17,7 @@ import {
 
 export function WeekStartRow() {
   const { t } = useTranslation();
+  const { data: company } = useAttendanceSettings();
   const weekStartsOn = useUserPreferencesStore((state) => state.weekStartsOn);
   const setWeekStartsOn = useUserPreferencesStore(
     (state) => state.setWeekStartsOn,
@@ -30,10 +32,17 @@ export function WeekStartRow() {
     <SettingsRow
       stack
       title={t("settings:preferencesPage.firstDayOfWeek")}
-      description={t("settings:preferencesPage.firstDayOfWeekDescription")}
+      description={t(
+        company?.configured
+          ? "attendance:companyWeekHint"
+          : "settings:preferencesPage.firstDayOfWeekDescription",
+      )}
     >
       <Select
-        value={String(weekStartsOn)}
+        disabled={Boolean(company?.configured)}
+        value={String(
+          company?.configured ? company.policy.weekStartsOn : weekStartsOn,
+        )}
         onValueChange={(value) => {
           if (!value) return;
           const parsed = Number(value);

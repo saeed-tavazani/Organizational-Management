@@ -15,6 +15,7 @@ import {
 } from "drizzle-orm/pg-core";
 import type { GitHubImportState } from "../github-integration/import-state";
 import type { ImportRunProject } from "../import/import-run-project";
+export * from "./attendance-schema";
 
 // Timestamp columns without a time zone hold UTC (Drizzle reads and writes
 // them as UTC). A bare now() default would be cast through the session time

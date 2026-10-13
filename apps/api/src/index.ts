@@ -82,6 +82,7 @@ import { descriptionPageQuery, listTasksQuery } from "./task/schema";
 import taskRelation from "./task-relation";
 import telegramIntegration from "./telegram-integration";
 import timeEntry from "./time-entry";
+import attendance from "./attendance";
 import user from "./user";
 import getAvatar from "./user/controllers/get-avatar";
 import { apiKeyRejection } from "./utils/api-key-rejection";
@@ -833,6 +834,7 @@ export function createApp() {
   const activityApi = api.route("/activity", activity);
   const commentApi = api.route("/comment", comment);
   const timeEntryApi = api.route("/time-entry", timeEntry);
+  const attendanceApi = api.route("/attendance", attendance);
   const labelApi = api.route("/label", label);
   const notificationApi = api.route("/notification", notification);
   const notificationPreferencesApi = api.route(
@@ -1000,6 +1002,7 @@ export function createApp() {
     taskRelationApi,
     telegramIntegrationApi,
     timeEntryApi,
+    attendanceApi,
     userApi,
     adminApi,
     workflowRuleApi,
@@ -1133,6 +1136,7 @@ const {
   taskRelationApi,
   telegramIntegrationApi,
   timeEntryApi,
+  attendanceApi,
   userApi,
   adminApi,
   workflowRuleApi,
@@ -1161,6 +1165,7 @@ export type AppType =
   | typeof columnApi
   | typeof activityApi
   | typeof commentApi
+  | typeof attendanceApi
   | typeof timeEntryApi
   | typeof labelApi
   | typeof notificationApi

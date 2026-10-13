@@ -25,11 +25,18 @@ import { Route as DeviceIndexRouteImport } from './routes/device/index'
 import { Route as DeviceApproveRouteImport } from './routes/device/approve'
 import { Route as McpAuthorizeRouteImport } from './routes/mcp.authorize'
 import { Route as PublicProjectProjectIdRouteImport } from './routes/public-project.$projectId'
+import { Route as LayoutAuthenticatedAttendanceRouteImport } from './routes/_layout/_authenticated/attendance'
 import { Route as LayoutAuthenticatedDashboardRouteImport } from './routes/_layout/_authenticated/dashboard'
 import { Route as LayoutAuthenticatedInvitationsRouteImport } from './routes/_layout/_authenticated/invitations'
 import { Route as LayoutAuthenticatedOnboardingRouteImport } from './routes/_layout/_authenticated/onboarding'
 import { Route as LayoutAuthenticatedProfileSetupRouteImport } from './routes/_layout/_authenticated/profile-setup'
 import { Route as InvitationAcceptInviteIdRouteImport } from './routes/invitation/accept.$inviteId'
+import { Route as LayoutAuthenticatedAttendanceIndexRouteImport } from './routes/_layout/_authenticated/attendance/index'
+import { Route as LayoutAuthenticatedAttendanceEmployeesRouteImport } from './routes/_layout/_authenticated/attendance/employees'
+import { Route as LayoutAuthenticatedAttendanceFinanceRouteImport } from './routes/_layout/_authenticated/attendance/finance'
+import { Route as LayoutAuthenticatedAttendanceLeavesRouteImport } from './routes/_layout/_authenticated/attendance/leaves'
+import { Route as LayoutAuthenticatedAttendanceReportsRouteImport } from './routes/_layout/_authenticated/attendance/reports'
+import { Route as LayoutAuthenticatedAttendanceRequestsRouteImport } from './routes/_layout/_authenticated/attendance/requests'
 import { Route as LayoutAuthenticatedDashboardIndexRouteImport } from './routes/_layout/_authenticated/dashboard/index'
 import { Route as LayoutAuthenticatedDashboardInvitationsRouteImport } from './routes/_layout/_authenticated/dashboard/invitations'
 import { Route as LayoutAuthenticatedDashboardSettingsRouteImport } from './routes/_layout/_authenticated/dashboard/settings'
@@ -45,6 +52,7 @@ import { Route as LayoutAuthenticatedDashboardSettingsAccountInformationRouteImp
 import { Route as LayoutAuthenticatedDashboardSettingsAccountNotificationsRouteImport } from './routes/_layout/_authenticated/dashboard/settings/account/notifications'
 import { Route as LayoutAuthenticatedDashboardSettingsAccountPreferencesRouteImport } from './routes/_layout/_authenticated/dashboard/settings/account/preferences'
 import { Route as LayoutAuthenticatedDashboardSettingsAccountSecurityRouteImport } from './routes/_layout/_authenticated/dashboard/settings/account/security'
+import { Route as LayoutAuthenticatedDashboardSettingsAdminAttendanceRouteImport } from './routes/_layout/_authenticated/dashboard/settings/admin/attendance'
 import { Route as LayoutAuthenticatedDashboardSettingsAdminUsersRouteImport } from './routes/_layout/_authenticated/dashboard/settings/admin/users'
 import { Route as LayoutAuthenticatedDashboardSettingsAdminWorkspacesRouteImport } from './routes/_layout/_authenticated/dashboard/settings/admin/workspaces'
 import { Route as LayoutAuthenticatedDashboardSettingsWorkspaceBillingRouteImport } from './routes/_layout/_authenticated/dashboard/settings/workspace/billing'
@@ -149,6 +157,12 @@ const PublicProjectProjectIdRoute = PublicProjectProjectIdRouteImport.update({
   path: '/public-project/$projectId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LayoutAuthenticatedAttendanceRoute =
+  LayoutAuthenticatedAttendanceRouteImport.update({
+    id: '/attendance',
+    path: '/attendance',
+    getParentRoute: () => LayoutAuthenticatedRoute,
+  } as any)
 const LayoutAuthenticatedDashboardRoute =
   LayoutAuthenticatedDashboardRouteImport.update({
     id: '/dashboard',
@@ -178,6 +192,42 @@ const InvitationAcceptInviteIdRoute =
     id: '/invitation/accept/$inviteId',
     path: '/invitation/accept/$inviteId',
     getParentRoute: () => rootRouteImport,
+  } as any)
+const LayoutAuthenticatedAttendanceIndexRoute =
+  LayoutAuthenticatedAttendanceIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
+  } as any)
+const LayoutAuthenticatedAttendanceEmployeesRoute =
+  LayoutAuthenticatedAttendanceEmployeesRouteImport.update({
+    id: '/employees',
+    path: '/employees',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
+  } as any)
+const LayoutAuthenticatedAttendanceFinanceRoute =
+  LayoutAuthenticatedAttendanceFinanceRouteImport.update({
+    id: '/finance',
+    path: '/finance',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
+  } as any)
+const LayoutAuthenticatedAttendanceLeavesRoute =
+  LayoutAuthenticatedAttendanceLeavesRouteImport.update({
+    id: '/leaves',
+    path: '/leaves',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
+  } as any)
+const LayoutAuthenticatedAttendanceReportsRoute =
+  LayoutAuthenticatedAttendanceReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
+  } as any)
+const LayoutAuthenticatedAttendanceRequestsRoute =
+  LayoutAuthenticatedAttendanceRequestsRouteImport.update({
+    id: '/requests',
+    path: '/requests',
+    getParentRoute: () => LayoutAuthenticatedAttendanceRoute,
   } as any)
 const LayoutAuthenticatedDashboardIndexRoute =
   LayoutAuthenticatedDashboardIndexRouteImport.update({
@@ -270,6 +320,12 @@ const LayoutAuthenticatedDashboardSettingsAccountSecurityRoute =
     id: '/security',
     path: '/security',
     getParentRoute: () => LayoutAuthenticatedDashboardSettingsAccountRoute,
+  } as any)
+const LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute =
+  LayoutAuthenticatedDashboardSettingsAdminAttendanceRouteImport.update({
+    id: '/attendance',
+    path: '/attendance',
+    getParentRoute: () => LayoutAuthenticatedDashboardSettingsAdminRoute,
   } as any)
 const LayoutAuthenticatedDashboardSettingsAdminUsersRoute =
   LayoutAuthenticatedDashboardSettingsAdminUsersRouteImport.update({
@@ -467,13 +523,20 @@ export interface FileRoutesByFullPath {
   '/mcp/authorize': typeof McpAuthorizeRoute
   '/public-project/$projectId': typeof PublicProjectProjectIdRoute
   '/device/': typeof DeviceIndexRoute
+  '/attendance': typeof LayoutAuthenticatedAttendanceRouteWithChildren
   '/dashboard': typeof LayoutAuthenticatedDashboardRouteWithChildren
   '/invitations': typeof LayoutAuthenticatedInvitationsRoute
   '/onboarding': typeof LayoutAuthenticatedOnboardingRoute
   '/profile-setup': typeof LayoutAuthenticatedProfileSetupRoute
   '/invitation/accept/$inviteId': typeof InvitationAcceptInviteIdRoute
+  '/attendance/employees': typeof LayoutAuthenticatedAttendanceEmployeesRoute
+  '/attendance/finance': typeof LayoutAuthenticatedAttendanceFinanceRoute
+  '/attendance/leaves': typeof LayoutAuthenticatedAttendanceLeavesRoute
+  '/attendance/reports': typeof LayoutAuthenticatedAttendanceReportsRoute
+  '/attendance/requests': typeof LayoutAuthenticatedAttendanceRequestsRoute
   '/dashboard/invitations': typeof LayoutAuthenticatedDashboardInvitationsRoute
   '/dashboard/settings': typeof LayoutAuthenticatedDashboardSettingsRouteWithChildren
+  '/attendance/': typeof LayoutAuthenticatedAttendanceIndexRoute
   '/dashboard/': typeof LayoutAuthenticatedDashboardIndexRoute
   '/dashboard/settings/account': typeof LayoutAuthenticatedDashboardSettingsAccountRouteWithChildren
   '/dashboard/settings/admin': typeof LayoutAuthenticatedDashboardSettingsAdminRouteWithChildren
@@ -487,6 +550,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/settings/account/notifications': typeof LayoutAuthenticatedDashboardSettingsAccountNotificationsRoute
   '/dashboard/settings/account/preferences': typeof LayoutAuthenticatedDashboardSettingsAccountPreferencesRoute
   '/dashboard/settings/account/security': typeof LayoutAuthenticatedDashboardSettingsAccountSecurityRoute
+  '/dashboard/settings/admin/attendance': typeof LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute
   '/dashboard/settings/admin/users': typeof LayoutAuthenticatedDashboardSettingsAdminUsersRoute
   '/dashboard/settings/admin/workspaces': typeof LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute
   '/dashboard/settings/workspace/billing': typeof LayoutAuthenticatedDashboardSettingsWorkspaceBillingRoute
@@ -531,8 +595,14 @@ export interface FileRoutesByTo {
   '/onboarding': typeof LayoutAuthenticatedOnboardingRoute
   '/profile-setup': typeof LayoutAuthenticatedProfileSetupRoute
   '/invitation/accept/$inviteId': typeof InvitationAcceptInviteIdRoute
+  '/attendance/employees': typeof LayoutAuthenticatedAttendanceEmployeesRoute
+  '/attendance/finance': typeof LayoutAuthenticatedAttendanceFinanceRoute
+  '/attendance/leaves': typeof LayoutAuthenticatedAttendanceLeavesRoute
+  '/attendance/reports': typeof LayoutAuthenticatedAttendanceReportsRoute
+  '/attendance/requests': typeof LayoutAuthenticatedAttendanceRequestsRoute
   '/dashboard/invitations': typeof LayoutAuthenticatedDashboardInvitationsRoute
   '/dashboard/settings': typeof LayoutAuthenticatedDashboardSettingsRouteWithChildren
+  '/attendance': typeof LayoutAuthenticatedAttendanceIndexRoute
   '/dashboard': typeof LayoutAuthenticatedDashboardIndexRoute
   '/dashboard/settings/account': typeof LayoutAuthenticatedDashboardSettingsAccountRouteWithChildren
   '/dashboard/settings/admin': typeof LayoutAuthenticatedDashboardSettingsAdminRouteWithChildren
@@ -545,6 +615,7 @@ export interface FileRoutesByTo {
   '/dashboard/settings/account/notifications': typeof LayoutAuthenticatedDashboardSettingsAccountNotificationsRoute
   '/dashboard/settings/account/preferences': typeof LayoutAuthenticatedDashboardSettingsAccountPreferencesRoute
   '/dashboard/settings/account/security': typeof LayoutAuthenticatedDashboardSettingsAccountSecurityRoute
+  '/dashboard/settings/admin/attendance': typeof LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute
   '/dashboard/settings/admin/users': typeof LayoutAuthenticatedDashboardSettingsAdminUsersRoute
   '/dashboard/settings/admin/workspaces': typeof LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute
   '/dashboard/settings/workspace/billing': typeof LayoutAuthenticatedDashboardSettingsWorkspaceBillingRoute
@@ -589,13 +660,20 @@ export interface FileRoutesById {
   '/mcp/authorize': typeof McpAuthorizeRoute
   '/public-project/$projectId': typeof PublicProjectProjectIdRoute
   '/device/': typeof DeviceIndexRoute
+  '/_layout/_authenticated/attendance': typeof LayoutAuthenticatedAttendanceRouteWithChildren
   '/_layout/_authenticated/dashboard': typeof LayoutAuthenticatedDashboardRouteWithChildren
   '/_layout/_authenticated/invitations': typeof LayoutAuthenticatedInvitationsRoute
   '/_layout/_authenticated/onboarding': typeof LayoutAuthenticatedOnboardingRoute
   '/_layout/_authenticated/profile-setup': typeof LayoutAuthenticatedProfileSetupRoute
   '/invitation/accept/$inviteId': typeof InvitationAcceptInviteIdRoute
+  '/_layout/_authenticated/attendance/employees': typeof LayoutAuthenticatedAttendanceEmployeesRoute
+  '/_layout/_authenticated/attendance/finance': typeof LayoutAuthenticatedAttendanceFinanceRoute
+  '/_layout/_authenticated/attendance/leaves': typeof LayoutAuthenticatedAttendanceLeavesRoute
+  '/_layout/_authenticated/attendance/reports': typeof LayoutAuthenticatedAttendanceReportsRoute
+  '/_layout/_authenticated/attendance/requests': typeof LayoutAuthenticatedAttendanceRequestsRoute
   '/_layout/_authenticated/dashboard/invitations': typeof LayoutAuthenticatedDashboardInvitationsRoute
   '/_layout/_authenticated/dashboard/settings': typeof LayoutAuthenticatedDashboardSettingsRouteWithChildren
+  '/_layout/_authenticated/attendance/': typeof LayoutAuthenticatedAttendanceIndexRoute
   '/_layout/_authenticated/dashboard/': typeof LayoutAuthenticatedDashboardIndexRoute
   '/_layout/_authenticated/dashboard/settings/account': typeof LayoutAuthenticatedDashboardSettingsAccountRouteWithChildren
   '/_layout/_authenticated/dashboard/settings/admin': typeof LayoutAuthenticatedDashboardSettingsAdminRouteWithChildren
@@ -609,6 +687,7 @@ export interface FileRoutesById {
   '/_layout/_authenticated/dashboard/settings/account/notifications': typeof LayoutAuthenticatedDashboardSettingsAccountNotificationsRoute
   '/_layout/_authenticated/dashboard/settings/account/preferences': typeof LayoutAuthenticatedDashboardSettingsAccountPreferencesRoute
   '/_layout/_authenticated/dashboard/settings/account/security': typeof LayoutAuthenticatedDashboardSettingsAccountSecurityRoute
+  '/_layout/_authenticated/dashboard/settings/admin/attendance': typeof LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute
   '/_layout/_authenticated/dashboard/settings/admin/users': typeof LayoutAuthenticatedDashboardSettingsAdminUsersRoute
   '/_layout/_authenticated/dashboard/settings/admin/workspaces': typeof LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute
   '/_layout/_authenticated/dashboard/settings/workspace/billing': typeof LayoutAuthenticatedDashboardSettingsWorkspaceBillingRoute
@@ -652,13 +731,20 @@ export interface FileRouteTypes {
     | '/mcp/authorize'
     | '/public-project/$projectId'
     | '/device/'
+    | '/attendance'
     | '/dashboard'
     | '/invitations'
     | '/onboarding'
     | '/profile-setup'
     | '/invitation/accept/$inviteId'
+    | '/attendance/employees'
+    | '/attendance/finance'
+    | '/attendance/leaves'
+    | '/attendance/reports'
+    | '/attendance/requests'
     | '/dashboard/invitations'
     | '/dashboard/settings'
+    | '/attendance/'
     | '/dashboard/'
     | '/dashboard/settings/account'
     | '/dashboard/settings/admin'
@@ -672,6 +758,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/account/notifications'
     | '/dashboard/settings/account/preferences'
     | '/dashboard/settings/account/security'
+    | '/dashboard/settings/admin/attendance'
     | '/dashboard/settings/admin/users'
     | '/dashboard/settings/admin/workspaces'
     | '/dashboard/settings/workspace/billing'
@@ -716,8 +803,14 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/profile-setup'
     | '/invitation/accept/$inviteId'
+    | '/attendance/employees'
+    | '/attendance/finance'
+    | '/attendance/leaves'
+    | '/attendance/reports'
+    | '/attendance/requests'
     | '/dashboard/invitations'
     | '/dashboard/settings'
+    | '/attendance'
     | '/dashboard'
     | '/dashboard/settings/account'
     | '/dashboard/settings/admin'
@@ -730,6 +823,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/account/notifications'
     | '/dashboard/settings/account/preferences'
     | '/dashboard/settings/account/security'
+    | '/dashboard/settings/admin/attendance'
     | '/dashboard/settings/admin/users'
     | '/dashboard/settings/admin/workspaces'
     | '/dashboard/settings/workspace/billing'
@@ -773,13 +867,20 @@ export interface FileRouteTypes {
     | '/mcp/authorize'
     | '/public-project/$projectId'
     | '/device/'
+    | '/_layout/_authenticated/attendance'
     | '/_layout/_authenticated/dashboard'
     | '/_layout/_authenticated/invitations'
     | '/_layout/_authenticated/onboarding'
     | '/_layout/_authenticated/profile-setup'
     | '/invitation/accept/$inviteId'
+    | '/_layout/_authenticated/attendance/employees'
+    | '/_layout/_authenticated/attendance/finance'
+    | '/_layout/_authenticated/attendance/leaves'
+    | '/_layout/_authenticated/attendance/reports'
+    | '/_layout/_authenticated/attendance/requests'
     | '/_layout/_authenticated/dashboard/invitations'
     | '/_layout/_authenticated/dashboard/settings'
+    | '/_layout/_authenticated/attendance/'
     | '/_layout/_authenticated/dashboard/'
     | '/_layout/_authenticated/dashboard/settings/account'
     | '/_layout/_authenticated/dashboard/settings/admin'
@@ -793,6 +894,7 @@ export interface FileRouteTypes {
     | '/_layout/_authenticated/dashboard/settings/account/notifications'
     | '/_layout/_authenticated/dashboard/settings/account/preferences'
     | '/_layout/_authenticated/dashboard/settings/account/security'
+    | '/_layout/_authenticated/dashboard/settings/admin/attendance'
     | '/_layout/_authenticated/dashboard/settings/admin/users'
     | '/_layout/_authenticated/dashboard/settings/admin/workspaces'
     | '/_layout/_authenticated/dashboard/settings/workspace/billing'
@@ -945,6 +1047,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicProjectProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_layout/_authenticated/attendance': {
+      id: '/_layout/_authenticated/attendance'
+      path: '/attendance'
+      fullPath: '/attendance'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceRouteImport
+      parentRoute: typeof LayoutAuthenticatedRoute
+    }
     '/_layout/_authenticated/dashboard': {
       id: '/_layout/_authenticated/dashboard'
       path: '/dashboard'
@@ -979,6 +1088,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/invitation/accept/$inviteId'
       preLoaderRoute: typeof InvitationAcceptInviteIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_layout/_authenticated/attendance/': {
+      id: '/_layout/_authenticated/attendance/'
+      path: '/'
+      fullPath: '/attendance/'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceIndexRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
+    }
+    '/_layout/_authenticated/attendance/employees': {
+      id: '/_layout/_authenticated/attendance/employees'
+      path: '/employees'
+      fullPath: '/attendance/employees'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceEmployeesRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
+    }
+    '/_layout/_authenticated/attendance/finance': {
+      id: '/_layout/_authenticated/attendance/finance'
+      path: '/finance'
+      fullPath: '/attendance/finance'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceFinanceRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
+    }
+    '/_layout/_authenticated/attendance/leaves': {
+      id: '/_layout/_authenticated/attendance/leaves'
+      path: '/leaves'
+      fullPath: '/attendance/leaves'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceLeavesRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
+    }
+    '/_layout/_authenticated/attendance/reports': {
+      id: '/_layout/_authenticated/attendance/reports'
+      path: '/reports'
+      fullPath: '/attendance/reports'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceReportsRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
+    }
+    '/_layout/_authenticated/attendance/requests': {
+      id: '/_layout/_authenticated/attendance/requests'
+      path: '/requests'
+      fullPath: '/attendance/requests'
+      preLoaderRoute: typeof LayoutAuthenticatedAttendanceRequestsRouteImport
+      parentRoute: typeof LayoutAuthenticatedAttendanceRoute
     }
     '/_layout/_authenticated/dashboard/': {
       id: '/_layout/_authenticated/dashboard/'
@@ -1084,6 +1235,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/settings/account/security'
       preLoaderRoute: typeof LayoutAuthenticatedDashboardSettingsAccountSecurityRouteImport
       parentRoute: typeof LayoutAuthenticatedDashboardSettingsAccountRoute
+    }
+    '/_layout/_authenticated/dashboard/settings/admin/attendance': {
+      id: '/_layout/_authenticated/dashboard/settings/admin/attendance'
+      path: '/attendance'
+      fullPath: '/dashboard/settings/admin/attendance'
+      preLoaderRoute: typeof LayoutAuthenticatedDashboardSettingsAdminAttendanceRouteImport
+      parentRoute: typeof LayoutAuthenticatedDashboardSettingsAdminRoute
     }
     '/_layout/_authenticated/dashboard/settings/admin/users': {
       id: '/_layout/_authenticated/dashboard/settings/admin/users'
@@ -1263,6 +1421,36 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LayoutAuthenticatedAttendanceRouteChildren {
+  LayoutAuthenticatedAttendanceEmployeesRoute: typeof LayoutAuthenticatedAttendanceEmployeesRoute
+  LayoutAuthenticatedAttendanceFinanceRoute: typeof LayoutAuthenticatedAttendanceFinanceRoute
+  LayoutAuthenticatedAttendanceLeavesRoute: typeof LayoutAuthenticatedAttendanceLeavesRoute
+  LayoutAuthenticatedAttendanceReportsRoute: typeof LayoutAuthenticatedAttendanceReportsRoute
+  LayoutAuthenticatedAttendanceRequestsRoute: typeof LayoutAuthenticatedAttendanceRequestsRoute
+  LayoutAuthenticatedAttendanceIndexRoute: typeof LayoutAuthenticatedAttendanceIndexRoute
+}
+
+const LayoutAuthenticatedAttendanceRouteChildren: LayoutAuthenticatedAttendanceRouteChildren =
+  {
+    LayoutAuthenticatedAttendanceEmployeesRoute:
+      LayoutAuthenticatedAttendanceEmployeesRoute,
+    LayoutAuthenticatedAttendanceFinanceRoute:
+      LayoutAuthenticatedAttendanceFinanceRoute,
+    LayoutAuthenticatedAttendanceLeavesRoute:
+      LayoutAuthenticatedAttendanceLeavesRoute,
+    LayoutAuthenticatedAttendanceReportsRoute:
+      LayoutAuthenticatedAttendanceReportsRoute,
+    LayoutAuthenticatedAttendanceRequestsRoute:
+      LayoutAuthenticatedAttendanceRequestsRoute,
+    LayoutAuthenticatedAttendanceIndexRoute:
+      LayoutAuthenticatedAttendanceIndexRoute,
+  }
+
+const LayoutAuthenticatedAttendanceRouteWithChildren =
+  LayoutAuthenticatedAttendanceRoute._addFileChildren(
+    LayoutAuthenticatedAttendanceRouteChildren,
+  )
+
 interface LayoutAuthenticatedDashboardSettingsAccountRouteChildren {
   LayoutAuthenticatedDashboardSettingsAccountDeveloperRoute: typeof LayoutAuthenticatedDashboardSettingsAccountDeveloperRoute
   LayoutAuthenticatedDashboardSettingsAccountInformationRoute: typeof LayoutAuthenticatedDashboardSettingsAccountInformationRoute
@@ -1291,12 +1479,15 @@ const LayoutAuthenticatedDashboardSettingsAccountRouteWithChildren =
   )
 
 interface LayoutAuthenticatedDashboardSettingsAdminRouteChildren {
+  LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute: typeof LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute
   LayoutAuthenticatedDashboardSettingsAdminUsersRoute: typeof LayoutAuthenticatedDashboardSettingsAdminUsersRoute
   LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute: typeof LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute
 }
 
 const LayoutAuthenticatedDashboardSettingsAdminRouteChildren: LayoutAuthenticatedDashboardSettingsAdminRouteChildren =
   {
+    LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute:
+      LayoutAuthenticatedDashboardSettingsAdminAttendanceRoute,
     LayoutAuthenticatedDashboardSettingsAdminUsersRoute:
       LayoutAuthenticatedDashboardSettingsAdminUsersRoute,
     LayoutAuthenticatedDashboardSettingsAdminWorkspacesRoute:
@@ -1465,6 +1656,7 @@ const LayoutAuthenticatedDashboardRouteWithChildren =
   )
 
 interface LayoutAuthenticatedRouteChildren {
+  LayoutAuthenticatedAttendanceRoute: typeof LayoutAuthenticatedAttendanceRouteWithChildren
   LayoutAuthenticatedDashboardRoute: typeof LayoutAuthenticatedDashboardRouteWithChildren
   LayoutAuthenticatedInvitationsRoute: typeof LayoutAuthenticatedInvitationsRoute
   LayoutAuthenticatedOnboardingRoute: typeof LayoutAuthenticatedOnboardingRoute
@@ -1473,6 +1665,8 @@ interface LayoutAuthenticatedRouteChildren {
 }
 
 const LayoutAuthenticatedRouteChildren: LayoutAuthenticatedRouteChildren = {
+  LayoutAuthenticatedAttendanceRoute:
+    LayoutAuthenticatedAttendanceRouteWithChildren,
   LayoutAuthenticatedDashboardRoute:
     LayoutAuthenticatedDashboardRouteWithChildren,
   LayoutAuthenticatedInvitationsRoute: LayoutAuthenticatedInvitationsRoute,

@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import {
   getNotificationContent,
@@ -64,6 +65,15 @@ export function InboxDetail({
 
           {taskId && (
             <InboxTask key={taskId} taskId={taskId} workspaceId={workspaceId} />
+          )}
+          {notification.type === "attendance" && (
+            <Button
+              variant="outline"
+              className="self-start"
+              render={<Link to="/attendance/requests" />}
+            >
+              {t("attendance:viewRequests")}
+            </Button>
           )}
         </div>
       </div>

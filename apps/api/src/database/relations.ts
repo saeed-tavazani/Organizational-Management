@@ -32,6 +32,14 @@ import {
   workspaceTable,
   workspaceUserTable,
 } from "./schema";
+import {
+  attendanceAuditTable,
+  attendanceBankTable,
+  attendanceEmployeeTable,
+  attendanceEntryTable,
+  attendanceRateTable,
+  attendanceRequestTable,
+} from "./attendance-schema";
 
 export const userTableRelations = relations(userTable, ({ many, one }) => ({
   sessions: many(sessionTable),
@@ -40,6 +48,17 @@ export const userTableRelations = relations(userTable, ({ many, one }) => ({
   workspaceMemberships: many(workspaceUserTable),
   assignedTasks: many(taskTable),
   timeEntries: many(timeEntryTable),
+  attendanceRole: one(attendanceEmployeeTable),
+  attendanceBank: one(attendanceBankTable),
+  attendanceEntries: many(attendanceEntryTable),
+  attendanceRates: many(attendanceRateTable),
+  attendanceRequests: many(attendanceRequestTable),
+  attendanceAuditEntries: many(attendanceAuditTable, {
+    relationName: "attendanceAuditOwner",
+  }),
+  attendanceAuditActions: many(attendanceAuditTable, {
+    relationName: "attendanceAuditActor",
+  }),
   activities: many(activityTable),
   comments: many(commentTable),
   assets: many(assetTable),
@@ -49,6 +68,72 @@ export const userTableRelations = relations(userTable, ({ many, one }) => ({
   sentInvitations: many(invitationTable),
   apikeys: many(apikeyTable),
 }));
+
+export const attendanceEmployeeTableRelations = relations(
+  attendanceEmployeeTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [attendanceEmployeeTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const attendanceBankTableRelations = relations(
+  attendanceBankTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [attendanceBankTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const attendanceEntryTableRelations = relations(
+  attendanceEntryTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [attendanceEntryTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const attendanceRateTableRelations = relations(
+  attendanceRateTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [attendanceRateTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const attendanceRequestTableRelations = relations(
+  attendanceRequestTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [attendanceRequestTable.userId],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const attendanceAuditTableRelations = relations(
+  attendanceAuditTable,
+  ({ one }) => ({
+    owner: one(userTable, {
+      fields: [attendanceAuditTable.userId],
+      references: [userTable.id],
+      relationName: "attendanceAuditOwner",
+    }),
+    actor: one(userTable, {
+      fields: [attendanceAuditTable.actorId],
+      references: [userTable.id],
+      relationName: "attendanceAuditActor",
+    }),
+  }),
+);
 
 export const sessionTableRelations = relations(sessionTable, ({ one }) => ({
   user: one(userTable, {

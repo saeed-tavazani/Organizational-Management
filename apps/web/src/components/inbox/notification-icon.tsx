@@ -21,6 +21,7 @@ const icons: Record<string, LucideIcon> = {
   due_date_reminder: CalendarClock,
   task_overdue: CalendarX,
   time_entry_created: Timer,
+  attendance: Timer,
 };
 
 export function NotificationIcon({ type }: { type: string }) {

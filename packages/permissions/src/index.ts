@@ -1,4 +1,5 @@
 import { createAccessControl } from "better-auth/plugins/access";
+export * from "./attendance.js";
 import {
   adminAc,
   defaultStatements,

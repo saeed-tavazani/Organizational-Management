@@ -84,6 +84,7 @@ export function useUserWebSocket() {
       ws.onopen = () => {
         if (disposed || activeSocket !== ws) return;
         retryDelay = BASE_DELAY;
+        void queryClient.invalidateQueries({ queryKey: ["attendance"] });
         clearPing();
         pingInterval = setInterval(() => {
           if (ws.readyState === WebSocket.OPEN) {
@@ -100,6 +101,9 @@ export function useUserWebSocket() {
             workspaceId?: string;
             workspaceIds?: string[] | null;
           };
+          if (message.type === "ATTENDANCE_ACCESS_CHANGED") {
+            void queryClient.resetQueries({ queryKey: ["attendance"] });
+          }
           if (message.type === "USER_ACCESS_REVOKED") {
             revokeUserAccess();
             return;
@@ -151,6 +155,16 @@ export function useUserWebSocket() {
             ])
               void queryClient.invalidateQueries({ queryKey });
             reconcileProjectAccess(queryClient, workspaceId, () => !disposed);
+          }
+          if (
+            [
+              "ATTENDANCE_CHANGED",
+              "PROJECT_ACCESS_CHANGED",
+              "WORKSPACE_ACCESS_REVOKED",
+              "WORKSPACE_ACCESS_SYNC",
+            ].includes(message.type ?? "")
+          ) {
+            void queryClient.invalidateQueries({ queryKey: ["attendance"] });
           }
           if (message.type === "NOTIFICATION_CREATED") {
             queryClient.invalidateQueries({ queryKey: ["notifications"] });

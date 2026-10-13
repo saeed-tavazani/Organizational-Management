@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { GlobalShortcuts } from "@/components/shortcuts/global-shortcuts";
+import { useSharedWeekStart } from "@/hooks/use-shared-week-start";
 import { useTrackSignup } from "@/hooks/use-track-signup";
 import { useUserWebSocket } from "@/hooks/use-user-websocket";
 import { authClient } from "@/lib/auth-client";
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/_layout/_authenticated")({
 function AuthenticatedLayout() {
   const { session } = Route.useRouteContext();
   useUserWebSocket();
+  useSharedWeekStart();
   useTrackSignup(session?.user);
   return (
     <>
