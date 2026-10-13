@@ -2,7 +2,7 @@ import { isBefore, isToday, startOfToday } from "date-fns";
 import { type JSX, useLayoutEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
-import { formatDate, formatDateShort } from "@/lib/format";
+import { formatCalendarDate, formatCalendarDateShort } from "@/lib/format";
 import {
   type CalendarTask,
   getCalendarTaskStatusClass,
@@ -69,12 +69,12 @@ export default function MonthAgenda({
               )}
             >
               <span className="text-sm font-semibold tabular-nums">
-                {formatDate(day, { day: "numeric" })}
+                {formatCalendarDate(day, { day: "numeric" })}
               </span>
               <span>
                 {isCurrentDay
                   ? t("tasks:calendar.today")
-                  : formatDate(day, { weekday: "long" })}
+                  : formatCalendarDate(day, { weekday: "long" })}
               </span>
             </h3>
             <ul className="flex flex-col gap-1.5 px-3 pb-3">
@@ -83,7 +83,7 @@ export default function MonthAgenda({
                   projectSlug && task.number != null
                     ? `${projectSlug}-${task.number}`
                     : undefined;
-                const range = `${formatDateShort(task.scheduleStart)} – ${formatDateShort(task.scheduleEnd)}`;
+                const range = `${formatCalendarDateShort(task.scheduleStart)} – ${formatCalendarDateShort(task.scheduleEnd)}`;
                 return (
                   <li key={task.id}>
                     <button

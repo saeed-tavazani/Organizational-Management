@@ -39,6 +39,22 @@ export function formatDate(
   }).format(toDate(value));
 }
 
+export function formatCalendarDate(
+  value: DateInput,
+  options?: Intl.DateTimeFormatOptions,
+  locale?: string,
+) {
+  const resolvedLocale = getLocale(locale);
+  return new Intl.DateTimeFormat(resolvedLocale, {
+    calendar: resolvedLocale.startsWith("fa") ? "persian" : undefined,
+    ...options,
+  }).format(toDate(value));
+}
+
+export function formatCalendarDateShort(value: DateInput, locale?: string) {
+  return formatCalendarDate(value, { month: "short", day: "numeric" }, locale);
+}
+
 export function formatDateShort(value: DateInput, locale?: string) {
   return formatDate(
     value,

@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
-import { formatDateShort } from "@/lib/format";
+import { formatCalendarDateShort } from "@/lib/format";
 import type { PackableTask, WeekSegment } from "./month-grid-model";
 
 export type CalendarTask = PackableTask & {
@@ -53,7 +53,7 @@ export default function CalendarTaskBar({
       ? `${projectSlug}-${task.number}`
       : undefined;
 
-  const range = `${formatDateShort(task.scheduleStart)} – ${formatDateShort(
+  const range = `${formatCalendarDateShort(task.scheduleStart)} – ${formatCalendarDateShort(
     task.scheduleEnd,
   )}`;
 

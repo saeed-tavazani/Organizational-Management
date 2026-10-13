@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { addMonths, startOfMonth, subMonths } from "date-fns";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CalendarToolbar from "@/components/calendar/calendar-toolbar";
@@ -19,6 +18,11 @@ import TaskDetailsSheet from "@/components/task/task-details-sheet";
 import { useGetTasks } from "@/hooks/queries/task/use-get-tasks";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toScheduledTasks } from "@/lib/task-schedule";
+import {
+  addCalendarMonths,
+  startOfCalendarMonth,
+  subCalendarMonths,
+} from "@/lib/calendar-date";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 
 type CalendarSearchParams = {
@@ -54,7 +58,7 @@ function RouteComponent() {
     scope: "schedule",
   });
   const [visibleMonth, setVisibleMonth] = useState(() =>
-    startOfMonth(new Date()),
+    startOfCalendarMonth(new Date()),
   );
 
   const allScheduledTasks = useMemo(() => toScheduledTasks(project), [project]);
@@ -69,15 +73,15 @@ function RouteComponent() {
   );
 
   const handlePreviousMonth = useCallback(() => {
-    setVisibleMonth((current) => subMonths(current, 1));
+    setVisibleMonth((current) => subCalendarMonths(current, 1));
   }, []);
 
   const handleNextMonth = useCallback(() => {
-    setVisibleMonth((current) => addMonths(current, 1));
+    setVisibleMonth((current) => addCalendarMonths(current, 1));
   }, []);
 
   const handleToday = useCallback(() => {
-    setVisibleMonth(startOfMonth(new Date()));
+    setVisibleMonth(startOfCalendarMonth(new Date()));
   }, []);
 
   const handleOpenTask = useCallback(

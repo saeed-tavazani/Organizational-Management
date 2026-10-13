@@ -1,11 +1,10 @@
 import {
   differenceInCalendarDays,
   eachDayOfInterval,
-  endOfMonth,
   endOfWeek,
-  startOfMonth,
   startOfWeek,
 } from "date-fns";
+import { endOfCalendarMonth, startOfCalendarMonth } from "@/lib/calendar-date";
 
 export const DAYS_PER_WEEK = 7;
 
@@ -51,8 +50,10 @@ export function buildMonthWeeks(
   visibleMonth: Date,
   weekStartsOn: WeekStartsOn,
 ): Date[][] {
-  const gridStart = startOfWeek(startOfMonth(visibleMonth), { weekStartsOn });
-  const gridEnd = endOfWeek(endOfMonth(visibleMonth), { weekStartsOn });
+  const gridStart = startOfWeek(startOfCalendarMonth(visibleMonth), {
+    weekStartsOn,
+  });
+  const gridEnd = endOfWeek(endOfCalendarMonth(visibleMonth), { weekStartsOn });
   const days = eachDayOfInterval({ start: gridStart, end: gridEnd });
 
   const weeks: Date[][] = [];

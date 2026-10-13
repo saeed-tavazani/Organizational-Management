@@ -1,11 +1,5 @@
-import {
-  eachDayOfInterval,
-  endOfMonth,
-  isAfter,
-  isBefore,
-  startOfDay,
-  startOfMonth,
-} from "date-fns";
+import { eachDayOfInterval, isAfter, isBefore, startOfDay } from "date-fns";
+import { endOfCalendarMonth, startOfCalendarMonth } from "@/lib/calendar-date";
 import type { PackableTask } from "./month-grid-model";
 
 export type AgendaDay<TTask extends PackableTask> = {
@@ -23,8 +17,8 @@ export function buildMonthAgenda<TTask extends PackableTask>(
   tasks: TTask[],
 ): Array<AgendaDay<TTask>> {
   const days = eachDayOfInterval({
-    start: startOfMonth(visibleMonth),
-    end: endOfMonth(visibleMonth),
+    start: startOfCalendarMonth(visibleMonth),
+    end: endOfCalendarMonth(visibleMonth),
   });
 
   return days

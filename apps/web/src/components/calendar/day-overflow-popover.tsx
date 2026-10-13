@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { formatDate, formatDateShort } from "@/lib/format";
+import { formatCalendarDate, formatCalendarDateShort } from "@/lib/format";
 import type { CalendarTask } from "./calendar-task-bar";
 
 type DayOverflowPopoverProps = {
@@ -27,7 +27,7 @@ export default function DayOverflowPopover({
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const dayLabel = formatDate(day, {
+  const dayLabel = formatCalendarDate(day, {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -68,8 +68,8 @@ export default function DayOverflowPopover({
                   {task.title}
                 </span>
                 <span className="w-full truncate text-[11px] text-muted-foreground">
-                  {formatDateShort(task.scheduleStart)} –{" "}
-                  {formatDateShort(task.scheduleEnd)}
+                  {formatCalendarDateShort(task.scheduleStart)} –{" "}
+                  {formatCalendarDateShort(task.scheduleEnd)}
                 </span>
               </button>
             ))}

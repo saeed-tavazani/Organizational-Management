@@ -15,8 +15,8 @@ vi.mock("react-i18next", () => ({
 }));
 
 vi.mock("@/lib/format", () => ({
-  formatDate: () => "Monday, August 10",
-  formatDateShort: (value: Date) => value.toISOString().slice(0, 10),
+  formatCalendarDate: () => "Monday, August 10",
+  formatCalendarDateShort: (value: Date) => value.toISOString().slice(0, 10),
 }));
 
 const TRIGGER_NAME = "tasks:calendar.dayTasksAriaLabel";

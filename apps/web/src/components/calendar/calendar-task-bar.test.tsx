@@ -11,7 +11,7 @@ afterEach(() => {
 // Formats from local parts, so the expected label does not move with the
 // runner's timezone the way toISOString would.
 vi.mock("@/lib/format", () => ({
-  formatDateShort: (value: Date) =>
+  formatCalendarDateShort: (value: Date) =>
     [
       value.getFullYear(),
       String(value.getMonth() + 1).padStart(2, "0"),

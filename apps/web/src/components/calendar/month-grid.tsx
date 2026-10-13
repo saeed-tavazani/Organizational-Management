@@ -1,7 +1,8 @@
-import { isSameMonth, isToday, isWeekend } from "date-fns";
+import { isToday, isWeekend } from "date-fns";
 import { type JSX, useMemo } from "react";
 import { cn } from "@/lib/cn";
-import { formatDate } from "@/lib/format";
+import { isSameCalendarMonth } from "@/lib/calendar-date";
+import { formatCalendarDate } from "@/lib/format";
 import CalendarTaskBar, { type CalendarTask } from "./calendar-task-bar";
 import DayOverflowPopover from "./day-overflow-popover";
 import { packWeekLanes } from "./month-grid-model";
@@ -37,7 +38,7 @@ export default function MonthGrid({
             key={`weekday-${day.toISOString()}`}
             className="border-e border-border/60 px-1 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-muted-foreground"
           >
-            {formatDate(day, { weekday: "short" })}
+            {formatCalendarDate(day, { weekday: "short" })}
           </div>
         ))}
       </div>
@@ -76,12 +77,12 @@ export default function MonthGrid({
                   <span
                     className={cn(
                       "flex size-5 items-center justify-center rounded-full text-[11px] font-medium",
-                      !isSameMonth(day, visibleMonth) &&
+                      !isSameCalendarMonth(day, visibleMonth) &&
                         "text-muted-foreground/60",
                       isToday(day) && "bg-primary text-primary-foreground",
                     )}
                   >
-                    {formatDate(day, { day: "numeric" })}
+                    {formatCalendarDate(day, { day: "numeric" })}
                   </span>
                 </div>
               ))}
