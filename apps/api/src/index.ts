@@ -83,6 +83,7 @@ import { boardSchema, descriptionPageSchema } from "./task/response";
 import { descriptionPageQuery, listTasksQuery } from "./task/schema";
 import taskRelation from "./task-relation";
 import telegramIntegration from "./telegram-integration";
+import baleIntegration from "./bale-integration";
 import timeEntry from "./time-entry";
 import attendance from "./attendance";
 import user from "./user";
@@ -872,6 +873,7 @@ export function createApp() {
     mattermostIntegration,
   );
   const slackIntegrationApi = api.route("/slack-integration", slackIntegration);
+  const baleIntegrationApi = api.route("/bale-integration", baleIntegration);
   const telegramIntegrationApi = api.route(
     "/telegram-integration",
     telegramIntegration,
@@ -1008,6 +1010,7 @@ export function createApp() {
     taskApi,
     taskRelationApi,
     telegramIntegrationApi,
+    baleIntegrationApi,
     timeEntryApi,
     attendanceApi,
     userApi,
@@ -1142,6 +1145,7 @@ const {
   taskApi,
   taskRelationApi,
   telegramIntegrationApi,
+  baleIntegrationApi,
   timeEntryApi,
   attendanceApi,
   userApi,
@@ -1187,6 +1191,7 @@ export type AppType =
   | typeof mattermostIntegrationApi
   | typeof slackIntegrationApi
   | typeof telegramIntegrationApi
+  | typeof baleIntegrationApi
   | typeof taskRelationApi
   | typeof externalLinkApi
   | typeof workflowRuleApi

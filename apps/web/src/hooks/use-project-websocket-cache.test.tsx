@@ -92,6 +92,16 @@ afterEach(() => {
 });
 
 describe("board realtime races", () => {
+  it("refreshes only the matching project's Bale settings", () => {
+    renderHook(() => useProjectWebSocket("p"));
+    Socket.current.message("BALE_INTEGRATION_UPDATED", {});
+    expect(mocks.client.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ["bale-integration", "p"],
+    });
+    mocks.client.invalidateQueries.mockClear();
+    Socket.current.message("BALE_INTEGRATION_UPDATED", { projectId: "other" });
+    expect(mocks.client.invalidateQueries).not.toHaveBeenCalled();
+  });
   it.each(["TASKS_REORDERED", "PROJECT_UPDATED", "TASK_RELATION_UPDATED"])(
     "discards a task refresh started before %s",
     async (type) => {

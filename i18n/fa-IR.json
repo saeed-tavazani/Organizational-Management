@@ -1712,7 +1712,8 @@
 			"statusPaused": "متوقف",
 			"connect": "اتصال",
 			"configure": "پیکربندی",
-			"done": "انجام شد"
+			"done": "انجام شد",
+			"baleSectionSubtitle": "اعلان‌های پروژه را به چت، گروه یا کانال بله بفرستید."
 		},
 		"projectVisibility": {
 			"pageTitle": "نمایانی پروژه",
@@ -2395,6 +2396,33 @@
 			"newField": "فیلد جدید",
 			"fieldsTitle": "فیلدها",
 			"fieldsDescription": "برای تغییر ترتیب نمایش در کار، بکشید."
+		},
+		"baleIntegration": {
+			"validation": {
+				"botTokenInvalid": "توکن معتبر ربات بله وارد کنید",
+				"chatIdRequired": "شناسه عددی چت یا نام کاربری کانال با @ را وارد کنید."
+			},
+			"toast": {
+				"saved": "اتصال بله با موفقیت ذخیره شد",
+				"saveError": "ذخیرهٔ اتصال بله ناموفق بود",
+				"enabled": "اعلان‌های بله فعال شدند",
+				"disabled": "اعلان‌های بله متوقف شدند",
+				"updateError": "به‌روزرسانی اتصال بله ناموفق بود",
+				"removed": "اتصال بله با موفقیت حذف شد",
+				"removeError": "حذف اتصال بله ناموفق بود"
+			},
+			"botTokenLabel": "توکن ربات",
+			"botTokenPlaceholder": "123456789:توکن بازو",
+			"botTokenHint": "توکن بازوی خود را از @botfather در بله بگیرید.",
+			"botTokenHintConfigured": "توکن فعلی: {{token}}",
+			"chatIdLabel": "شناسه چت یا کانال بله",
+			"chatIdPlaceholder": "-123456789 یا @channelusername",
+			"chatLabelLabel": "نام گفت‌وگو",
+			"chatLabelPlaceholder": "به‌روزرسانی‌های تیم فنی",
+			"connect": "اتصال بله",
+			"loadError": "بارگذاری تنظیمات بله ممکن نشد.",
+			"botTokenSavedPlaceholder": "ذخیره شد. برای جایگزینی، توکن جدید وارد کنید.",
+			"configurationHint": "ذخیره تنظیمات به معنی تأیید ارسال پیام نیست. بازو باید اجازه ارسال به مقصد را داشته باشد."
 		}
 	},
 	"navigation": {
@@ -3749,5 +3777,25 @@
 			"permission": "دسترسی مدیر اصلی لازم است."
 		},
 		"viewRequests": "مشاهده درخواست‌های حضور و غیاب"
+	},
+	"baleProjectMessages": {
+		"taskCreated": "تسک جدید",
+		"taskCreatedBody": "تسک جدیدی اضافه شد: {{title}}",
+		"taskStatusChanged": "تغییر وضعیت تسک",
+		"taskStatusChangedBody": "وضعیت از {{old}} به {{new}} تغییر کرد.",
+		"taskPriorityChanged": "تغییر اولویت تسک",
+		"taskPriorityChangedBody": "اولویت از {{old}} به {{new}} تغییر کرد.",
+		"taskTitleChanged": "تغییر عنوان تسک",
+		"taskTitleChangedBody": "عنوان از {{old}} به {{new}} تغییر کرد.",
+		"taskDescriptionChanged": "تغییر توضیح تسک",
+		"taskDescriptionChangedBody": "توضیح تسک به‌روز شد: {{description}}",
+		"taskCommentCreated": "کامنت جدید",
+		"task": "تسک",
+		"project": "پروژه",
+		"status": "وضعیت",
+		"priority": "اولویت",
+		"actor": "تغییردهنده",
+		"unknown": "نامشخص",
+		"link": "مشاهده تسک"
 	}
 }

@@ -121,6 +121,7 @@ function evictPrivateQueries(
       "discord-integration",
       "mattermost-integration",
       "telegram-integration",
+      "bale-integration",
       "generic-webhook-integration",
       "calendar-feeds",
       "columns",

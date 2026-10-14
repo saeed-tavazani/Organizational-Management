@@ -1,12 +1,5 @@
+import { getChatEventData, type ChatEventData } from "../chat-event-data";
 import { createHash } from "node:crypto";
-import { and, eq } from "drizzle-orm";
-import db from "../../database";
-import {
-  projectTable,
-  taskTable,
-  userTable,
-  workspaceTable,
-} from "../../database/schema";
 import { safeOutboundError } from "../../utils/outbound-request";
 import type {
   PluginContext,
@@ -20,16 +13,6 @@ import type {
 import { postToTelegram } from "./client";
 import type { TelegramConfig, TelegramEventKey } from "./config";
 import { normalizeTelegramConfig, validateTelegramConfig } from "./config";
-
-type TelegramEventData = {
-  taskTitle: string;
-  taskNumber: number | null;
-  projectName: string;
-  taskUrl: string | null;
-  actorName: string | null;
-  status: string | null;
-  priority: string | null;
-};
 
 function isEnabled(config: TelegramConfig, key: TelegramEventKey): boolean {
   return config.events?.[key] ?? false;
@@ -66,83 +49,11 @@ function getSafeTelegramTargetIdentifier(config: TelegramConfig): string {
   return `tg:${hash}`;
 }
 
-function getTaskUrl(
-  clientUrl: string | undefined,
-  workspaceId: string,
-  projectId: string,
-  taskId: string,
-): string | null {
-  const normalizedClientUrl = clientUrl?.trim();
-  if (!normalizedClientUrl) {
-    return null;
-  }
-
-  try {
-    return new URL(
-      `/dashboard/workspace/${workspaceId}/project/${projectId}/task/${taskId}`,
-      normalizedClientUrl,
-    ).toString();
-  } catch {
-    return null;
-  }
-}
-
-async function getTelegramEventData(
-  taskId: string,
-  projectId: string,
-  userId: string | null,
-): Promise<TelegramEventData | null> {
-  const taskPromise = db
-    .select({
-      title: taskTable.title,
-      number: taskTable.number,
-      status: taskTable.status,
-      priority: taskTable.priority,
-      projectName: projectTable.name,
-      projectId: projectTable.id,
-      workspaceId: workspaceTable.id,
-    })
-    .from(taskTable)
-    .innerJoin(projectTable, eq(taskTable.projectId, projectTable.id))
-    .innerJoin(workspaceTable, eq(projectTable.workspaceId, workspaceTable.id))
-    .where(and(eq(taskTable.id, taskId), eq(projectTable.id, projectId)))
-    .limit(1);
-
-  const userPromise = userId
-    ? db
-        .select({ name: userTable.name })
-        .from(userTable)
-        .where(eq(userTable.id, userId))
-        .limit(1)
-    : Promise.resolve([]);
-
-  const [[taskRow], [user]] = await Promise.all([taskPromise, userPromise]);
-
-  if (!taskRow) {
-    return null;
-  }
-
-  return {
-    taskTitle: taskRow.title,
-    taskNumber: taskRow.number,
-    projectName: taskRow.projectName,
-    taskUrl: getTaskUrl(
-      process.env.KANEO_CLIENT_URL,
-      taskRow.workspaceId,
-      taskRow.projectId,
-      taskId,
-    ),
-    actorName: user?.name ?? null,
-    status: taskRow.status,
-    priority: taskRow.priority,
-  };
-}
-
 async function sendTelegramMessage(
   config: TelegramConfig,
   title: string,
   body: string,
-  data: TelegramEventData,
+  data: ChatEventData,
 ): Promise<void> {
   const issueKey =
     data.taskNumber !== null ? `#${data.taskNumber}` : "Task update";
@@ -209,7 +120,7 @@ async function runTelegramHandler(
   const config = normalizeTelegramConfig(context.config as TelegramConfig);
   if (!isEnabled(config, featureKey)) return;
 
-  const data = await getTelegramEventData(
+  const data = await getChatEventData(
     event.taskId,
     event.projectId,
     event.userId,

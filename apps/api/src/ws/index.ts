@@ -10,6 +10,7 @@ import {
   workspaceUserTable,
 } from "../database/schema";
 import { subscribeToEvent } from "../events";
+import { subscribeBaleIntegrationEvents } from "./integration-events";
 import { findInaccessibleProjectIds } from "../project-access/find-inaccessible-project-ids";
 import { filterUsersWithProjectAccess } from "../project-access/filter-users-with-project-access";
 import { listWorkspaceProjectIds } from "../project-access/list-workspace-project-ids";
@@ -33,6 +34,9 @@ import { InMemoryBroadcastAdapter } from "./in-memory-broadcast-adapter";
 import { RedisBroadcastAdapter } from "./redis-broadcast-adapter";
 
 const INSTANCE_ID = randomUUID();
+subscribeBaleIntegrationEvents((projectId, message) =>
+  broadcastToProject(projectId, message),
+);
 let revocationDelivery: ReturnType<typeof createRevocationDelivery> | undefined;
 let receivedRevocations:
   | ReturnType<typeof createRevocationDelivery>

@@ -18,6 +18,7 @@ const fetchers = vi.hoisted(() => ({
   discord: vi.fn(),
   mattermost: vi.fn(),
   telegram: vi.fn(),
+  bale: vi.fn(),
   webhook: vi.fn(),
 }));
 vi.mock("@/fetchers/github-integration/get-github-integration", () => ({
@@ -40,6 +41,9 @@ vi.mock("@/fetchers/mattermost-integration/get-mattermost-integration", () => ({
 }));
 vi.mock("@/fetchers/telegram-integration/get-telegram-integration", () => ({
   default: fetchers.telegram,
+}));
+vi.mock("@/fetchers/bale-integration/get-bale-integration", () => ({
+  default: fetchers.bale,
 }));
 vi.mock(
   "@/fetchers/generic-webhook-integration/get-generic-webhook-integration",

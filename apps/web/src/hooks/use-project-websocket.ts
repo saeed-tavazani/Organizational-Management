@@ -188,6 +188,15 @@ export function useProjectWebSocket(projectId: string) {
         if (disposed || activeSocket !== ws) return;
         try {
           const message = JSON.parse(event.data);
+          if (
+            message.type === "BALE_INTEGRATION_UPDATED" &&
+            message.projectId === projectId
+          ) {
+            void queryClient.invalidateQueries({
+              queryKey: ["bale-integration", projectId],
+            });
+            return;
+          }
           if (message.type === "PROJECT_MEMBERS_UPDATED") {
             void queryClient.invalidateQueries({
               predicate: (query) =>

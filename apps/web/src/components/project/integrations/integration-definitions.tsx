@@ -6,6 +6,8 @@ import { GithubIcon } from "@/components/icons/github-icon";
 import { GitlabIcon } from "@/components/icons/gitlab-icon";
 import { MattermostIcon } from "@/components/icons/mattermost-icon";
 import { SlackIcon } from "@/components/icons/slack-icon";
+import { BaleIcon } from "@/components/icons/bale-icon";
+import { BaleIntegrationSettings } from "./bale/bale-integration-settings";
 import { TelegramIcon } from "@/components/icons/telegram-icon";
 import { DiscordIntegrationSettings } from "@/components/project/discord-integration-settings";
 import { GenericWebhookIntegrationSettings } from "@/components/project/generic-webhook-integration-settings";
@@ -24,6 +26,7 @@ export type IntegrationId =
   | "discord"
   | "mattermost"
   | "telegram"
+  | "bale"
   | "webhook";
 
 export type IntegrationDefinition = {
@@ -99,6 +102,15 @@ export const INTEGRATIONS: IntegrationDefinition[] = [
     icon: TelegramIcon,
     iconClassName: "text-[#26A5E4]",
     Settings: TelegramIntegrationSettings,
+  },
+  {
+    id: "bale",
+    category: "chat",
+    name: "بله",
+    descriptionKey: "settings:projectIntegrations.baleSectionSubtitle",
+    icon: BaleIcon,
+    iconClassName: "text-[#00A884]",
+    Settings: BaleIntegrationSettings,
   },
   {
     id: "webhook",

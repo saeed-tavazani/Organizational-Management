@@ -11,6 +11,7 @@ import useGetGithubIntegration from "@/hooks/queries/github-integration/use-get-
 import useGetGitlabIntegration from "@/hooks/queries/gitlab-integration/use-get-gitlab-integration";
 import useGetMattermostIntegration from "@/hooks/queries/mattermost-integration/use-get-mattermost-integration";
 import useGetSlackIntegration from "@/hooks/queries/slack-integration/use-get-slack-integration";
+import useGetBaleIntegration from "@/hooks/queries/bale-integration/use-get-bale-integration";
 import useGetTelegramIntegration from "@/hooks/queries/telegram-integration/use-get-telegram-integration";
 
 // Shares query keys with the per-integration settings panels, so opening a
@@ -22,6 +23,7 @@ export function useIntegrationStatuses(projectId: string) {
   const slack = useGetSlackIntegration(projectId);
   const discord = useGetDiscordIntegration(projectId);
   const mattermost = useGetMattermostIntegration(projectId);
+  const bale = useGetBaleIntegration(projectId);
   const telegram = useGetTelegramIntegration(projectId);
   const webhook = useGetGenericWebhookIntegration(projectId);
 
@@ -74,6 +76,13 @@ export function useIntegrationStatuses(projectId: string) {
       isActive: mattermost.data?.isActive,
       detail: formatChannel(mattermost.data?.channelName),
     }),
+    bale: getIntegrationStatus({
+      queryStatus: bale.status,
+      hasData: bale.data !== undefined,
+      configured: Boolean(bale.data?.botTokenConfigured),
+      isActive: bale.data?.isActive,
+      detail: bale.data?.chatLabel,
+    }),
     telegram: getIntegrationStatus({
       queryStatus: telegram.status,
       hasData: telegram.data !== undefined,
@@ -96,6 +105,7 @@ export function useIntegrationStatuses(projectId: string) {
     discord,
     mattermost,
     telegram,
+    bale,
     webhook,
   };
 

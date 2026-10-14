@@ -1,5 +1,20 @@
 # Iranian mobile accounts and Bale
 
+## Project integration with a Bale BotFather bot
+
+Project settings → Integrations → Bale can send project updates to a private chat, group, or channel. This is a separate integration from Safir phone sign-in and personal notifications described below. It uses a normal BotFather token; no Safir account, organization key, webhook, Redis, or additional worker is needed.
+
+1. Create a bot with [@botfather in Bale](https://ble.ir/botfather) and copy its token.
+2. For a private destination, start a conversation with the bot. For a group, add the bot and allow it to send messages. For a channel, add it as an administrator with permission to post.
+3. Obtain the numeric `chat.id` from a message returned by the bot's `getUpdates` API after sending a message or command to it. Call this from your own trusted tool, and keep the token out of screenshots, shell history, and shared logs. If this bot already has a webhook or another consumer, use that consumer's updates instead of changing its webhook or taking its update queue. Public channels can also use `@channelusername`.
+4. In the Bale project panel, enter the token and chat ID (or channel username), optionally name the destination, and select the events to send.
+
+New tasks, status changes, and new comments are enabled by default. Priority, title, and description changes can also be enabled. Messages use Persian labels and include task context and a task link when `KANEO_CLIENT_URL` is configured. The token stays on the API; a masked token is returned to the web app. No Bale token belongs in Vite variables.
+
+Saving only validates the configuration's shape; it does not verify the token or destination with Bale. The panel's connected state means configuration is stored. Verify delivery by creating a test task in a test project and checking the intended destination. Disable delivery to pause it, or disconnect to remove the stored configuration. An empty token field while editing keeps the saved token.
+
+The project integration attempts each message once with a ten-second timeout. Failures are logged without the credential and do not block task changes; there is no durable queue, automatic retry, or email fallback for project messages. Existing Safir notification delivery retains its own queue and fallback behavior. See the [official Bale Bot API](https://docs.bale.ai/) for token, destination, and rate-limit details.
+
 Montask supports email accounts and phone-only accounts side by side. Phone accounts use a six-digit code delivered through **Safir Bale**, without SMS or a password. Only Iranian mobile numbers are accepted. Users can attach a verified phone or email to their existing account; two existing accounts are never merged automatically.
 
 ## Configure Safir

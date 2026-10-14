@@ -1712,7 +1712,8 @@
 			"statusPaused": "Paused",
 			"connect": "Connect",
 			"configure": "Configure",
-			"done": "Done"
+			"done": "Done",
+			"baleSectionSubtitle": "Send project updates to a Bale chat, group, or channel."
 		},
 		"projectVisibility": {
 			"pageTitle": "Project Visibility",
@@ -2395,6 +2396,33 @@
 			"newField": "New field",
 			"fieldsTitle": "Fields",
 			"fieldsDescription": "Drag to change the order they appear in on a task."
+		},
+		"baleIntegration": {
+			"validation": {
+				"botTokenInvalid": "Enter a valid Bale bot token",
+				"chatIdRequired": "Enter a numeric chat ID or @channelusername."
+			},
+			"toast": {
+				"saved": "Bale integration saved successfully",
+				"saveError": "Failed to save Bale integration",
+				"enabled": "Bale notifications enabled",
+				"disabled": "Bale notifications paused",
+				"updateError": "Failed to update Bale integration",
+				"removed": "Bale integration removed successfully",
+				"removeError": "Failed to remove Bale integration"
+			},
+			"botTokenLabel": "Bot token",
+			"botTokenPlaceholder": "123456789:bot-token",
+			"botTokenHint": "Create a Bale bot with @botfather and paste its token.",
+			"botTokenHintConfigured": "Current token: {{token}}",
+			"chatIdLabel": "Bale chat ID or channel username",
+			"chatIdPlaceholder": "-123456789 or @channelusername",
+			"chatLabelLabel": "Chat name",
+			"chatLabelPlaceholder": "Engineering Updates",
+			"connect": "Connect Bale",
+			"loadError": "Couldn't load the Bale settings.",
+			"botTokenSavedPlaceholder": "Saved. Paste a new token to replace it.",
+			"configurationHint": "Saved settings do not confirm message delivery. The bot must have permission to send to the destination."
 		}
 	},
 	"navigation": {
@@ -3749,5 +3777,25 @@
 			"permission": "Main administrator access is required."
 		},
 		"viewRequests": "View attendance requests"
+	},
+	"baleProjectMessages": {
+		"taskCreated": "New task",
+		"taskCreatedBody": "A new task was added: {{title}}",
+		"taskStatusChanged": "Task status changed",
+		"taskStatusChangedBody": "Status changed from {{old}} to {{new}}.",
+		"taskPriorityChanged": "Task priority changed",
+		"taskPriorityChangedBody": "Priority changed from {{old}} to {{new}}.",
+		"taskTitleChanged": "Task title changed",
+		"taskTitleChangedBody": "Title changed from {{old}} to {{new}}.",
+		"taskDescriptionChanged": "Task description changed",
+		"taskDescriptionChangedBody": "Task description updated: {{description}}",
+		"taskCommentCreated": "New comment",
+		"task": "Task",
+		"project": "Project",
+		"status": "Status",
+		"priority": "Priority",
+		"actor": "Changed by",
+		"unknown": "Unknown",
+		"link": "View task"
 	}
 }

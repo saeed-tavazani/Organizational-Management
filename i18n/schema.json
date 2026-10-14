@@ -6973,6 +6973,9 @@
 						},
 						"done": {
 							"type": "string"
+						},
+						"baleSectionSubtitle": {
+							"type": "string"
 						}
 					},
 					"required": [
@@ -7001,7 +7004,8 @@
 						"statusPaused",
 						"connect",
 						"configure",
-						"done"
+						"done",
+						"baleSectionSubtitle"
 					]
 				},
 				"projectVisibility": {
@@ -9780,6 +9784,113 @@
 						"fieldsTitle",
 						"fieldsDescription"
 					]
+				},
+				"baleIntegration": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"validation": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"botTokenInvalid": {
+									"type": "string"
+								},
+								"chatIdRequired": {
+									"type": "string"
+								}
+							},
+							"required": ["botTokenInvalid", "chatIdRequired"]
+						},
+						"toast": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"saved": {
+									"type": "string"
+								},
+								"saveError": {
+									"type": "string"
+								},
+								"enabled": {
+									"type": "string"
+								},
+								"disabled": {
+									"type": "string"
+								},
+								"updateError": {
+									"type": "string"
+								},
+								"removed": {
+									"type": "string"
+								},
+								"removeError": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"saved",
+								"saveError",
+								"enabled",
+								"disabled",
+								"updateError",
+								"removed",
+								"removeError"
+							]
+						},
+						"botTokenLabel": {
+							"type": "string"
+						},
+						"botTokenPlaceholder": {
+							"type": "string"
+						},
+						"botTokenHint": {
+							"type": "string"
+						},
+						"botTokenHintConfigured": {
+							"type": "string"
+						},
+						"chatIdLabel": {
+							"type": "string"
+						},
+						"chatIdPlaceholder": {
+							"type": "string"
+						},
+						"chatLabelLabel": {
+							"type": "string"
+						},
+						"chatLabelPlaceholder": {
+							"type": "string"
+						},
+						"connect": {
+							"type": "string"
+						},
+						"loadError": {
+							"type": "string"
+						},
+						"botTokenSavedPlaceholder": {
+							"type": "string"
+						},
+						"configurationHint": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"validation",
+						"toast",
+						"botTokenLabel",
+						"botTokenPlaceholder",
+						"botTokenHint",
+						"botTokenHintConfigured",
+						"chatIdLabel",
+						"chatIdPlaceholder",
+						"chatLabelLabel",
+						"chatLabelPlaceholder",
+						"connect",
+						"loadError",
+						"botTokenSavedPlaceholder",
+						"configurationHint"
+					]
 				}
 			},
 			"required": [
@@ -9831,7 +9942,8 @@
 				"chatIntegrations",
 				"codeHosting",
 				"shared",
-				"projectCustomFields"
+				"projectCustomFields",
+				"baleIntegration"
 			]
 		},
 		"navigation": {
@@ -15502,6 +15614,86 @@
 				"errors",
 				"viewRequests"
 			]
+		},
+		"baleProjectMessages": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"taskCreated": {
+					"type": "string"
+				},
+				"taskCreatedBody": {
+					"type": "string"
+				},
+				"taskStatusChanged": {
+					"type": "string"
+				},
+				"taskStatusChangedBody": {
+					"type": "string"
+				},
+				"taskPriorityChanged": {
+					"type": "string"
+				},
+				"taskPriorityChangedBody": {
+					"type": "string"
+				},
+				"taskTitleChanged": {
+					"type": "string"
+				},
+				"taskTitleChangedBody": {
+					"type": "string"
+				},
+				"taskDescriptionChanged": {
+					"type": "string"
+				},
+				"taskDescriptionChangedBody": {
+					"type": "string"
+				},
+				"taskCommentCreated": {
+					"type": "string"
+				},
+				"task": {
+					"type": "string"
+				},
+				"project": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"priority": {
+					"type": "string"
+				},
+				"actor": {
+					"type": "string"
+				},
+				"unknown": {
+					"type": "string"
+				},
+				"link": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"taskCreated",
+				"taskCreatedBody",
+				"taskStatusChanged",
+				"taskStatusChangedBody",
+				"taskPriorityChanged",
+				"taskPriorityChangedBody",
+				"taskTitleChanged",
+				"taskTitleChangedBody",
+				"taskDescriptionChanged",
+				"taskDescriptionChangedBody",
+				"taskCommentCreated",
+				"task",
+				"project",
+				"status",
+				"priority",
+				"actor",
+				"unknown",
+				"link"
+			]
 		}
 	},
 	"required": [
@@ -15516,6 +15708,7 @@
 		"workspace",
 		"team",
 		"publicProject",
-		"attendance"
+		"attendance",
+		"baleProjectMessages"
 	]
 }

@@ -7,6 +7,7 @@ import { mattermostPlugin } from "./mattermost";
 import { initializeEventSubscriptions, registerPlugin } from "./registry";
 import { slackPlugin } from "./slack";
 import { telegramPlugin } from "./telegram";
+import { balePlugin } from "./bale";
 
 export function initializePlugins() {
   console.log("Initializing plugins...");
@@ -19,6 +20,7 @@ export function initializePlugins() {
   registerPlugin(discordPlugin);
   registerPlugin(genericWebhookPlugin);
   registerPlugin(telegramPlugin);
+  registerPlugin(balePlugin);
   initializeGitHubPlugin();
   initializeEventSubscriptions();
 
