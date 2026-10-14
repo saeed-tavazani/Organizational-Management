@@ -1,3 +1,5 @@
+import { registerPhoneAuthRoutes } from "./phone/openapi";
+import { publicAuthIdentity } from "./phone/public-identity";
 import integrationSync from "./integration-sync";
 import { syncWorkspaceAccess } from "./ws/workspace-access";
 import { drainPasswordResetDeliveries } from "./utils/password-reset-delivery";
@@ -267,6 +269,10 @@ export function createApp() {
   const api = new OpenAPIHono<ApiVariables>({ defaultHook: validationHook });
 
   api.use("*", applyApiKeyHeaders);
+  api.use("/auth/*", publicAuthIdentity);
+  api.use("/invitation/*", publicAuthIdentity);
+  api.use("/admin/*", publicAuthIdentity);
+  api.use("/workspace/*", publicAuthIdentity);
 
   const apiKeyRateLimited = api.openAPIRegistry.registerComponent(
     "responses",
@@ -630,22 +636,23 @@ export function createApp() {
   });
   api.openAPIRegistry.register("ApiError", apiErrorSchema);
   organizationRoutes(api.openAPIRegistry);
+  registerPhoneAuthRoutes(api.openAPIRegistry);
 
   api.get("/openapi", (c) => {
     const document = api.getOpenAPI31Document({
       openapi: "3.1.0",
       info: {
-        title: "Kaneo API",
+        title: "Montask API",
         version: "1.0.0",
         description:
-          "Kaneo Project Management API - Manage projects, tasks, labels, and more",
+          "Montask Project Management API - Manage projects, tasks, labels, and more",
       },
       servers: [
         {
           url: normalizeApiServerUrl(
             process.env.KANEO_API_URL || "https://cloud.kaneo.app",
           ),
-          description: "Kaneo API Server",
+          description: "Montask API Server",
         },
       ],
       security: [{ bearerAuth: [] }],

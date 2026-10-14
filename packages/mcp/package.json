@@ -2,9 +2,9 @@
 	"name": "@kaneo/mcp",
 	"version": "0.1.13",
 	"mcpName": "io.github.usekaneo/kaneo",
-	"description": "Official MCP (Model Context Protocol) server for Kaneo, the open source project management platform: manage tasks, projects, and labels from Claude, Cursor, and other MCP clients",
+	"description": "Official MCP (Model Context Protocol) server for Montask, the open source project management platform: manage tasks, projects, and labels from Claude, Cursor, and other MCP clients",
 	"license": "MIT",
-	"author": "Kaneo (https://kaneo.app)",
+	"author": "Montask (https://kaneo.app)",
 	"homepage": "https://kaneo.app/docs/core/integrations/mcp",
 	"repository": {
 		"type": "git",

@@ -8,6 +8,7 @@ import type {
 export type WorkspaceRule = Pick<
   NotificationPreferenceWorkspaceRule,
   | "isActive"
+  | "baleEnabled"
   | "emailEnabled"
   | "gotifyEnabled"
   | "ntfyEnabled"
@@ -20,6 +21,7 @@ export type WorkspaceRuleState = WorkspaceRule;
 
 export const RULE_CHANNEL_KEYS = {
   email: "emailEnabled",
+  bale: "baleEnabled",
   gotify: "gotifyEnabled",
   ntfy: "ntfyEnabled",
   webhook: "webhookEnabled",
@@ -32,6 +34,7 @@ export function createWorkspaceRuleState(
   if (rule) {
     return {
       isActive: rule.isActive,
+      baleEnabled: rule.baleEnabled ?? false,
       emailEnabled: rule.emailEnabled,
       gotifyEnabled: rule.gotifyEnabled,
       ntfyEnabled: rule.ntfyEnabled,
@@ -43,6 +46,7 @@ export function createWorkspaceRuleState(
 
   return {
     isActive: true,
+    baleEnabled: availability.bale === "available",
     emailEnabled: availability.email === "available",
     gotifyEnabled: availability.gotify === "available",
     ntfyEnabled: availability.ntfy === "available",
@@ -58,6 +62,9 @@ export function toWorkspaceRuleRequest(
 ): UpsertNotificationWorkspaceRuleRequest {
   return {
     isActive: state.isActive,
+    baleEnabled: Boolean(
+      state.baleEnabled && availability.bale === "available",
+    ),
     emailEnabled: state.emailEnabled && availability.email === "available",
     gotifyEnabled: state.gotifyEnabled && availability.gotify === "available",
     ntfyEnabled: state.ntfyEnabled && availability.ntfy === "available",

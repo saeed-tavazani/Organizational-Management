@@ -1,3 +1,4 @@
+import { RecoverPhoneDialog } from "./recover-phone-dialog";
 import { UsersRoundIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,6 +31,7 @@ function UserManagementPanel() {
   const { user: currentUser } = useAuth();
   const { search, setSearch, debouncedSearch, page, setPage } =
     useDirectoryPaging();
+  const [recoveringUser, setRecoveringUser] = useState<AdminUser | null>(null);
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
   const [pendingAction, setPendingAction] = useState<PendingUserAction | null>(
     null,
@@ -124,6 +126,7 @@ function UserManagementPanel() {
                     user={user}
                     isSelf={user.id === currentUser?.id}
                     onEdit={() => setEditingUser(user)}
+                    onRecover={() => setRecoveringUser(user)}
                     onAction={(type) => setPendingAction({ type, user })}
                   />
                 ))
@@ -147,6 +150,10 @@ function UserManagementPanel() {
         </SettingsCard>
       </SettingsSection>
 
+      <RecoverPhoneDialog
+        user={recoveringUser}
+        onClose={() => setRecoveringUser(null)}
+      />
       <EditUserDialog
         user={editingUser}
         currentUserId={currentUser?.id}

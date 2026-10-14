@@ -39,7 +39,7 @@ const messages = {
     ignoreTitle: "Didn't ask for this?",
     ignore:
       "You can ignore this email. Your password stays the same until someone opens this link and sets a new one.",
-    footer: "Kaneo security email",
+    footer: "Montask security email",
   },
   fa: {
     preview:
@@ -54,7 +54,7 @@ const messages = {
     ignoreTitle: "این درخواست را نداده‌اید؟",
     ignore:
       "می‌توانید این ایمیل را نادیده بگیرید. گذرواژهٔ شما تا زمانی که کسی این پیوند را باز و گذرواژه‌ای تازه انتخاب نکند، تغییر نمی‌کند.",
-    footer: "ایمیل امنیتی Kaneo",
+    footer: "ایمیل امنیتی Montask",
   },
 } as const;
 

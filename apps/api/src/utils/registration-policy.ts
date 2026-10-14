@@ -1,3 +1,4 @@
+import { isPhoneIdentityEmail } from "@kaneo/contacts";
 import { APIError } from "better-auth/api";
 import {
   checkRegistrationAllowed,
@@ -60,6 +61,10 @@ export async function assertUserRegistrationAllowed(
   },
   context?: { path?: string; invitationId?: unknown },
 ): Promise<void> {
+  if (isPhoneIdentityEmail(user.email))
+    throw new APIError("BAD_REQUEST", {
+      message: "A real email address is required",
+    });
   if (user.isAnonymous) {
     await assertGuestRegistrationAllowed();
     return;

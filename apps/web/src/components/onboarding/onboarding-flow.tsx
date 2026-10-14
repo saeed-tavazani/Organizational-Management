@@ -322,7 +322,7 @@ export function OnboardingFlow() {
       eyebrow={heading.eyebrow}
       title={heading.title}
       description={heading.description}
-      email={user?.email}
+      email={user?.email ?? undefined}
       opening={opening}
       onSignOut={signOut}
       preview={

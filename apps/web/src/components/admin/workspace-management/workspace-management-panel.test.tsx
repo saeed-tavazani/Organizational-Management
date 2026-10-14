@@ -56,6 +56,7 @@ vi.mock("@/hooks/queries/admin/use-admin-users", () => ({
           id: "linus",
           name: "Linus Torvalds",
           email: "linus@example.com",
+          phoneNumber: null,
         },
       ],
       total: 1,
@@ -126,7 +127,14 @@ const acme: AdminWorkspace = {
   createdAt: "2026-01-01T00:00:00.000Z",
   memberCount: 2,
   projectCount: 4,
-  owners: [{ id: "ada", name: "Ada Lovelace", email: "ada@example.com" }],
+  owners: [
+    {
+      id: "ada",
+      name: "Ada Lovelace",
+      email: "ada@example.com",
+      phoneNumber: null,
+    },
+  ],
 };
 
 const orphan: AdminWorkspace = {
@@ -146,6 +154,7 @@ function member(
     userId: "grace",
     name: "Grace Hopper",
     email: "grace@example.com",
+    phoneNumber: null,
     image: null,
     role: "member",
     joinedAt: "2026-01-02T00:00:00.000Z",
@@ -159,6 +168,7 @@ const members = [
     userId: "ada",
     name: "Ada Lovelace",
     email: "ada@example.com",
+    phoneNumber: null,
     role: "owner",
   }),
 ];

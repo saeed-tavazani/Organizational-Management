@@ -80,7 +80,7 @@ const startImportRunRoute = createRoute({
   tags: ["Import"],
   summary: "Start an import",
   description:
-    "Import the selected source projects into the workspace as new Kaneo projects. The import runs in the background; poll getImportRun for progress. The credentials are held in memory only while the import runs; they are never stored, logged, or returned. Imported tasks do not send notifications or trigger integrations.",
+    "Import the selected source projects into the workspace as new Montask projects. The import runs in the background; poll getImportRun for progress. The credentials are held in memory only while the import runs; they are never stored, logged, or returned. Imported tasks do not send notifications or trigger integrations.",
   middleware: [
     workspaceAccess.fromBody(),
     importPermission,

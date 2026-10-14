@@ -7,6 +7,7 @@ import {
 
 const availability: ChannelAvailabilityMap = {
   email: "available",
+  bale: "notConnected",
   gotify: "paused",
   ntfy: "notConnected",
   webhook: "available",
@@ -16,6 +17,7 @@ describe("createWorkspaceRuleState", () => {
   it("starts a new rule active, on every available channel, for all projects", () => {
     expect(createWorkspaceRuleState(undefined, availability)).toEqual({
       isActive: true,
+      baleEnabled: false,
       emailEnabled: true,
       gotifyEnabled: false,
       ntfyEnabled: false,
@@ -28,6 +30,7 @@ describe("createWorkspaceRuleState", () => {
   it("copies an existing rule", () => {
     const rule = {
       isActive: false,
+      baleEnabled: false,
       emailEnabled: false,
       gotifyEnabled: true,
       ntfyEnabled: false,
@@ -57,6 +60,7 @@ describe("toWorkspaceRuleRequest", () => {
       ),
     ).toEqual({
       isActive: true,
+      baleEnabled: false,
       emailEnabled: true,
       gotifyEnabled: false,
       ntfyEnabled: false,

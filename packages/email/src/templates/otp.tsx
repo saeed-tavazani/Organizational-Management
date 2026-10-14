@@ -29,29 +29,29 @@ const minutes = OTP_EXPIRY_SECONDS / 60;
 const messages = {
   en: {
     preview: `Enter it on the sign-in page to continue. It expires in ${minutes} minutes.`,
-    title: "Sign in to Kaneo",
+    title: "Sign in to Montask",
     subtitle:
       "Enter this code on the sign-in page to finish signing in. It works once.",
     codeLabel: "Verification code",
-    code: "is your Kaneo verification code.",
+    code: "is your Montask verification code.",
     expiry: `This code expires in ${minutes} minutes.`,
     ignoreTitle: "Didn't try to sign in?",
     ignore:
-      "You can ignore this email. Nobody can get into your account without this code. Kaneo will never ask you to share it.",
-    footer: "Kaneo security email",
+      "You can ignore this email. Nobody can get into your account without this code. Montask will never ask you to share it.",
+    footer: "Montask security email",
   },
   fa: {
     preview: `برای ادامه، کد را در صفحهٔ ورود وارد کنید. کد پس از ${minutes} دقیقه منقضی می‌شود.`,
-    title: "ورود به Kaneo",
+    title: "ورود به Montask",
     subtitle:
       "برای تکمیل ورود، این کد را در صفحهٔ ورود وارد کنید. کد فقط یک‌بار قابل استفاده است.",
     codeLabel: "کد تأیید",
-    code: "کد تأیید Kaneo شماست.",
+    code: "کد تأیید Montask شماست.",
     expiry: `این کد پس از ${minutes} دقیقه منقضی می‌شود.`,
     ignoreTitle: "برای ورود درخواست نداده‌اید؟",
     ignore:
-      "می‌توانید این ایمیل را نادیده بگیرید. بدون این کد کسی نمی‌تواند وارد حساب شما شود. Kaneo هرگز از شما نمی‌خواهد کد را در اختیار دیگران بگذارید.",
-    footer: "ایمیل امنیتی Kaneo",
+      "می‌توانید این ایمیل را نادیده بگیرید. بدون این کد کسی نمی‌تواند وارد حساب شما شود. Montask هرگز از شما نمی‌خواهد کد را در اختیار دیگران بگذارید.",
+    footer: "ایمیل امنیتی Montask",
   },
 } as const;
 

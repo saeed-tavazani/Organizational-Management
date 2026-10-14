@@ -29,19 +29,26 @@ export const sendMagicLinkEmail = async (
   to: string,
   subject: string,
   data: MagicLinkEmailProps,
-) => {
-  const emailTemplate = await render(
-    MagicLinkEmail({ email: to, instance: instanceHost(), ...data }),
-  );
+): Promise<boolean> => {
+  if (
+    to.toLowerCase().endsWith("@phone.montask.invalid") ||
+    !isSmtpConfigured()
+  )
+    return false;
   try {
+    const emailTemplate = await render(
+      MagicLinkEmail({ email: to, instance: instanceHost(), ...data }),
+    );
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
       to,
       subject,
       html: emailTemplate,
     });
-  } catch (error) {
-    console.error("Error sending magic link email", error);
+    return true;
+  } catch (_error) {
+    console.error("Error sending magic link email");
+    return false;
   }
 };
 
@@ -50,6 +57,7 @@ export const sendOtpEmail = async (
   subject: string,
   data: OtpEmailProps,
 ) => {
+  if (to.toLowerCase().endsWith("@phone.montask.invalid")) return;
   const emailTemplate = await render(
     OtpEmail({ email: to, instance: instanceHost(), ...data }),
   );
@@ -60,8 +68,8 @@ export const sendOtpEmail = async (
       subject,
       html: emailTemplate,
     });
-  } catch (error) {
-    console.error("Error sending OTP email", error);
+  } catch (_error) {
+    console.error("Error sending OTP email");
   }
 };
 
@@ -69,7 +77,12 @@ export const sendPasswordResetEmail = async (
   to: string,
   subject: string,
   data: PasswordResetEmailProps,
-) => {
+): Promise<boolean> => {
+  if (
+    to.toLowerCase().endsWith("@phone.montask.invalid") ||
+    !isSmtpConfigured()
+  )
+    return false;
   let emailTemplate: string;
   try {
     emailTemplate = await render(
@@ -77,7 +90,7 @@ export const sendPasswordResetEmail = async (
     );
   } catch {
     console.error("Error rendering password reset email");
-    return;
+    return false;
   }
   try {
     await transporter.sendMail({
@@ -86,11 +99,13 @@ export const sendPasswordResetEmail = async (
       subject,
       html: emailTemplate,
     });
+    return true;
   } catch (error) {
     console.error(
       "Error sending password reset email",
       getSmtpErrorDetails(error),
     );
+    return false;
   }
 };
 
@@ -104,6 +119,8 @@ export const sendWorkspaceInvitationEmail = async (
   subject: string,
   data: WorkspaceInvitationEmailProps,
 ): Promise<EmailResult> => {
+  if (to.toLowerCase().endsWith("@phone.montask.invalid"))
+    return { success: false, reason: "SMTP_NOT_CONFIGURED" };
   if (!isSmtpConfigured()) {
     return { success: false, reason: "SMTP_NOT_CONFIGURED" };
   }
@@ -120,7 +137,7 @@ export const sendWorkspaceInvitationEmail = async (
     });
     return { success: true };
   } catch (error) {
-    console.error("Error sending workspace invitation email", error);
+    console.error("Error sending workspace invitation email");
     throw error;
   }
 };
@@ -144,7 +161,7 @@ export const sendNotificationEmail = async (
     });
     return { success: true };
   } catch (error) {
-    console.error("Error sending notification email", error);
+    console.error("Error sending notification email");
     throw error;
   }
 };
@@ -153,18 +170,25 @@ export const sendTrialReminderEmail = async (
   to: string,
   subject: string,
   data: TrialReminderEmailProps,
-) => {
-  const emailTemplate = await render(
-    TrialReminderEmail({ email: to, ...data }),
-  );
+): Promise<boolean> => {
+  if (
+    to.toLowerCase().endsWith("@phone.montask.invalid") ||
+    !isSmtpConfigured()
+  )
+    return false;
   try {
+    const emailTemplate = await render(
+      TrialReminderEmail({ email: to, ...data }),
+    );
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
       to,
       subject,
       html: emailTemplate,
     });
-  } catch (error) {
-    console.error("Error sending trial reminder email", error);
+    return true;
+  } catch (_error) {
+    console.error("Error sending trial reminder email");
+    return false;
   }
 };

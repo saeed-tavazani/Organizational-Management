@@ -26,7 +26,7 @@ export const gitlabIntegrationSchema = z
     branchPattern: z.string().optional(),
     commentTaskLinkOnGitlabIssue: z.boolean().optional().openapi({
       description:
-        "When on, Kaneo comments a link back to the task on each issue opened in GitLab. Issues Kaneo creates from tasks are not commented on.",
+        "When on, Montask comments a link back to the task on each issue opened in GitLab. Issues Montask creates from tasks are not commented on.",
     }),
     isActive: z.boolean().nullable(),
     createdAt: responseTimestamp,

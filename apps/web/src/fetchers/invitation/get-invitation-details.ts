@@ -3,7 +3,8 @@ import { client } from "@kaneo/libs";
 import { HttpError } from "@/lib/http-error";
 export type InvitationDetails = {
   id: string;
-  email: string;
+  email: string | null;
+  phoneNumber?: string | null;
   workspaceName: string;
   inviterName: string;
   expiresAt: string;

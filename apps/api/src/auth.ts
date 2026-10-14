@@ -1,3 +1,14 @@
+import { isBaleConfigured } from "./bale/config";
+import { enqueueAccountMessage } from "./bale/account-message";
+import { randomUUID } from "node:crypto";
+import { normalizeIranPhone } from "@kaneo/contacts";
+import {
+  guardPhoneAuth,
+  assertPhoneRegistrationAllowed,
+} from "./phone/auth-guard";
+import { storePhoneChallenge, consumePhoneChallenge } from "./phone/challenges";
+import { initializePhoneNotifications } from "./phone/notification-defaults";
+import { enqueueBale } from "./bale/outbox";
 import { revokeUserConnections, revokeWorkspaceConnections } from "./ws";
 import { apiKey } from "@better-auth/api-key";
 import {
@@ -27,6 +38,7 @@ import {
   bearer,
   deviceAuthorization,
   emailOTP,
+  phoneNumber,
   genericOAuth,
   lastLoginMethod,
   magicLink,
@@ -179,16 +191,16 @@ function getAuthEmailCopy(locale?: string | null) {
 
   if (localeKey === "fa") {
     return {
-      magicLinkSubject: "پیوند ورود به Kaneo",
-      otpSubject: (otp: string) => `کد ورود Kaneo شما: ${otp}`,
-      passwordResetSubject: "بازنشانی گذرواژهٔ Kaneo",
+      magicLinkSubject: "پیوند ورود به Montask",
+      otpSubject: (otp: string) => `کد ورود Montask شما: ${otp}`,
+      passwordResetSubject: "بازنشانی گذرواژهٔ Montask",
     };
   }
 
   return {
-    magicLinkSubject: "Login for Kaneo",
-    otpSubject: (otp: string) => `${otp} is your Kaneo sign-in code`,
-    passwordResetSubject: "Reset your Kaneo password",
+    magicLinkSubject: "Login for Montask",
+    otpSubject: (otp: string) => `${otp} is your Montask sign-in code`,
+    passwordResetSubject: "Reset your Montask password",
   };
 }
 
@@ -272,8 +284,8 @@ export const auth = betterAuth({
       const requestContext = getEmailRequestContext(request?.headers);
       // Keep SMTP latency out of the response so it cannot reveal accounts.
       trackPasswordResetDelivery(
-        getUserLocale(user.email).then((locale) =>
-          sendPasswordResetEmail(
+        getUserLocale(user.email).then(async (locale) => {
+          const emailSent = await sendPasswordResetEmail(
             user.email,
             getAuthEmailCopy(locale).passwordResetSubject,
             {
@@ -282,8 +294,17 @@ export const auth = betterAuth({
               locale,
               ...requestContext,
             },
-          ),
-        ),
+          );
+          await enqueueAccountMessage(
+            user.email,
+            "password-reset",
+            getAuthEmailCopy(locale).passwordResetSubject,
+            getAuthEmailCopy(locale).passwordResetSubject,
+            url,
+            emailSent,
+            new Date(Date.now() + 60 * 60_000),
+          );
+        }),
       );
     },
     password: {
@@ -311,6 +332,28 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    phoneNumber({
+      otpLength: 6,
+      expiresIn: 300,
+      allowedAttempts: 5,
+      phoneNumberValidator: (value) => normalizeIranPhone(value) === value,
+      sendOTP: async ({ phoneNumber: number, code }, ctx) => {
+        if (!ctx)
+          throw new APIError("BAD_REQUEST", {
+            message: "Missing phone request context",
+          });
+        await storePhoneChallenge(number, code, ctx);
+      },
+      verifyOTP: async ({ phoneNumber: number, code }, ctx) =>
+        ctx ? consumePhoneChallenge(number, code, ctx) : false,
+      signUpOnVerification: {
+        getTempEmail: () => randomUUID() + "@phone.montask.invalid",
+      },
+      callbackOnVerification: async ({ user }) => {
+        await initializePhoneNotifications(user.id);
+        await publishEvent("user.identity.updated", { userId: user.id });
+      },
+    }),
     ...(process.env.DISABLE_GUEST_ACCESS !== "true"
       ? [
           anonymous({
@@ -332,11 +375,24 @@ export const auth = betterAuth({
           }
           const locale = await getUserLocale(email);
           const copy = getAuthEmailCopy(locale);
-          await sendMagicLinkEmail(email, copy.magicLinkSubject, {
-            magicLink: url,
-            locale,
-            ...requestContext,
-          });
+          const emailSent = await sendMagicLinkEmail(
+            email,
+            copy.magicLinkSubject,
+            {
+              magicLink: url,
+              locale,
+              ...requestContext,
+            },
+          );
+          await enqueueAccountMessage(
+            email,
+            "magic-link",
+            copy.magicLinkSubject,
+            copy.magicLinkSubject,
+            url,
+            emailSent,
+            new Date(Date.now() + 300_000),
+          );
         });
       },
     }),
@@ -415,6 +471,7 @@ export const auth = betterAuth({
             organizationId: "workspaceId",
           },
           additionalFields: {
+            phoneNumber: { type: "string", input: true, required: false },
             projectAccess: {
               type: "string",
               input: true,
@@ -462,7 +519,7 @@ export const auth = betterAuth({
           }
         : true,
       // Better Auth defaults this to `true`, which blocks any user whose email
-      // is not verified from accepting/rejecting an invitation. Kaneo does not
+      // is not verified from accepting/rejecting an invitation. Montask does not
       // verify emails on signup (and guest/anonymous users are unverified by
       // design), so leaving the default on breaks invitation acceptance for
       // everyone. The invitation link id is the actual secret here, so gate on
@@ -479,6 +536,7 @@ export const auth = betterAuth({
           }
         },
         afterCreateOrganization: async ({ organization, user }) => {
+          await initializePhoneNotifications(user.id, organization.id);
           // Seed the editable default roles for this workspace. Each
           // role's permissions are derived from the compiled-in defaults
           // in `@kaneo/permissions`; admins can later replace them in the
@@ -570,6 +628,10 @@ export const auth = betterAuth({
           await applyInvitationProjectAccess(invitation, user.id);
         },
         afterAcceptInvitation: async ({ member }) => {
+          await initializePhoneNotifications(
+            member.userId,
+            member.organizationId,
+          );
           await publishMemberProjects(
             member.organizationId,
             member.userId,
@@ -599,6 +661,26 @@ export const auth = betterAuth({
       },
       async sendInvitationEmail(data) {
         const inviteLink = `${process.env.KANEO_CLIENT_URL}/invitation/accept/${data.id}`;
+        const phone = (data.invitation as { phoneNumber?: string }).phoneNumber;
+        if (phone) {
+          await enqueueBale({
+            userId: data.inviter.user.id,
+            phoneNumber: phone,
+            kind: "invitation",
+            resourceId: data.id,
+            message: {
+              text: `${data.inviter.user.name} invited you to ${data.organization.name}`,
+              url: inviteLink,
+            },
+            fallback: {
+              subject: "Montask invitation",
+              text: `${data.inviter.user.name} invited you to ${data.organization.name}`,
+              url: inviteLink,
+            },
+            expiresAt: data.invitation.expiresAt,
+          });
+          return;
+        }
         const locale = await getUserLocale(data.email);
         const copy = getWorkspaceInvitationEmailCopy(locale);
 
@@ -726,6 +808,21 @@ export const auth = betterAuth({
       },
       create: {
         before: async (user, ctx) => {
+          if (ctx?.path === "/phone-number/verify") {
+            const phone = (user as { phoneNumber?: string }).phoneNumber;
+            if (!phone)
+              throw new APIError("BAD_REQUEST", {
+                message: "Phone number required",
+              });
+            await assertPhoneRegistrationAllowed(phone);
+            return {
+              data: {
+                ...user,
+                name: String(ctx.body?.name ?? "").trim(),
+                emailVerified: false,
+              },
+            };
+          }
           await assertUserRegistrationAllowed(
             user as Partial<UserWithAnonymous> & { email: string },
             {
@@ -755,6 +852,8 @@ export const auth = betterAuth({
   },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
+      const phoneResponse = await guardPhoneAuth(ctx);
+      if (phoneResponse) return phoneResponse;
       if (ctx.path === "/admin/remove-user") {
         await prepareAdminUserRemoval(ctx);
       }
@@ -783,7 +882,11 @@ export const auth = betterAuth({
         });
       }
 
-      if (ctx.path === "/request-password-reset" && !isSmtpConfigured()) {
+      if (
+        ctx.path === "/request-password-reset" &&
+        !isSmtpConfigured() &&
+        !isBaleConfigured()
+      ) {
         throw new APIError("FORBIDDEN", {
           code: "EMAIL_DELIVERY_NOT_CONFIGURED",
           message: "Password reset requires email delivery to be configured.",

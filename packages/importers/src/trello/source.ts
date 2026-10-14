@@ -94,7 +94,9 @@ function normalizeCredentials(
     throw new Error("That does not look like a Trello API key.");
   }
   if (!token) {
-    throw new Error("Paste the token Trello shows after you authorize Kaneo.");
+    throw new Error(
+      "Paste the token Trello shows after you authorize Montask.",
+    );
   }
   if (!CREDENTIAL_FORMAT.test(token)) {
     throw new Error(

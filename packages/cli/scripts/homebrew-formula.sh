@@ -32,7 +32,7 @@ linux_x64=$(sha kaneo-linux-x64)
 
 cat <<EOF
 class Kaneo < Formula
-  desc "Official command-line client for Kaneo, the open source project manager"
+  desc "Official command-line client for Montask, the open source project manager"
   homepage "https://kaneo.app/docs/cli"
   version "$version"
   license "MIT"

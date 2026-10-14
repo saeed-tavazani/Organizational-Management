@@ -1,19 +1,21 @@
-# Kaneo MCP server
+# Montask MCP server
 
-[`@kaneo/mcp`](https://www.npmjs.com/package/@kaneo/mcp) is the official MCP (Model Context Protocol) server for [Kaneo](https://kaneo.app), the open source project management platform. It is maintained in the [usekaneo/kaneo](https://github.com/usekaneo/kaneo) monorepo and published to npm by the Kaneo team.
+[`@kaneo/mcp`](https://www.npmjs.com/package/@kaneo/mcp) is the official MCP (Model Context Protocol) server for [Montask](https://kaneo.app), the open source project management platform. It is maintained in the [usekaneo/kaneo](https://github.com/usekaneo/kaneo) monorepo and published to npm by the Montask team.
 
-It runs over stdio, signs in with Kaneo's device flow, and then calls the Kaneo API with a bearer token. The package lives in `packages/mcp` in this monorepo and exposes the `kaneo-mcp` CLI.
+Montask is a fork of [Kaneo](https://github.com/usekaneo/kaneo); the package and `kaneo-mcp` command names remain for compatibility.
 
-> **Tip:** Every Kaneo instance also ships a built-in HTTP MCP endpoint at `/api/mcp`. If your MCP client supports Streamable HTTP transport (e.g. Claude Code), you can connect directly without this package. See the [MCP docs](https://kaneo.app/docs/core/integrations/mcp) for details.
+It runs over stdio, signs in with Montask's device flow, and then calls the Montask API with a bearer token. The package lives in `packages/mcp` in this monorepo and exposes the `kaneo-mcp` CLI.
+
+> **Tip:** Every Montask instance also ships a built-in HTTP MCP endpoint at `/api/mcp`. If your MCP client supports Streamable HTTP transport (e.g. Claude Code), you can connect directly without this package. See the [MCP docs](https://kaneo.app/docs/core/integrations/mcp) for details.
 
 ## Prerequisites
 
 - Node.js 24+
-- A running Kaneo API (for example `http://localhost:1337`) and web app (for device approval UI).
+- A running Montask API (for example `http://localhost:1337`) and web app (for device approval UI).
 
-Kaneo allows `kaneo-cli` and `kaneo-mcp` by default, so you usually do not need extra server configuration.
+Montask allows `kaneo-cli` and `kaneo-mcp` by default, so you usually do not need extra server configuration.
 
-If you want to run this server with a different client ID, allow it on the Kaneo server:
+If you want to run this server with a different client ID, allow it on the Montask server:
 
 ```bash
 DEVICE_AUTH_CLIENT_IDS=kaneo-cli,kaneo-mcp,your-client-id
@@ -23,9 +25,9 @@ DEVICE_AUTH_CLIENT_IDS=kaneo-cli,kaneo-mcp,your-client-id
 
 | Variable | Description |
 |----------|-------------|
-| `KANEO_API_URL` | Kaneo API origin (default `http://localhost:1337`). Do not include `/api`. |
+| `KANEO_API_URL` | Montask API origin (default `http://localhost:1337`). Do not include `/api`. |
 | `KANEO_MCP_CLIENT_ID` | Device-flow client id (default `kaneo-mcp`). Must match `DEVICE_AUTH_CLIENT_IDS` on the server. |
-| `KANEO_API_KEY` | **Optional.** A Kaneo API key (create one under Settings → Account → Developer). When set, the server authenticates with it as a Bearer token and skips the interactive device flow. Use this for headless/Docker setups. |
+| `KANEO_API_KEY` | **Optional.** A Montask API key (create one under Settings → Account → Developer). When set, the server authenticates with it as a Bearer token and skips the interactive device flow. Use this for headless/Docker setups. |
 
 ## Install
 
@@ -101,7 +103,7 @@ The CLI entry points to `./dist/index.js`. Use `npx @kaneo/mcp` or `kaneo-mcp` a
 
 ## Authentication
 
-On the first tool call that needs Kaneo, the server:
+On the first tool call that needs Montask, the server:
 
 1. Requests a device code from `POST /api/auth/device/code`
 2. Prints the verification URL and user code to `stderr`

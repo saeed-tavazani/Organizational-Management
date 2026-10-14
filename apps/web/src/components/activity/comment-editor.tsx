@@ -181,7 +181,7 @@ export default function CommentEditor({
       projectId
         ? (projectMembers ?? []).map((member) => ({
             id: member.id,
-            label: member.name || member.email,
+            label: member.name || member.phoneNumber || member.email || "",
             image: member.image,
           }))
         : (workspaceUsers?.members ?? []).map((member) => ({

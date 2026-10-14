@@ -3,6 +3,7 @@ import { HttpError } from "@/lib/http-error";
 import type { NotificationPreferences } from "./get-notification-preferences";
 
 export type UpdateNotificationPreferencesRequest = {
+  baleEnabled?: boolean;
   emailEnabled?: boolean;
   ntfyEnabled?: boolean;
   ntfyServerUrl?: string | null;

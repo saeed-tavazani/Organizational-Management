@@ -26,7 +26,7 @@ export const chooseMember = Effect.fnUntraced(function* (
       members.map((member) => ({
         title: member.name,
         value: member,
-        description: `${member.email}, ${roleLabel(member.role)}`,
+        description: `${member.email ?? member.phoneNumber ?? ""}, ${roleLabel(member.role)}`,
       })),
     );
   }

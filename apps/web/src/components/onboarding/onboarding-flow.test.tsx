@@ -251,7 +251,7 @@ describe("OnboardingFlow invites", () => {
   it("invites each filled address once and moves on", async () => {
     await createWorkspace({ smtp: true });
     const [first, second] = await screen.findAllByPlaceholderText(
-      "auth:onboarding.cloud.invite.emailPlaceholder",
+      "auth:onboarding.cloud.invite.emailOrPhonePlaceholder",
     );
     fireEvent.change(first, { target: { value: "a@example.com" } });
     fireEvent.change(second, { target: { value: "A@example.com" } });
@@ -276,7 +276,7 @@ describe("OnboardingFlow invites", () => {
     );
     await createWorkspace({ smtp: true });
     const [first, second] = await screen.findAllByPlaceholderText(
-      "auth:onboarding.cloud.invite.emailPlaceholder",
+      "auth:onboarding.cloud.invite.emailOrPhonePlaceholder",
     );
     fireEvent.change(first, { target: { value: "a@example.com" } });
     fireEvent.change(second, { target: { value: "b@example.com" } });
@@ -285,7 +285,7 @@ describe("OnboardingFlow invites", () => {
     await waitFor(() =>
       expect(
         screen.getAllByPlaceholderText(
-          "auth:onboarding.cloud.invite.emailPlaceholder",
+          "auth:onboarding.cloud.invite.emailOrPhonePlaceholder",
         ),
       ).toHaveLength(1),
     );
@@ -309,13 +309,15 @@ describe("OnboardingFlow invites", () => {
   it("holds the invite step on a malformed address", async () => {
     await createWorkspace({ smtp: true });
     const [first] = await screen.findAllByPlaceholderText(
-      "auth:onboarding.cloud.invite.emailPlaceholder",
+      "auth:onboarding.cloud.invite.emailOrPhonePlaceholder",
     );
     fireEvent.change(first, { target: { value: "not-an-email" } });
     fireEvent.click(sendButton());
 
     expect(
-      await screen.findByText("auth:onboarding.cloud.invite.invalidEmail"),
+      await screen.findByText(
+        "auth:onboarding.cloud.invite.invalidEmailOrPhone",
+      ),
     ).toBeInTheDocument();
     expect(first).toHaveFocus();
     expect(m.inviteMember).not.toHaveBeenCalled();

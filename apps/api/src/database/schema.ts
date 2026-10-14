@@ -16,6 +16,7 @@ import {
 import type { GitHubImportState } from "../github-integration/import-state";
 import type { ImportRunProject } from "../import/import-run-project";
 export * from "./attendance-schema";
+export * from "./bale-schema";
 
 // Timestamp columns without a time zone hold UTC (Drizzle reads and writes
 // them as UTC). A bare now() default would be cast through the session time
@@ -36,6 +37,10 @@ export const userTable = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified")
     .$defaultFn(() => false)
+    .notNull(),
+  phoneNumber: text("phone_number").unique(),
+  phoneNumberVerified: boolean("phone_number_verified")
+    .default(false)
     .notNull(),
   image: text("image"),
   locale: text("locale"),
@@ -288,6 +293,7 @@ export const invitationTable = pgTable(
       .notNull()
       .references(() => workspaceTable.id, { onDelete: "cascade" }),
     email: text("email").notNull(),
+    phoneNumber: text("phone_number"),
     role: text("role"),
     teamId: text("team_id"),
     status: text("status").default("pending").notNull(),
@@ -307,6 +313,7 @@ export const invitationTable = pgTable(
   (table) => [
     index("invitation_workspaceId_idx").on(table.workspaceId),
     index("invitation_email_idx").on(table.email),
+    index("invitation_phone_idx").on(table.phoneNumber),
     index("invitation_inviterId_idx").on(table.inviterId),
   ],
 );
@@ -860,6 +867,7 @@ export const userNotificationPreferenceTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
+    baleEnabled: boolean("bale_enabled").default(false).notNull(),
     emailEnabled: boolean("email_enabled").default(false).notNull(),
     ntfyEnabled: boolean("ntfy_enabled").default(false).notNull(),
     ntfyServerUrl: text("ntfy_server_url"),
@@ -915,6 +923,7 @@ export const userNotificationWorkspaceRuleTable = pgTable(
         onUpdate: "cascade",
       }),
     isActive: boolean("is_active").default(true).notNull(),
+    baleEnabled: boolean("bale_enabled").default(false).notNull(),
     emailEnabled: boolean("email_enabled").default(false).notNull(),
     ntfyEnabled: boolean("ntfy_enabled").default(false).notNull(),
     gotifyEnabled: boolean("gotify_enabled").default(false).notNull(),

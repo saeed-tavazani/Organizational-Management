@@ -47,10 +47,10 @@ export type NotificationEmailProps = {
 
 const messages = {
   en: {
-    preview: "You have a new Kaneo notification",
+    preview: "You have a new Montask notification",
     subtitle: "A notification matched your delivery preferences.",
-    footer: "Kaneo notification",
-    actionLabel: "Open in Kaneo",
+    footer: "Montask notification",
+    actionLabel: "Open in Montask",
     openTask: "Open task",
     manage: "Manage notifications",
     priority: {
@@ -61,10 +61,10 @@ const messages = {
     },
   },
   fa: {
-    preview: "اعلان تازه‌ای از Kaneo دارید",
+    preview: "اعلان تازه‌ای از Montask دارید",
     subtitle: "اعلانی با تنظیمات دریافت اعلان شما مطابقت دارد.",
-    footer: "اعلان Kaneo",
-    actionLabel: "باز کردن در Kaneo",
+    footer: "اعلان Montask",
+    actionLabel: "باز کردن در Montask",
     openTask: "باز کردن تسک",
     manage: "مدیریت اعلان‌ها",
     priority: {

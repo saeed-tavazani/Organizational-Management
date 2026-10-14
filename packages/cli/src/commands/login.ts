@@ -174,7 +174,11 @@ export const runLogin = Effect.fn("command.login")(function* (options: {
       apiUrl: session.apiUrl,
       webUrl,
       token,
-      user: { id: user.id, name: user.name, email: user.email },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email || user.phoneNumber || user.name,
+      },
       ...(workspace ? { workspaceId: workspace.id } : {}),
     })),
   );

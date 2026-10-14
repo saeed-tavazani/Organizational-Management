@@ -1,4 +1,4 @@
-import { and, eq, gt } from "drizzle-orm";
+import { and, eq, gt, or, isNull } from "drizzle-orm";
 import db from "../database";
 import { invitationTable, userTable, workspaceTable } from "../database/schema";
 
@@ -86,6 +86,7 @@ async function findValidInvitation(
     .select({
       id: invitationTable.id,
       email: invitationTable.email,
+      phoneNumber: invitationTable.phoneNumber,
       workspaceId: invitationTable.workspaceId,
       workspaceName: workspaceTable.name,
       inviterName: userTable.name,
@@ -112,6 +113,7 @@ async function findValidInvitation(
 type InvitationDetails = {
   id: string;
   email: string;
+  phoneNumber: string | null;
   workspaceName: string;
   inviterName: string;
   expiresAt: Date;
@@ -134,6 +136,7 @@ export async function getInvitationDetails(
     .select({
       id: invitationTable.id,
       email: invitationTable.email,
+      phoneNumber: invitationTable.phoneNumber,
       workspaceName: workspaceTable.name,
       inviterName: userTable.name,
       expiresAt: invitationTable.expiresAt,
@@ -163,6 +166,7 @@ export async function getInvitationDetails(
   const baseInvitation: InvitationDetails = {
     id: row.id,
     email: row.email,
+    phoneNumber: row.phoneNumber,
     workspaceName: row.workspaceName,
     inviterName: row.inviterName,
     expiresAt: row.expiresAt,
@@ -214,13 +218,17 @@ export async function canSendSignInEmail(email: string): Promise<boolean> {
   return (await getUserPendingInvitations(email)).length > 0;
 }
 
-export async function getUserPendingInvitations(userEmail: string) {
+export async function getUserPendingInvitations(
+  userEmail: string,
+  phoneNumber?: string | null,
+) {
   const now = new Date();
 
   const result = await db
     .select({
       id: invitationTable.id,
       email: invitationTable.email,
+      phoneNumber: invitationTable.phoneNumber,
       workspaceId: invitationTable.workspaceId,
       workspaceName: workspaceTable.name,
       inviterName: userTable.name,
@@ -236,7 +244,15 @@ export async function getUserPendingInvitations(userEmail: string) {
     .innerJoin(userTable, eq(invitationTable.inviterId, userTable.id))
     .where(
       and(
-        eq(invitationTable.email, userEmail.toLowerCase()),
+        or(
+          and(
+            isNull(invitationTable.phoneNumber),
+            eq(invitationTable.email, userEmail.toLowerCase()),
+          ),
+          phoneNumber
+            ? eq(invitationTable.phoneNumber, phoneNumber)
+            : undefined,
+        ),
         eq(invitationTable.status, "pending"),
         gt(invitationTable.expiresAt, now),
       ),

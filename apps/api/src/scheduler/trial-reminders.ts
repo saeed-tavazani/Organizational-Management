@@ -1,3 +1,5 @@
+import { enqueueAccountMessage } from "../bale/account-message";
+import { isBaleConfigured } from "../bale/config";
 import { isSmtpConfigured, sendTrialReminderEmail } from "@kaneo/email";
 import { and, asc, eq, gt, isNotNull, isNull, lte } from "drizzle-orm";
 import { isBillingEnabled, trialDays } from "../billing/config";
@@ -123,7 +125,7 @@ async function getWorkspacesNeedingReminder(
 }
 
 export async function checkTrialReminders(): Promise<{ degraded: boolean }> {
-  if (!isBillingEnabled() || !isSmtpConfigured()) {
+  if (!isBillingEnabled() || (!isSmtpConfigured() && !isBaleConfigured())) {
     return { degraded: false };
   }
 
@@ -183,7 +185,7 @@ export async function checkTrialReminders(): Promise<{ degraded: boolean }> {
         await sleep(SEND_SPACING_MS);
       }
 
-      await sendTrialReminderEmail(
+      const emailSent = await sendTrialReminderEmail(
         row.email,
         reminder.subject(row.workspaceName),
         {
@@ -193,6 +195,16 @@ export async function checkTrialReminders(): Promise<{ degraded: boolean }> {
           trialDays: trialDays(),
           endsAt: row.trialEndsAt,
         },
+      );
+      await enqueueAccountMessage(
+        row.email,
+        "trial",
+        reminder.subject(row.workspaceName),
+        reminder.subject(row.workspaceName),
+        `${clientUrl()}/dashboard/settings/workspace/billing`,
+        emailSent,
+        new Date(Date.now() + DAY_MS),
+        row.workspaceId,
       );
       sent++;
     }

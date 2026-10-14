@@ -75,7 +75,7 @@ const TrialReminderEmail = ({
     >
       <EmailIntro title={title(daysLeft)} subtitle={subtitle(daysLeft)} />
       <Frame
-        title="Kaneo Cloud trial"
+        title="Montask Cloud trial"
         description={
           endDate
             ? `${workspaceName} workspace, ends ${endDate}`
@@ -93,15 +93,15 @@ const TrialReminderEmail = ({
         Choose a plan
       </EmailButton>
       <EmailNote title="Rather run it yourself?">
-        Kaneo is free forever when you host it, with every feature included. You
-        can export your data at any time and move it to your own server.
+        Montask is free forever when you host it, with every feature included.
+        You can export your data at any time and move it to your own server.
       </EmailNote>
       <EmailFooter
-        title="Kaneo Cloud billing"
+        title="Montask Cloud billing"
         reason={
           email
-            ? `Sent to ${email} because you own the ${workspaceName} workspace on Kaneo Cloud.`
-            : `You are receiving this because you own this workspace on Kaneo Cloud.`
+            ? `Sent to ${email} because you own the ${workspaceName} workspace on Montask Cloud.`
+            : `You are receiving this because you own this workspace on Montask Cloud.`
         }
         links={footerLinks("en", [{ label: "Billing", href: billingUrl }])}
       />

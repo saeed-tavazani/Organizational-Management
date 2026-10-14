@@ -65,7 +65,7 @@ export function EmailShell({
                 />
               </Column>
               <Column className="k-text" style={wordmark}>
-                Kaneo
+                Montask
               </Column>
             </Row>
             {children}

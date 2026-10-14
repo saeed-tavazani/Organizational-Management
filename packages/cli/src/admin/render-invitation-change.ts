@@ -64,12 +64,15 @@ export function renderInvitationAnswer(
 
 export function renderInvitationCanceled(
   ui: Ui,
-  invitation: { readonly email: string },
+  invitation: {
+    readonly email: string | null;
+    readonly phoneNumber?: string | null;
+  },
 ): string[] {
   const { theme, glyphs } = ui;
   return [
     "",
-    `  ${theme.success(glyphs.tick)} Canceled the invitation for ${theme.strong(invitation.email)}`,
+    `  ${theme.success(glyphs.tick)} Canceled the invitation for ${theme.strong(invitation.email || invitation.phoneNumber || "")}`,
     "",
   ];
 }

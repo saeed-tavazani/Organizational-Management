@@ -1,6 +1,6 @@
 # Peekareq
 
-A maintainer comments `/peekareq` on an open Kaneo PR. The bot selects up to three UI scenarios, captures the PR in Chromium, frames the changed component, uploads three distinct previews, and posts this line followed by a description/image table:
+A maintainer comments `/peekareq` on an open Montask PR. The bot selects up to three UI scenarios, captures the PR in Chromium, frames the changed component, uploads three distinct previews, and posts this line followed by a description/image table:
 
 > This UI-screenshot was auto-made by a beta tool made by @tinsever
 

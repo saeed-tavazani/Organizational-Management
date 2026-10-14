@@ -64,7 +64,7 @@ export const runTaskAssign = Effect.fn("command.task.assign")(
                         description:
                           member.id === resolved.task.assigneeId
                             ? `${member.email}, current`
-                            : member.email,
+                            : member.email || member.phoneNumber || undefined,
                       })),
                     ]),
                   ),

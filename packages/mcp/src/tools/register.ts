@@ -67,7 +67,7 @@ export function registerTools(
     "whoami",
     {
       description:
-        "Return the current Kaneo user for the configured authentication method.",
+        "Return the current Montask user for the configured authentication method.",
       inputSchema: z.object({}),
     },
     async () => run(() => getCurrentUser(client)),

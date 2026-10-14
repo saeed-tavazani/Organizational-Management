@@ -13,7 +13,7 @@ export type ContextReport = {
   readonly user: {
     readonly id: string;
     readonly name: string;
-    readonly email: string;
+    readonly email: string | null;
   } | null;
   readonly workspace: Provenance["workspace"] & {
     readonly name: string | null;

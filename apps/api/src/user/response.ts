@@ -23,7 +23,9 @@ export const currentUserSchema = z
   .object({
     id: z.string(),
     name: z.string(),
-    email: z.string(),
+    email: z.string().nullable(),
+    phoneNumber: z.string().nullable(),
+    phoneNumberVerified: z.boolean(),
     image: z.string().nullable(),
     role: z.string().nullable(),
   })

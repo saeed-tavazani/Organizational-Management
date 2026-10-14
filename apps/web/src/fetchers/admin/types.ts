@@ -10,7 +10,7 @@ export type AdminUser = AdminUsersResult["users"][number];
 export type UpdateAdminUserRequest = {
   userId: string;
   name: string;
-  email: string;
+  email?: string;
   role?: string;
 };
 

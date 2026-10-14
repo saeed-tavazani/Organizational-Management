@@ -1,14 +1,14 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Kaneo API",
+    "title": "Montask API",
     "version": "1.0.0",
-    "description": "Kaneo Project Management API - Manage projects, tasks, labels, and more"
+    "description": "Montask Project Management API - Manage projects, tasks, labels, and more"
   },
   "servers": [
     {
       "url": "https://cloud.kaneo.app/api",
-      "description": "Kaneo API Server"
+      "description": "Montask API Server"
     }
   ],
   "security": [
@@ -568,6 +568,9 @@
           "hasSmtp": {
             "type": "boolean"
           },
+          "hasBale": {
+            "type": "boolean"
+          },
           "hasImageUploads": {
             "type": "boolean",
             "description": "Whether S3-compatible storage is configured, so task images and board backgrounds can be uploaded."
@@ -618,6 +621,7 @@
           "disableWorkspaceCreation",
           "isDemoMode",
           "hasSmtp",
+          "hasBale",
           "hasImageUploads",
           "hasGithubSignIn",
           "hasGoogleSignIn",
@@ -2054,6 +2058,18 @@
               "null"
             ]
           },
+          "baleConfigured": {
+            "type": "boolean"
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "baleEnabled": {
+            "type": "boolean"
+          },
           "emailEnabled": {
             "type": "boolean"
           },
@@ -2166,6 +2182,8 @@
         },
         "required": [
           "emailAddress",
+          "baleConfigured",
+          "phoneNumber",
           "emailEnabled",
           "ntfyEnabled",
           "ntfyConfigured",
@@ -2208,6 +2226,9 @@
           "isActive": {
             "type": "boolean",
             "description": "Turn all notifications for this workspace on or off."
+          },
+          "baleEnabled": {
+            "type": "boolean"
           },
           "emailEnabled": {
             "type": "boolean"
@@ -2415,7 +2436,7 @@
                     ]
                   }
                 ],
-                "description": "Kaneo workspace label IDs controlling task sync. Missing labels pause sync."
+                "description": "Montask workspace label IDs controlling task sync. Missing labels pause sync."
               },
               "incoming": {
                 "oneOf": [
@@ -2996,7 +3017,7 @@
           },
           "commentTaskLinkOnGitHubIssue": {
             "type": "boolean",
-            "description": "When on, Kaneo comments a link back to the task on the linked GitHub issue."
+            "description": "When on, Montask comments a link back to the task on the linked GitHub issue."
           },
           "isActive": {
             "type": [
@@ -3087,7 +3108,7 @@
           },
           "commentTaskLinkOnGitHubIssue": {
             "type": "boolean",
-            "description": "When on, Kaneo comments a link back to the task on the linked GitHub issue."
+            "description": "When on, Montask comments a link back to the task on the linked GitHub issue."
           },
           "isActive": {
             "type": [
@@ -3272,7 +3293,7 @@
           },
           "commentTaskLinkOnGiteaIssue": {
             "type": "boolean",
-            "description": "When on, Kaneo comments a link back to the task on the linked Gitea issue."
+            "description": "When on, Montask comments a link back to the task on the linked Gitea issue."
           },
           "isActive": {
             "type": [
@@ -3484,7 +3505,7 @@
           },
           "commentTaskLinkOnGitlabIssue": {
             "type": "boolean",
-            "description": "When on, Kaneo comments a link back to the task on each issue opened in GitLab. Issues Kaneo creates from tasks are not commented on."
+            "description": "When on, Montask comments a link back to the task on each issue opened in GitLab. Issues Montask creates from tasks are not commented on."
           },
           "isActive": {
             "type": [
@@ -4276,7 +4297,16 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "workspaceId": {
             "type": "string"
@@ -4303,6 +4333,7 @@
         "required": [
           "id",
           "email",
+          "phoneNumber",
           "workspaceId",
           "workspaceName",
           "inviterName",
@@ -4325,7 +4356,16 @@
                 "type": "string"
               },
               "email": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "phoneNumber": {
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "workspaceName": {
                 "type": "string"
@@ -4347,6 +4387,7 @@
             "required": [
               "id",
               "email",
+              "phoneNumber",
               "workspaceName",
               "inviterName",
               "expiresAt",
@@ -4420,7 +4461,16 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "image": {
             "type": [
@@ -4903,7 +4953,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 4096,
-            "description": "A Trello token authorized for this Kaneo instance. Used only for this import and never stored or logged."
+            "description": "A Trello token authorized for this Montask instance. Used only for this import and never stored or logged."
           },
           "apiKey": {
             "type": "string",
@@ -5056,7 +5106,7 @@
               "string",
               "null"
             ],
-            "description": "The Kaneo project created by the import, once completed."
+            "description": "The Montask project created by the import, once completed."
           },
           "projectSlug": {
             "type": [
@@ -5145,7 +5195,7 @@
               "string",
               "null"
             ],
-            "description": "Trello page where the user approves read access for Kaneo and copies a token. null when the server has no TRELLO_API_KEY; the user then sends their own Trello API key with the token."
+            "description": "Trello page where the user approves read access for Montask and copies a token. null when the server has no TRELLO_API_KEY; the user then sends their own Trello API key with the token."
           }
         },
         "required": [
@@ -5162,7 +5212,19 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumberVerified": {
+            "type": "boolean"
           },
           "image": {
             "type": [
@@ -5181,6 +5243,8 @@
           "id",
           "name",
           "email",
+          "phoneNumber",
+          "phoneNumberVerified",
           "image",
           "role"
         ]
@@ -5247,7 +5311,19 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumberVerified": {
+            "type": "boolean"
           },
           "emailVerified": {
             "type": "boolean"
@@ -5356,13 +5432,23 @@
                   "type": "string"
                 },
                 "email": {
-                  "type": "string"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phoneNumber": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 }
               },
               "required": [
                 "id",
                 "name",
-                "email"
+                "email",
+                "phoneNumber"
               ]
             }
           }
@@ -5387,7 +5473,16 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "image": {
             "type": [
@@ -5407,6 +5502,7 @@
           "userId",
           "name",
           "email",
+          "phoneNumber",
           "image",
           "role",
           "joinedAt"
@@ -6760,7 +6856,16 @@
                       "type": "string"
                     },
                     "email": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phoneNumber": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "role": {
                       "type": "string"
@@ -7025,7 +7130,16 @@
                       "type": "string"
                     },
                     "email": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phoneNumber": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "role": {
                       "type": "string"
@@ -7233,7 +7347,16 @@
                         "type": "string"
                       },
                       "email": {
-                        "type": "string"
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "phoneNumber": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "role": {
                         "type": "string"
@@ -7509,7 +7632,16 @@
                         "type": "string"
                       },
                       "email": {
-                        "type": "string"
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "phoneNumber": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
                       },
                       "role": {
                         "type": "string"
@@ -8398,6 +8530,196 @@
         }
       }
     },
+    "/auth/phone-number/send-otp": {
+      "post": {
+        "operationId": "sendPhoneNumberOtp",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Send a six-digit code through Bale",
+        "security": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sign-in",
+                "change-phone"
+              ],
+              "description": "change-phone requires an authenticated user session."
+            },
+            "required": false,
+            "description": "change-phone requires an authenticated user session.",
+            "name": "x-phone-purpose",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Iranian mobile number: 09…, 989… or +989…. Persian and Arabic digits are accepted."
+                  }
+                },
+                "required": [
+                  "phoneNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Code queued for delivery",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid mobile number"
+          },
+          "403": {
+            "description": "Bale or local sign-in disabled"
+          },
+          "429": {
+            "description": "Wait before sending another code"
+          }
+        }
+      }
+    },
+    "/auth/phone-number/verify": {
+      "post": {
+        "operationId": "verifyPhoneNumberOtp",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign in or verify a new phone with a purpose-bound Bale code",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "Iranian mobile number: 09…, 989… or +989…. Persian and Arabic digits are accepted."
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{6}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Required when creating a new account."
+                  },
+                  "updatePhoneNumber": {
+                    "type": "boolean",
+                    "description": "Requires a user session and a change-phone challenge."
+                  },
+                  "disableSession": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "phoneNumber",
+                  "code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verified; session created unless disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean"
+                    },
+                    "token": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "user": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        },
+                        "phoneNumberVerified": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "email",
+                        "phoneNumber",
+                        "phoneNumberVerified"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "token",
+                    "user"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid, expired, already-used code or missing name"
+          },
+          "403": {
+            "description": "Registration or account unavailable"
+          },
+          "409": {
+            "description": "Number already belongs to another account"
+          }
+        }
+      }
+    },
     "/auth/device": {
       "get": {
         "operationId": "getDeviceAuthorizationPage",
@@ -8541,7 +8863,7 @@
           "MCP"
         ],
         "summary": "Start MCP authorization",
-        "description": "Begin an MCP OAuth authorization. Redirects the browser to the Kaneo consent page, which then approves or denies the request.",
+        "description": "Begin an MCP OAuth authorization. Redirects the browser to the Montask consent page, which then approves or denies the request.",
         "security": [],
         "parameters": [
           {
@@ -8608,7 +8930,7 @@
         ],
         "responses": {
           "302": {
-            "description": "Redirect to the Kaneo consent page"
+            "description": "Redirect to the Montask consent page"
           },
           "400": {
             "description": "Invalid authorization request",
@@ -19434,6 +19756,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "baleEnabled": {
+                    "type": "boolean"
+                  },
                   "emailEnabled": {
                     "type": "boolean"
                   },
@@ -19574,6 +19899,9 @@
                 "type": "object",
                 "properties": {
                   "isActive": {
+                    "type": "boolean"
+                  },
+                  "baleEnabled": {
                     "type": "boolean"
                   },
                   "emailEnabled": {
@@ -20041,7 +20369,7 @@
                             ]
                           }
                         ],
-                        "description": "Kaneo workspace label IDs controlling task sync. Missing labels pause sync."
+                        "description": "Montask workspace label IDs controlling task sync. Missing labels pause sync."
                       },
                       "incoming": {
                         "oneOf": [
@@ -20274,7 +20602,7 @@
                             ]
                           }
                         ],
-                        "description": "Kaneo workspace label IDs controlling task sync. Missing labels pause sync."
+                        "description": "Montask workspace label IDs controlling task sync. Missing labels pause sync."
                       },
                       "incoming": {
                         "oneOf": [
@@ -20533,7 +20861,7 @@
           "Integration sync"
         ],
         "summary": "Resume a reviewed issue link",
-        "description": "Explicitly choose the current Kaneo or repository title, description and open/closed state. Existing links are reused; historical comments are not replayed. The task must still match its outgoing rule. A changed comparison requires another review.",
+        "description": "Explicitly choose the current Montask or repository title, description and open/closed state. Existing links are reused; historical comments are not replayed. The task must still match its outgoing rule. A changed comparison requires another review.",
         "parameters": [
           {
             "schema": {
@@ -20818,7 +21146,7 @@
           "GitHub"
         ],
         "summary": "Verify GitHub installation",
-        "description": "Check that the GitHub App is installed on a repository and holds the permissions Kaneo needs. Always 200 -- problems are reported in the body so the client can guide the user.",
+        "description": "Check that the GitHub App is installed on a repository and holds the permissions Montask needs. Always 200 -- problems are reported in the body so the client can guide the user.",
         "requestBody": {
           "required": true,
           "content": {
@@ -21473,7 +21801,7 @@
           "Gitea"
         ],
         "summary": "Verify Gitea access",
-        "description": "Check that the base URL is a Gitea instance and that the token can reach the repository with the permissions Kaneo needs. Repository permission failures are reported in the body; invalid credentials and upstream errors return an error status. Omit accessToken to use the saved token for the unchanged base URL.",
+        "description": "Check that the base URL is a Gitea instance and that the token can reach the repository with the permissions Montask needs. Repository permission failures are reported in the body; invalid credentials and upstream errors return an error status. Omit accessToken to use the saved token for the unchanged base URL.",
         "requestBody": {
           "required": true,
           "content": {
@@ -21535,7 +21863,7 @@
             }
           },
           "401": {
-            "description": "Kaneo authentication required",
+            "description": "Montask authentication required",
             "content": {
               "application/json": {
                 "schema": {
@@ -22107,7 +22435,7 @@
           "GitLab"
         ],
         "summary": "Verify GitLab access",
-        "description": "Check that the base URL is a GitLab instance and that the token can reach the project with the permissions Kaneo needs. An unreachable instance, a missing project, or insufficient permissions are reported in a 200 body so the form can explain them; a token GitLab rejects outright is a 401.",
+        "description": "Check that the base URL is a GitLab instance and that the token can reach the project with the permissions Montask needs. An unreachable instance, a missing project, or insufficient permissions are reported in a 200 body so the form can explain them; a token GitLab rejects outright is a 401.",
         "requestBody": {
           "required": true,
           "content": {
@@ -22278,7 +22606,7 @@
           "GitLab"
         ],
         "summary": "Create GitLab integration",
-        "description": "Link a project to a GitLab project. Kaneo generates the secret GitLab must send with each webhook; add the webhook in GitLab afterwards. Use the verify route first to confirm the token really reaches the project.",
+        "description": "Link a project to a GitLab project. Montask generates the secret GitLab must send with each webhook; add the webhook in GitLab afterwards. Use the verify route first to confirm the token really reaches the project.",
         "parameters": [
           {
             "schema": {
@@ -22377,7 +22705,7 @@
             }
           },
           "409": {
-            "description": "That GitLab project is already linked to another Kaneo project",
+            "description": "That GitLab project is already linked to another Montask project",
             "content": {
               "application/json": {
                 "schema": {
@@ -22709,7 +23037,7 @@
           "Generic Webhook"
         ],
         "summary": "Create webhook integration",
-        "description": "Create or replace the outgoing webhook for a project. Kaneo POSTs the selected task events to this URL, signed with the secret when one is set.",
+        "description": "Create or replace the outgoing webhook for a project. Montask POSTs the selected task events to this URL, signed with the secret when one is set.",
         "parameters": [
           {
             "schema": {
@@ -25296,6 +25624,121 @@
         }
       }
     },
+    "/invitation/phone": {
+      "post": {
+        "operationId": "createPhoneInvitation",
+        "tags": [
+          "Invitations"
+        ],
+        "summary": "Invite an Iranian phone number through Bale",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "member",
+                      "admin",
+                      "owner"
+                    ]
+                  },
+                  "resend": {
+                    "type": "boolean"
+                  },
+                  "projectAccess": {
+                    "type": "string",
+                    "enum": [
+                      "all",
+                      "selected"
+                    ]
+                  },
+                  "projectIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "phoneNumber",
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invitation saved and queued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "null"
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "email",
+                    "phoneNumber",
+                    "status",
+                    "role",
+                    "createdAt",
+                    "expiresAt"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
     "/invitation/pending": {
       "get": {
         "operationId": "getUserPendingInvitations",
@@ -26745,7 +27188,7 @@
           "Import"
         ],
         "summary": "Start an import",
-        "description": "Import the selected source projects into the workspace as new Kaneo projects. The import runs in the background; poll getImportRun for progress. The credentials are held in memory only while the import runs; they are never stored, logged, or returned. Imported tasks do not send notifications or trigger integrations.",
+        "description": "Import the selected source projects into the workspace as new Montask projects. The import runs in the background; poll getImportRun for progress. The credentials are held in memory only while the import runs; they are never stored, logged, or returned. Imported tasks do not send notifications or trigger integrations.",
         "requestBody": {
           "required": true,
           "content": {
@@ -27093,6 +27536,236 @@
         }
       }
     },
+    "/user/contact/email": {
+      "post": {
+        "operationId": "sendContactEmailCode",
+        "summary": "Send account email verification code",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "removeContactEmail",
+        "summary": "Remove email while keeping a verified phone",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/user/contact/email/verify": {
+      "post": {
+        "operationId": "verifyContactEmail",
+        "summary": "Attach a verified email to the current account",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{6}$"
+                  }
+                },
+                "required": [
+                  "code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operation completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/user/bale-deliveries": {
+      "get": {
+        "operationId": "getBaleDeliveries",
+        "summary": "Recent Bale delivery status for the current user",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Recent delivery statuses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "kind": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "attempts": {
+                        "type": "number"
+                      },
+                      "errorCode": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "kind",
+                      "status",
+                      "attempts",
+                      "errorCode",
+                      "createdAt"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
     "/user/me": {
       "get": {
         "operationId": "getCurrentUser",
@@ -27243,6 +27916,76 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserAvatarDeleted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/admin/users/{userId}/recover-phone": {
+      "post": {
+        "operationId": "recoverUserPhone",
+        "summary": "Recover a user's phone; requires new-number verification",
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "userId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "phoneNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recovery pending phone verification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
                 }
               }
             }

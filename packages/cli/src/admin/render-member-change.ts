@@ -3,12 +3,16 @@ import { roleLabel } from "./roles.js";
 
 export function renderMemberRemoved(
   ui: Ui,
-  member: { readonly name: string; readonly email: string },
+  member: {
+    readonly name: string;
+    readonly email: string | null;
+    readonly phoneNumber?: string | null;
+  },
 ): string[] {
   const { theme, glyphs } = ui;
   return [
     "",
-    `  ${theme.success(glyphs.tick)} Removed ${theme.strong(member.name)} ${theme.muted(`${glyphs.separator} ${member.email}`)}`,
+    `  ${theme.success(glyphs.tick)} Removed ${theme.strong(member.name)} ${theme.muted(`${glyphs.separator} ${member.email || member.phoneNumber || ""}`)}`,
     "",
   ];
 }

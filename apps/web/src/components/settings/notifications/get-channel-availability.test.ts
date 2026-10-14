@@ -16,6 +16,7 @@ describe("getChannelAvailability", () => {
   it("maps each channel to its delivery state", () => {
     expect(getChannelAvailability(base)).toEqual({
       email: "available",
+      bale: "notConnected",
       gotify: "notConnected",
       ntfy: "paused",
       webhook: "available",

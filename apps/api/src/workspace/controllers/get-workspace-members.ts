@@ -26,6 +26,7 @@ async function getWorkspaceMembers(request: {
       id: userTable.id,
       name: userTable.name,
       email: userTable.email,
+      phoneNumber: userTable.phoneNumber,
       image: userTable.image,
       role: workspaceUserTable.role,
     })

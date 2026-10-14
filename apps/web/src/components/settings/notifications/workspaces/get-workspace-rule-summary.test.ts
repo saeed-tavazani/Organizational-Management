@@ -27,6 +27,7 @@ const t = ((key: string, options?: Record<string, unknown>) => {
 
 const availability: ChannelAvailabilityMap = {
   email: "available",
+  bale: "notConnected",
   gotify: "available",
   ntfy: "paused",
   webhook: "notConnected",

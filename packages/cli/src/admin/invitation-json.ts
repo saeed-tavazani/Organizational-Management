@@ -3,7 +3,8 @@ import { isoTimestamp } from "./iso-timestamp.js";
 
 export type SentInvitationJson = {
   readonly id: string;
-  readonly email: string;
+  readonly email: string | null;
+  readonly phoneNumber?: string | null;
   readonly role: string;
   readonly status: string;
   readonly expiresAt: string | null;
@@ -13,7 +14,8 @@ export type SentInvitationJson = {
 
 export type ReceivedInvitationJson = {
   readonly id: string;
-  readonly email: string;
+  readonly email: string | null;
+  readonly phoneNumber?: string | null;
   readonly workspaceId: string;
   readonly workspaceName: string;
   readonly inviterName: string;
@@ -31,6 +33,7 @@ export function toSentInvitationJson(
   return {
     id: invitation.id,
     email: invitation.email,
+    ...(invitation.phoneNumber ? { phoneNumber: invitation.phoneNumber } : {}),
     role: invitation.role,
     status: invitation.status,
     expiresAt: isoTimestamp(invitation.expiresAt),
@@ -53,6 +56,7 @@ export function toReceivedInvitationJson(
   return {
     id: invitation.id,
     email: invitation.email,
+    ...(invitation.phoneNumber ? { phoneNumber: invitation.phoneNumber } : {}),
     workspaceId: invitation.workspaceId,
     workspaceName: invitation.workspaceName,
     inviterName: invitation.inviterName,

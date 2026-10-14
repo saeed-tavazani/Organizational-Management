@@ -21,7 +21,7 @@ export const EMPTY_EDIT_USER_VALUES: EditUserValues = {
 export function getEditUserValues(user: EditableUser): EditUserValues {
   return {
     name: user.name,
-    email: user.email,
+    email: user.email ?? "",
     role: hasInstanceAdminRole(user.role) ? "admin" : "user",
   };
 }
@@ -33,7 +33,7 @@ export function buildUserUpdate(
 ) {
   const name = values.name.trim();
   const email = values.email.trim().toLowerCase();
-  if (!name || !email) return null;
+  if (!name || (!email && user.email)) return null;
 
   const wantsAdmin = values.role === "admin";
   const roleChanged =
@@ -42,7 +42,7 @@ export function buildUserUpdate(
   return {
     userId: user.id,
     name,
-    email,
+    ...(email ? { email } : {}),
     ...(roleChanged
       ? { role: withInstanceAdminRole(user.role, wantsAdmin) }
       : {}),

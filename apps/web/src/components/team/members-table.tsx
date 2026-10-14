@@ -7,6 +7,7 @@ import {
   ShieldIcon,
   TrashIcon,
   MailXIcon,
+  SendIcon,
   UserMinusIcon,
   ShieldCheckIcon,
 } from "lucide-react";
@@ -15,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import useCancelInvitation from "@/hooks/mutations/workspace-user/use-cancel-invitation";
 import useDeleteWorkspaceUser from "@/hooks/mutations/workspace-user/use-delete-workspace-user";
 import useUpdateWorkspaceUserRole from "@/hooks/mutations/workspace-user/use-update-workspace-user-role";
+import useInviteWorkspaceUser from "@/hooks/mutations/workspace-user/use-invite-workspace-user";
 import useWorkspaceRoles from "@/hooks/queries/workspace/use-workspace-roles";
 import useGetMyProjectAccess from "@/hooks/queries/workspace-users/use-get-my-project-access";
 import useGetWorkspaceProjectAccess from "@/hooks/queries/workspace-users/use-get-workspace-project-access";
@@ -122,6 +124,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
     useDeleteWorkspaceUser();
   const { mutateAsync: cancelInvitation, isPending: isCancelling } =
     useCancelInvitation();
+  const { mutateAsync: inviteWorkspaceUser } = useInviteWorkspaceUser();
   const { mutateAsync: updateMemberRole } = useUpdateWorkspaceUserRole();
   const { copy: copyInvitationLink } = useCopyInvitationLink();
   const { data: allWorkspaceRoles = [] } = useWorkspaceRoles(workspaceId);
@@ -187,7 +190,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
     try {
       await deleteWorkspaceUser({
         workspaceId,
-        userId: memberToDelete.user.email,
+        userId: memberToDelete.user.id,
       });
       toast.success(t("team:membersTable.removeSuccess"), {
         icon: UserMinusIcon,
@@ -221,6 +224,31 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
       );
     } finally {
       setInvitationToCancel(null);
+    }
+  };
+
+  const handleResendInvitation = async (
+    invitation: WorkspaceUserInvitation,
+  ) => {
+    const recipient = invitation.phoneNumber || invitation.email;
+    if (!recipient) return;
+    const access = getInvitationProjectAccess(invitation);
+    try {
+      await inviteWorkspaceUser({
+        workspaceId,
+        email: recipient,
+        role: invitation.role,
+        resend: true,
+        projectAccess: access.projectAccess,
+        projectIds: access.projectIds,
+      });
+      toast.success(t("team:invitations.resent"));
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t("team:invitations.resendFailed"),
+      );
     }
   };
 
@@ -266,7 +294,9 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
               !(managerLimited && access.projectAccess === "all");
             const accessLabel = describeAccess(access);
             const memberName = member.user.name || member.user.email;
-            const tone = toneFor(member.user.email);
+            const tone = toneFor(
+              member.user.email ?? member.user.phoneNumber ?? member.user.id,
+            );
             return (
               <TableRow key={member.user.email}>
                 <TableCell className="ps-6 py-3">
@@ -421,7 +451,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">
-                        {invitation.email}
+                        {invitation.phoneNumber || invitation.email}
                       </span>
                       <Badge
                         variant="outline"
@@ -477,6 +507,12 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                       <EllipsisIcon className="size-4" />
                     </MenuTrigger>
                     <MenuPopup align="end">
+                      <MenuItem
+                        onClick={() => void handleResendInvitation(invitation)}
+                      >
+                        <SendIcon className="size-4" />
+                        {t("team:invitations.resend")}
+                      </MenuItem>
                       <MenuItem
                         onClick={() => copyInvitationLink(invitation.id)}
                       >

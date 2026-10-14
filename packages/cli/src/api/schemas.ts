@@ -5,7 +5,8 @@ const NullableString = Schema.NullOr(Schema.String);
 export const CurrentUser = Schema.Struct({
   id: Schema.String,
   name: Schema.String,
-  email: Schema.String,
+  email: Schema.NullOr(Schema.String),
+  phoneNumber: Schema.optionalKey(Schema.NullOr(Schema.String)),
   image: NullableString,
   role: NullableString,
 });
@@ -154,7 +155,8 @@ export const ColumnList = Schema.Array(Column);
 export const WorkspaceMember = Schema.Struct({
   id: Schema.String,
   name: Schema.String,
-  email: Schema.String,
+  email: Schema.NullOr(Schema.String),
+  phoneNumber: Schema.optionalKey(Schema.NullOr(Schema.String)),
   role: Schema.String,
 });
 export type WorkspaceMember = typeof WorkspaceMember.Type;

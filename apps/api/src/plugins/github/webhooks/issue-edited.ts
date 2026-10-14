@@ -138,7 +138,7 @@ export async function handleIssueEdited(payload: IssueEditedPayload) {
                   )
                 ) {
                   console.log(
-                    "Skipping title update - already synced from Kaneo",
+                    "Skipping title update - already synced from Montask",
                   );
                   shouldUpdateTitle = false;
                 }
@@ -188,7 +188,7 @@ export async function handleIssueEdited(payload: IssueEditedPayload) {
                   )
                 ) {
                   console.log(
-                    "Skipping description update - already synced from Kaneo",
+                    "Skipping description update - already synced from Montask",
                   );
                   shouldUpdateDescription = false;
                 }

@@ -9,6 +9,7 @@ export const workspaceRuleSchema = z
     isActive: z.boolean().openapi({
       description: "Turn all notifications for this workspace on or off.",
     }),
+    baleEnabled: z.boolean().optional(),
     emailEnabled: z.boolean(),
     ntfyEnabled: z.boolean(),
     gotifyEnabled: z.boolean(),
@@ -26,6 +27,9 @@ export const workspaceRuleSchema = z
 export const notificationPreferenceSchema = z
   .object({
     emailAddress: z.string().nullable(),
+    baleConfigured: z.boolean(),
+    phoneNumber: z.string().nullable(),
+    baleEnabled: z.boolean().optional(),
     emailEnabled: z.boolean(),
     ntfyEnabled: z.boolean(),
     ntfyConfigured: z.boolean(),

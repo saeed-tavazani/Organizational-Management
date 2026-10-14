@@ -4,6 +4,7 @@ import {
   anonymousClient,
   deviceAuthorizationClient,
   emailOTPClient,
+  phoneNumberClient,
   genericOAuthClient,
   inferAdditionalFields,
   inferOrgAdditionalFields,
@@ -33,6 +34,7 @@ export const authClient = createAuthClient({
     lastLoginMethodClient(),
     magicLinkClient(),
     emailOTPClient(),
+    phoneNumberClient(),
     organizationClient({
       // Same widening as the server plugin in `apps/api/src/auth.ts`: our
       // narrow `statement` shape makes `ac`'s inferred `newRole` generic
@@ -50,6 +52,7 @@ export const authClient = createAuthClient({
       schema: inferOrgAdditionalFields({
         invitation: {
           additionalFields: {
+            phoneNumber: { type: "string", input: true, required: false },
             projectAccess: {
               type: "string",
               input: true,

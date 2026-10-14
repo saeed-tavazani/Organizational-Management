@@ -10,7 +10,9 @@ import { Input } from "@/components/ui/input";
 
 type ProfileDetailsSectionProps = {
   form: UseFormReturn<{ name: string }>;
-  user: { name?: string; email?: string; image?: string | null } | undefined;
+  user:
+    | { name?: string; email?: string | null; image?: string | null }
+    | undefined;
   refetchUser: () => Promise<unknown>;
 };
 

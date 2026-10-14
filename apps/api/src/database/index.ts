@@ -1,3 +1,4 @@
+import * as baleSchema from "./bale-schema";
 import { config } from "dotenv-mono";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
@@ -95,6 +96,7 @@ config();
 
 export const schema = {
   ...attendanceSchema,
+  ...baleSchema,
   dataMigrationTable,
   storageCleanupTable,
   accountTable,

@@ -4,6 +4,7 @@ export const workspaceIdParam = z.object({ workspaceId: z.string() });
 
 // Secrets are write-only: a value sets it, null clears it, omitting leaves it.
 export const updatePreferencesBody = z.object({
+  baleEnabled: z.boolean().optional(),
   emailEnabled: z.boolean().optional(),
   ntfyEnabled: z.boolean().optional(),
   ntfyServerUrl: z.string().nullable().optional(),
@@ -30,6 +31,7 @@ export const updatePreferencesBody = z.object({
 
 export const upsertWorkspaceRuleBody = z.object({
   isActive: z.boolean(),
+  baleEnabled: z.boolean().optional(),
   emailEnabled: z.boolean(),
   ntfyEnabled: z.boolean(),
   gotifyEnabled: z.boolean(),

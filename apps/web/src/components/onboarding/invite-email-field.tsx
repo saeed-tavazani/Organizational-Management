@@ -34,16 +34,20 @@ export function InviteEmailField({
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id} className="sr-only">
-        {t("auth:onboarding.cloud.invite.emailLabel", { index: position })}
+        {t("auth:onboarding.cloud.invite.emailOrPhoneLabel", {
+          index: position,
+        })}
       </Label>
       <div className="flex items-center gap-2">
         <Input
           id={id}
           size="lg"
-          type="email"
+          type="text"
           autoComplete="off"
           autoFocus={autoFocus}
-          placeholder={t("auth:onboarding.cloud.invite.emailPlaceholder")}
+          placeholder={t(
+            "auth:onboarding.cloud.invite.emailOrPhonePlaceholder",
+          )}
           value={value}
           disabled={disabled}
           aria-invalid={invalid || undefined}
@@ -68,7 +72,7 @@ export function InviteEmailField({
       </div>
       {invalid ? (
         <p id={errorId} className={authMessageClassName}>
-          {t("auth:onboarding.cloud.invite.invalidEmail")}
+          {t("auth:onboarding.cloud.invite.invalidEmailOrPhone")}
         </p>
       ) : null}
     </div>

@@ -34,7 +34,7 @@ function WorkspaceMemberRow({
 }: Props) {
   const { t } = useTranslation();
   const isOwner = isWorkspaceOwnerRole(member.role);
-  const name = member.name || member.email;
+  const name = member.name || member.phoneNumber || member.email || "";
 
   return (
     <div
@@ -46,7 +46,7 @@ function WorkspaceMemberRow({
         <div className="min-w-0">
           <span className="block truncate text-sm font-medium">{name}</span>
           <span className="block truncate text-xs text-muted-foreground">
-            {member.email}
+            {member.email || member.phoneNumber}
           </span>
         </div>
       </div>

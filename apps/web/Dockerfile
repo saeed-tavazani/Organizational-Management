@@ -22,6 +22,7 @@ COPY pnpm-workspace.yaml pnpm-lock.yaml package.json vite.config.ts ./
 COPY apps/web/package.json ./apps/web/
 COPY packages/typescript-config/package.json ./packages/typescript-config/
 COPY packages/libs/package.json ./packages/libs/
+COPY packages/contacts/package.json ./packages/contacts/
 COPY packages/permissions/package.json ./packages/permissions/
 
 # Install dependencies
@@ -30,9 +31,14 @@ RUN pnpm install --frozen-lockfile
 # Copy only necessary source code
 COPY packages/typescript-config ./packages/typescript-config
 COPY packages/libs ./packages/libs
+COPY packages/contacts ./packages/contacts
 COPY packages/permissions ./packages/permissions
 COPY i18n ./i18n
 COPY apps/web ./apps/web
+
+# Build contact helpers
+WORKDIR /app/packages/contacts
+RUN pnpm run build
 
 # Build the permissions package first
 WORKDIR /app/packages/permissions

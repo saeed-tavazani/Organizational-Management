@@ -12,6 +12,7 @@ import { SequenceHint } from "./components/shortcuts/sequence-hint";
 import { ShortcutsPanel } from "./components/shortcuts/shortcuts-panel";
 import AuthProvider from "./components/providers/auth-provider";
 import { ThemeProvider } from "./components/providers/theme-provider";
+import { PwaUpdatePrompt } from "./components/pwa-update-prompt";
 import { ErrorBoundary } from "./components/ui/error-boundary";
 import { ShortcutListener } from "./lib/shortcuts/shortcut-listener";
 import { captureCheckoutIntent } from "./lib/checkout-intent";
@@ -101,6 +102,7 @@ if (!rootElement.innerHTML) {
           <ThemeProvider>
             <AuthProvider>
               <AppI18nProvider>
+                <PwaUpdatePrompt />
                 <ShortcutListener />
                 <App />
                 <ShortcutsPanel />

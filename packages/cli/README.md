@@ -1,6 +1,8 @@
-# Kaneo CLI
+# Montask CLI
 
-The official command-line client for [Kaneo](https://kaneo.app), the open source project manager. It is maintained in the [usekaneo/kaneo](https://github.com/usekaneo/kaneo) monorepo and ships as a single `kaneo` binary for macOS, Linux and Windows.
+The official command-line client for [Montask](https://kaneo.app), the open source project manager. It is maintained in the [usekaneo/kaneo](https://github.com/usekaneo/kaneo) monorepo and ships as a single `kaneo` binary for macOS, Linux and Windows.
+
+Montask is a fork of [Kaneo](https://github.com/usekaneo/kaneo); the `kaneo` command and package names are retained for compatibility.
 
 ```bash
 curl -fsSL https://kaneo.app/cli/install.sh | sh
@@ -8,7 +10,7 @@ kaneo login
 kaneo task list
 ```
 
-It works with Kaneo Cloud and with self-hosted instances, and prints styled output in a terminal and plain JSON everywhere else.
+It works with Montask Cloud and with self-hosted instances, and prints styled output in a terminal and plain JSON everywhere else.
 
 ## Install
 
@@ -58,7 +60,7 @@ Prefer the script to downloading a binary from the release page with a browser: 
 `kaneo login` uses device authorization: it shows a one-time code, copies it to your clipboard, and opens the approval page in your browser. Approve it there and the CLI stores a token for that server.
 
 ```bash
-kaneo login                                   # Kaneo Cloud
+kaneo login                                   # Montask Cloud
 kaneo login --api-url https://kaneo.example.com
 kaneo whoami
 kaneo logout
@@ -126,7 +128,7 @@ kaneo task list -p KAN --jq '.[] | select(.priority == "urgent") | .ticketId'
 
 Use `--human` to force styled output. Styled output respects `NO_COLOR`, `FORCE_COLOR` and `TERM=dumb`, and falls back to ASCII when the terminal cannot show Unicode.
 
-Images in task descriptions (`kaneo task images`), uploads (`kaneo task attach`) and your avatar (`kaneo whoami`) are shown inline in Kitty, Ghostty, iTerm2 and WezTerm. Other terminals with 256 colors and Unicode get a preview drawn with colored blocks, and the rest get links. Set `KANEO_IMAGES=kitty|iterm|blocks|off` to override this. Your token is only sent with requests for files on your Kaneo server.
+Images in task descriptions (`kaneo task images`), uploads (`kaneo task attach`) and your avatar (`kaneo whoami`) are shown inline in Kitty, Ghostty, iTerm2 and WezTerm. Other terminals with 256 colors and Unicode get a preview drawn with colored blocks, and the rest get links. Set `KANEO_IMAGES=kitty|iterm|blocks|off` to override this. Your token is only sent with requests for files on your Montask server.
 
 ## Agent skill
 

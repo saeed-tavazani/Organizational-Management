@@ -433,7 +433,8 @@ export function organizationRoutes(registry: OpenAPIHono["openAPIRegistry"]) {
           "application/json": {
             schema: z.object({
               id: z.string(),
-              email: z.string(),
+              email: z.string().nullable(),
+              phoneNumber: z.string().nullable().optional(),
               role: z.string(),
               organizationId: z.string(),
               inviterId: z.string(),
@@ -562,7 +563,8 @@ export function organizationRoutes(registry: OpenAPIHono["openAPIRegistry"]) {
           "application/json": {
             schema: z.object({
               id: z.string(),
-              email: z.string(),
+              email: z.string().nullable(),
+              phoneNumber: z.string().nullable().optional(),
               role: z.string(),
               organizationId: z.string(),
               inviterId: z.string(),
@@ -639,7 +641,8 @@ export function organizationRoutes(registry: OpenAPIHono["openAPIRegistry"]) {
             schema: z.array(
               z.object({
                 id: z.string(),
-                email: z.string(),
+                email: z.string().nullable(),
+                phoneNumber: z.string().nullable().optional(),
                 role: z.string(),
                 organizationId: z.string(),
                 inviterId: z.string(),
@@ -763,7 +766,8 @@ export function organizationRoutes(registry: OpenAPIHono["openAPIRegistry"]) {
             schema: z.array(
               z.object({
                 id: z.string(),
-                email: z.string(),
+                email: z.string().nullable(),
+                phoneNumber: z.string().nullable().optional(),
                 role: z.string(),
                 organizationId: z.string(),
                 organizationName: z.string(),

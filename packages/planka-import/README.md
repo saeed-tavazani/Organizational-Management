@@ -1,8 +1,10 @@
 # @kaneo/planka-import
 
-Migrate your [PLANKA](https://planka.app) boards into [Kaneo](https://kaneo.app).
+Migrate your [PLANKA](https://planka.app) boards into [Montask](https://kaneo.app).
 
-The CLI reads boards directly from PLANKA’s REST API and creates them through Kaneo’s public API. It does not modify PLANKA or use an intermediary migration service.
+Montask is a fork of [Kaneo](https://github.com/usekaneo/kaneo); the importer keeps its existing `kaneo` package and option names for compatibility.
+
+The CLI reads boards directly from PLANKA’s REST API and creates them through Montask’s public API. It does not modify PLANKA or use an intermediary migration service.
 
 ## Usage
 
@@ -22,12 +24,12 @@ npx @kaneo/planka-import \
 
 You'll be prompted for your PLANKA login and for which boards to migrate.
 
-Create a Kaneo API key under **Settings → Account → API Keys**. Self-hosting? Point
+Create a Montask API key under **Settings → Account → API Keys**. Self-hosting? Point
 `--kaneo-url` at your own instance.
 
 ## What carries over
 
-| PLANKA | Kaneo |
+| PLANKA | Montask |
 | --- | --- |
 | Board | Project |
 | List | Column (`Closed` lists become the final column) |
@@ -40,8 +42,8 @@ Create a Kaneo API key under **Settings → Account → API Keys**. Self-hosting
 | Due date | Due date |
 | Comments | Comments, with the original author recorded separately and the original date added to the text |
 
-One Kaneo project is created per PLANKA **board**, since the board is what holds
-lists and cards. If a PLANKA project has several boards, each Kaneo project is
+One Montask project is created per PLANKA **board**, since the board is what holds
+lists and cards. If a PLANKA project has several boards, each Montask project is
 named `Project - Board`.
 
 ## What doesn't
@@ -50,17 +52,17 @@ named `Project - Board`.
 - **Archive and trash lists.** Skipped by design; only active and closed lists
   are migrated.
 - **Comment authorship.** The comment is created by the API key's owner, but the
-  original PLANKA author is recorded and displayed alongside it. Requires Kaneo
+  original PLANKA author is recorded and displayed alongside it. Requires Montask
   2.17.6 or newer.
 - **Priorities.** The importer sets every task to
   `no-priority`.
-- **Custom fields, stopwatches, and card subscriptions.** The importer does not transfer these. Kaneo supports custom fields and time entries, but you need to recreate that information yourself.
+- **Custom fields, stopwatches, and card subscriptions.** The importer does not transfer these. Montask supports custom fields and time entries, but you need to recreate that information yourself.
 
 **Run the import as a PLANKA admin.** PLANKA hides other users' email addresses
 from non-admin accounts, and assignees are matched by email, so a non-admin
 import leaves every task unassigned.
 
-Assignees also only match when the person already exists in the target Kaneo
+Assignees also only match when the person already exists in the target Montask
 workspace with the same email address. Invite your team first, then import, and
 assignments come across on the first run.
 
@@ -73,8 +75,8 @@ assignments come across on the first run.
 | `--planka-password <pass>` | Password (or set `PLANKA_PASSWORD`) |
 | `--planka-token <token>` | Use an existing access token instead of logging in |
 | `--planka-api-key <key>` | Use a PLANKA API key (or `PLANKA_API_KEY`). Works for SSO-only accounts |
-| `--kaneo-url <url>` | Kaneo instance URL (default `https://cloud.kaneo.app`) |
-| `--kaneo-api-key <key>` | Kaneo API key (or set `KANEO_API_KEY`) |
+| `--kaneo-url <url>` | Montask instance URL (default `https://cloud.kaneo.app`) |
+| `--kaneo-api-key <key>` | Montask API key (or set `KANEO_API_KEY`) |
 | `--workspace <id>` | Target workspace (prompted if omitted) |
 | `--project <name\|id>` | Migrate only this PLANKA project (repeatable) |
 | `--all` | Migrate every board without prompting |
@@ -91,7 +93,7 @@ is no password to log in with. Create a PLANKA API key for the account and pass
 ## Re-running
 
 The importer always creates new projects; it does not update ones it created
-earlier. If an import goes wrong, delete the created Kaneo project and run it
+earlier. If an import goes wrong, delete the created Montask project and run it
 again. Board-level failures are isolated, so one broken board won't stop the
 rest, and the summary tells you which ones failed.
 

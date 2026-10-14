@@ -12,6 +12,7 @@ const members: AdminWorkspaceMember[] = [
     userId: "ada",
     name: "Ada Lovelace",
     email: "ada@example.com",
+    phoneNumber: null,
     image: null,
     role: "owner",
     joinedAt: "2026-01-02T00:00:00.000Z",

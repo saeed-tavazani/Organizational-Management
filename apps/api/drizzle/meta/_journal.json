@@ -456,6 +456,20 @@
       "when": 1791916410970,
       "tag": "0064_overconfident_otto_octavius",
       "breakpoints": true
+    },
+    {
+      "idx": 65,
+      "version": "7",
+      "when": 1791926325385,
+      "tag": "0065_nervous_owl",
+      "breakpoints": true
+    },
+    {
+      "idx": 66,
+      "version": "7",
+      "when": 1791927135982,
+      "tag": "0066_gorgeous_deathstrike",
+      "breakpoints": true
     }
   ]
 }

@@ -47,8 +47,9 @@ export function PanelSwitcher() {
       <Button
         variant={attendance ? "ghost" : "secondary"}
         aria-current={!attendance ? "page" : undefined}
-        className="min-w-0 px-1 text-xs"
+        className="min-w-0 px-1"
         onClick={() => change("tasks")}
+        size={"xs"}
       >
         <ClipboardList aria-hidden="true" />
         <span>{t("attendance:tasksPanel")}</span>
@@ -56,8 +57,9 @@ export function PanelSwitcher() {
       <Button
         variant={attendance ? "secondary" : "ghost"}
         aria-current={attendance ? "page" : undefined}
-        className="min-w-0 px-1 text-xs"
+        className="min-w-0 px-1"
         onClick={() => change("attendance")}
+        size={"xs"}
       >
         <Timer aria-hidden="true" />
         <span>{t("attendance:title")}</span>

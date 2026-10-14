@@ -52,6 +52,7 @@ async function listWorkspaces({ search, page, limit }: ListWorkspacesInput) {
         id: userTable.id,
         name: userTable.name,
         email: userTable.email,
+        phoneNumber: userTable.phoneNumber,
       })
       .from(workspaceUserTable)
       .innerJoin(userTable, eq(workspaceUserTable.userId, userTable.id))
@@ -91,7 +92,12 @@ async function listWorkspaces({ search, page, limit }: ListWorkspacesInput) {
       projectCount: projects.get(row.id) ?? 0,
       owners: owners
         .filter((owner) => owner.workspaceId === row.id)
-        .map(({ id, name, email }) => ({ id, name, email })),
+        .map(({ id, name, email, phoneNumber }) => ({
+          id,
+          name,
+          email,
+          phoneNumber,
+        })),
     })),
     total: totalRow?.value ?? 0,
   };

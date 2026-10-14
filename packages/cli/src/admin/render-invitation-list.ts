@@ -35,11 +35,15 @@ export function renderSentInvitations(
       view.invitations,
       [
         {
-          header: "Email",
+          header: "Email / Phone",
           flex: true,
           minWidth: 16,
           cell: (invitation): Cell => [
-            text(invitation.email, theme.strong, invitation.url),
+            text(
+              invitation.email || invitation.phoneNumber || "",
+              theme.strong,
+              invitation.url,
+            ),
           ],
         },
         {

@@ -23,6 +23,7 @@ type UserDirectoryRowProps = {
   user: AdminUser;
   isSelf: boolean;
   onEdit: () => void;
+  onRecover?: () => void;
   onAction: (type: PendingUserAction["type"]) => void;
 };
 
@@ -32,6 +33,7 @@ export function UserDirectoryRow({
   user,
   isSelf,
   onEdit,
+  onRecover,
   onAction,
 }: UserDirectoryRowProps) {
   const { t } = useTranslation();
@@ -46,6 +48,13 @@ export function UserDirectoryRow({
       onSelect: onEdit,
     },
   ];
+  if (onRecover && !isSelf)
+    actions.push({
+      id: "recover-phone",
+      label: t("auth:phone.recover"),
+      icon: PencilIcon,
+      onSelect: onRecover,
+    });
   if (!isSelf) {
     actions.push(
       isDeactivated
@@ -85,7 +94,7 @@ export function UserDirectoryRow({
             ) : null}
           </div>
           <span className="block truncate text-xs text-muted-foreground">
-            {user.email}
+            {user.email || user.phoneNumber}
           </span>
           <div className="mt-1.5 flex items-center gap-2 sm:hidden">
             <UserRoleBadge isAdmin={isAdmin} />

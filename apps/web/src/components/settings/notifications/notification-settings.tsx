@@ -1,3 +1,4 @@
+import { BaleDeliveries } from "./bale-deliveries";
 import { BellOffIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SettingsCard } from "@/components/settings/settings-card";
@@ -30,6 +31,7 @@ export function NotificationSettings() {
       <NotifyMeSection preferences={preferences} />
       <ChannelsSection preferences={preferences} />
       <WorkspacesSection preferences={preferences} />
+      {preferences.baleConfigured ? <BaleDeliveries /> : null}
     </>
   );
 }

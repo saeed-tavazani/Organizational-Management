@@ -40,7 +40,7 @@ beforeEach(async () => {
   // Better Auth skips origin checks in test mode unless explicitly enabled.
   (await auth.$context).skipOriginCheck = false;
   vi.spyOn(email, "isSmtpConfigured").mockReturnValue(true);
-  vi.spyOn(email, "sendPasswordResetEmail").mockResolvedValue();
+  vi.spyOn(email, "sendPasswordResetEmail").mockResolvedValue(true);
   expect(
     (
       await post("/sign-up/email", {
@@ -76,7 +76,7 @@ async function requestReset() {
   expect(link.origin).toBe("http://localhost:1337");
   expect(link.searchParams.get("callbackURL")).toBe(redirectTo);
   expect(vi.mocked(email.sendPasswordResetEmail).mock.calls.at(-1)?.[1]).toBe(
-    "بازنشانی گذرواژهٔ Kaneo",
+    "بازنشانی گذرواژهٔ Montask",
   );
   return { link, token: link.pathname.split("/").at(-1) };
 }

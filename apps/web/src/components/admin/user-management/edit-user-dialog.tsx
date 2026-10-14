@@ -120,7 +120,7 @@ export function EditUserDialog({
                   id="admin-user-email"
                   name="email"
                   type="email"
-                  required
+                  required={Boolean(editedUser?.email)}
                   value={values.email}
                   onChange={(event) =>
                     setValues((current) => ({

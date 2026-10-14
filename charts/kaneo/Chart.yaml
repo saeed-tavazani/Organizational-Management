@@ -1,6 +1,6 @@
 apiVersion: v2
 name: kaneo
-description: Kaneo - All you need. Nothing you don't. Open source project management that works for you.
+description: Montask - All you need. Nothing you don't. Open source project management that works for you.
 type: application
 version: 2.46.2
 appVersion: "2.46.2"
@@ -13,9 +13,9 @@ keywords:
 home: https://kaneo.app
 sources:
   - https://github.com/usekaneo/kaneo
-icon: https://assets.kaneo.app/logo-text.png
+icon: https://kaneo.app/web-app-manifest-512x512.png
 maintainers:
-  - name: Kaneo Team
+  - name: Montask Team
     url: https://github.com/usekaneo
     email: info@kaneo.app
 annotations:

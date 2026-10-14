@@ -1,5 +1,7 @@
 const localSignInPaths = new Set([
   "/sign-in/email",
+  "/phone-number/send-otp",
+  "/phone-number/verify",
   "/request-password-reset",
   "/reset-password",
   "/sign-in/magic-link",

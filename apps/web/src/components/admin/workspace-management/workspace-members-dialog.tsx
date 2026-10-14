@@ -162,7 +162,11 @@ function WorkspaceMembersDialog({ workspace, open, onOpenChange }: Props) {
                       if (!access) return;
                       setAccessTarget({
                         userId: member.userId,
-                        name: member.name || member.email,
+                        name:
+                          member.name ||
+                          member.phoneNumber ||
+                          member.email ||
+                          "",
                         access,
                       });
                       setIsAccessOpen(true);

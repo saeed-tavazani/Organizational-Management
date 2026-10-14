@@ -1,8 +1,8 @@
-# Kaneo
+# Montask
 
-Kaneo is a fast, simple, self-hosted project manager. The Hono API owns domain behavior and authorization; the React app uses its typed client. PostgreSQL stores durable state, events and WebSockets keep clients current, and Redis is optional for delivery across API instances.
+Montask is a fast, simple, self-hosted project manager. The Hono API owns domain behavior and authorization; the React app uses its typed client. PostgreSQL stores durable state, events and WebSockets keep clients current, and Redis is optional for delivery across API instances.
 
-People use Kaneo to manage active work on instances they control. Changes reach existing tasks, workspaces, and deployments, not just a fresh dev setup. Protect what they rely on: quick boards, straightforward workflows, reliable live updates, and self-hosting that stays simple. A change that weakens those needs a compelling product reason.
+People use Montask to manage active work on instances they control. Changes reach existing tasks, workspaces, and deployments, not just a fresh dev setup. Protect what they rely on: quick boards, straightforward workflows, reliable live updates, and self-hosting that stays simple. A change that weakens those needs a compelling product reason.
 
 Treat this guide as a set of defaults. The developer's request takes precedence.
 

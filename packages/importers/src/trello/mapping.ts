@@ -173,13 +173,13 @@ function boardWarnings(cards: TrelloCard[], tasks: ImportedTask[]): string[] {
   ).length;
   if (sharedCards > 0) {
     warnings.push(
-      `${cardCount(sharedCards)} had more than one member. Kaneo keeps one assignee per task, so only the first member was kept.`,
+      `${cardCount(sharedCards)} had more than one member. Montask keeps one assignee per task, so only the first member was kept.`,
     );
   }
 
   if (tasks.some((task) => task.assignee && !task.assignee.email)) {
     warnings.push(
-      "Trello does not share members' email addresses, so assignees are matched to Kaneo members by full name.",
+      "Trello does not share members' email addresses, so assignees are matched to Montask members by full name.",
     );
   }
 

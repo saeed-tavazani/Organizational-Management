@@ -7,7 +7,10 @@ export function matchMember(
   const wanted = reference.trim().toLowerCase();
   return (
     members.find((member) => member.id === reference.trim()) ??
-    members.find((member) => member.email.toLowerCase() === wanted) ??
+    members.find(
+      (member) =>
+        (member.email ?? member.phoneNumber ?? "").toLowerCase() === wanted,
+    ) ??
     members.find((member) => member.name.toLowerCase() === wanted)
   );
 }

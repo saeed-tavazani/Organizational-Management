@@ -1,3 +1,4 @@
+import { phoneAdminRoutes } from "../phone/admin-routes";
 import {
   apiRouter,
   createRoute,
@@ -214,6 +215,7 @@ const transferWorkspaceOwnershipRoute = createRoute({
 });
 
 const admin = apiRouter()
+  .route("/", phoneAdminRoutes)
   .openapi(listUsersRoute, async (c) =>
     c.json(await listUsers(c.req.valid("query")), 200),
   )

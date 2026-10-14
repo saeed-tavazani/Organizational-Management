@@ -32,10 +32,12 @@ export function renderMemberList(
           cell: (member): Cell => [text(member.name, theme.strong)],
         },
         {
-          header: "Email",
+          header: "Email / Phone",
           flex: true,
           minWidth: 16,
-          cell: (member): Cell => [text(member.email, theme.muted)],
+          cell: (member): Cell => [
+            text(member.email || member.phoneNumber || "", theme.muted),
+          ],
         },
         {
           header: "Role",

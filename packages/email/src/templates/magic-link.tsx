@@ -27,28 +27,28 @@ export type MagicLinkEmailProps = RequestContext & {
 const messages = {
   en: {
     preview: "Use it to finish signing in. It expires in 5 minutes.",
-    title: "Sign in to Kaneo",
+    title: "Sign in to Montask",
     subtitle:
       "Use the button below to finish signing in. The link works once and expires in 5 minutes.",
-    cta: "Sign in to Kaneo",
+    cta: "Sign in to Montask",
     fallback: "Button not working? Paste this link into your browser:",
     ignoreTitle: "Didn't try to sign in?",
     ignore:
-      "You can ignore this email. Nobody can get into your account without opening this link. Kaneo will never ask you to forward it.",
-    footer: "Kaneo security email",
+      "You can ignore this email. Nobody can get into your account without opening this link. Montask will never ask you to forward it.",
+    footer: "Montask security email",
   },
   fa: {
     preview:
       "برای تکمیل ورود از این پیوند استفاده کنید. پیوند پس از ۵ دقیقه منقضی می‌شود.",
-    title: "ورود به Kaneo",
+    title: "ورود به Montask",
     subtitle:
       "برای تکمیل ورود، دکمهٔ زیر را بزنید. پیوند فقط یک‌بار قابل استفاده است و پس از ۵ دقیقه منقضی می‌شود.",
-    cta: "ورود به Kaneo",
+    cta: "ورود به Montask",
     fallback: "دکمه کار نمی‌کند؟ این پیوند را در مرورگر باز کنید:",
     ignoreTitle: "برای ورود درخواست نداده‌اید؟",
     ignore:
-      "می‌توانید این ایمیل را نادیده بگیرید. بدون باز کردن این پیوند کسی نمی‌تواند وارد حساب شما شود. Kaneo هرگز از شما نمی‌خواهد پیوند را برای دیگران بفرستید.",
-    footer: "ایمیل امنیتی Kaneo",
+      "می‌توانید این ایمیل را نادیده بگیرید. بدون باز کردن این پیوند کسی نمی‌تواند وارد حساب شما شود. Montask هرگز از شما نمی‌خواهد پیوند را برای دیگران بفرستید.",
+    footer: "ایمیل امنیتی Montask",
   },
 } as const;
 

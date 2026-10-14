@@ -19,7 +19,10 @@ export function matchOrgMember(
   return (
     only(
       members.filter(
-        (member) => member.email.toLowerCase().split("@")[0] === wanted,
+        (member) =>
+          (member.email ?? member.phoneNumber ?? "")
+            .toLowerCase()
+            .split("@")[0] === wanted,
       ),
     ) ??
     only(

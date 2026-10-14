@@ -1,3 +1,6 @@
+import { realEmail } from "@kaneo/contacts";
+import { isBaleConfigured } from "../bale/config";
+import { userTable } from "../database/schema";
 import { and, eq, inArray, or } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import db from "../database";
@@ -18,6 +21,9 @@ export type NotificationPreferenceProjectMode = "all" | "selected";
 
 export type NotificationPreferenceResponse = {
   emailAddress: string | null;
+  baleConfigured: boolean;
+  phoneNumber: string | null;
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   ntfyConfigured: boolean;
@@ -45,6 +51,7 @@ export type NotificationPreferenceResponse = {
     workspaceId: string;
     workspaceName: string;
     isActive: boolean;
+    baleEnabled?: boolean;
     emailEnabled: boolean;
     ntfyEnabled: boolean;
     gotifyEnabled: boolean;
@@ -59,6 +66,7 @@ export type NotificationPreferenceResponse = {
 };
 
 export type UpdateNotificationPreferenceInput = {
+  baleEnabled?: boolean;
   emailEnabled?: boolean;
   ntfyEnabled?: boolean;
   ntfyServerUrl?: string | null;
@@ -79,6 +87,7 @@ export type UpdateNotificationPreferenceInput = {
 
 export type UpsertWorkspaceRuleInput = {
   isActive: boolean;
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   gotifyEnabled: boolean;
@@ -88,6 +97,7 @@ export type UpsertWorkspaceRuleInput = {
 };
 
 type WorkspaceRuleChannelState = {
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   gotifyEnabled: boolean;
@@ -172,6 +182,9 @@ export async function getNotificationPreferences(
   userId: string,
   emailAddress: string | null,
 ): Promise<NotificationPreferenceResponse> {
+  const user = await db.query.userTable.findFirst({
+    where: eq(userTable.id, userId),
+  });
   const preference = await db.query.userNotificationPreferenceTable.findFirst({
     where: eq(userNotificationPreferenceTable.userId, userId),
   });
@@ -203,7 +216,10 @@ export async function getNotificationPreferences(
   );
 
   return {
-    emailAddress,
+    emailAddress: realEmail(emailAddress),
+    baleConfigured: Boolean(isBaleConfigured() && user?.phoneNumberVerified),
+    phoneNumber: user?.phoneNumberVerified ? user.phoneNumber : null,
+    baleEnabled: decryptedPreference?.baleEnabled ?? false,
     emailEnabled: decryptedPreference?.emailEnabled ?? false,
     ntfyEnabled: decryptedPreference?.ntfyEnabled ?? false,
     ntfyConfigured: Boolean(
@@ -296,6 +312,8 @@ export async function updateNotificationPreferences(
     decryptedExisting?.webhookSecret,
   );
 
+  const baleEnabled =
+    input.baleEnabled ?? decryptedExisting?.baleEnabled ?? false;
   const emailEnabled =
     input.emailEnabled ?? decryptedExisting?.emailEnabled ?? false;
   const ntfyEnabled =
@@ -306,6 +324,7 @@ export async function updateNotificationPreferences(
     input.webhookEnabled ?? decryptedExisting?.webhookEnabled ?? false;
 
   const enabledRuleCascade: WorkspaceRuleChannelState = {
+    baleEnabled: false,
     emailEnabled: false,
     ntfyEnabled: false,
     gotifyEnabled: false,
@@ -328,7 +347,17 @@ export async function updateNotificationPreferences(
     input.webhookUrl !== undefined ||
     input.webhookSecret !== undefined;
 
-  if (emailEnabled && !emailAddress) {
+  if (baleEnabled) {
+    const user = await db.query.userTable.findFirst({
+      where: eq(userTable.id, userId),
+    });
+    if (!isBaleConfigured() || !user?.phoneNumberVerified)
+      throw new HTTPException(400, {
+        message:
+          "Bale notifications require a verified phone and configured Bale",
+      });
+  }
+  if (emailEnabled && !realEmail(emailAddress)) {
     throw new HTTPException(400, {
       message: "Email notifications require an account email address",
     });
@@ -389,6 +418,7 @@ export async function updateNotificationPreferences(
 
   const data = {
     userId,
+    baleEnabled,
     emailEnabled,
     ntfyEnabled,
     ntfyServerUrl,
@@ -438,12 +468,16 @@ export async function updateNotificationPreferences(
   }
 
   const ruleCascade: {
+    baleEnabled?: boolean;
     emailEnabled?: boolean;
     ntfyEnabled?: boolean;
     gotifyEnabled?: boolean;
     webhookEnabled?: boolean;
   } = {};
 
+  if (!baleEnabled) ruleCascade.baleEnabled = false;
+  if (baleEnabled && !decryptedExisting?.baleEnabled)
+    enabledRuleCascade.baleEnabled = true;
   const hadEmailEnabled = decryptedExisting?.emailEnabled ?? false;
   const hadNtfyEnabled = decryptedExisting?.ntfyEnabled ?? false;
   const hadGotifyEnabled = decryptedExisting?.gotifyEnabled ?? false;
@@ -506,6 +540,7 @@ export async function updateNotificationPreferences(
           eq(userNotificationWorkspaceRuleTable.userId, userId),
           eq(userNotificationWorkspaceRuleTable.isActive, true),
           or(
+            eq(userNotificationWorkspaceRuleTable.baleEnabled, true),
             eq(userNotificationWorkspaceRuleTable.emailEnabled, true),
             eq(userNotificationWorkspaceRuleTable.ntfyEnabled, true),
             eq(userNotificationWorkspaceRuleTable.gotifyEnabled, true),
@@ -552,6 +587,8 @@ export async function upsertWorkspaceRule(
     });
   }
 
+  if (input.baleEnabled && !preference?.baleEnabled)
+    throw new HTTPException(400, { message: "Enable Bale globally first" });
   if (
     input.ntfyEnabled &&
     (!preference?.ntfyEnabled ||
@@ -597,6 +634,7 @@ export async function upsertWorkspaceRule(
       .update(userNotificationWorkspaceRuleTable)
       .set({
         isActive: input.isActive,
+        baleEnabled: input.baleEnabled ?? existing?.baleEnabled ?? false,
         emailEnabled: input.emailEnabled,
         ntfyEnabled: input.ntfyEnabled,
         gotifyEnabled: input.gotifyEnabled,
@@ -612,6 +650,7 @@ export async function upsertWorkspaceRule(
         userId,
         workspaceId,
         isActive: input.isActive,
+        baleEnabled: input.baleEnabled ?? false,
         emailEnabled: input.emailEnabled,
         ntfyEnabled: input.ntfyEnabled,
         gotifyEnabled: input.gotifyEnabled,

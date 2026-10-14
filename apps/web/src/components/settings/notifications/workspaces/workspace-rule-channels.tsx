@@ -42,7 +42,7 @@ export function WorkspaceRuleChannels({
           <WorkspaceRuleChannelRow
             key={channel}
             availability={availability[channel]}
-            checked={state[RULE_CHANNEL_KEYS[channel]]}
+            checked={Boolean(state[RULE_CHANNEL_KEYS[channel]])}
             disabled={disabled}
             name={t(CHANNEL_NAME_KEYS[channel])}
             onCheckedChange={(checked) => onChange(channel, checked)}

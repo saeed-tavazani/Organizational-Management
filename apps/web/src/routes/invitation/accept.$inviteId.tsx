@@ -41,7 +41,13 @@ function AcceptInvitation() {
   const goToAuth = (to: "/auth/sign-in" | "/auth/sign-up") =>
     navigate({
       to,
-      search: { invitationId: inviteId, email: invitation?.email },
+      search: {
+        invitationId: inviteId,
+        email: invitation?.phoneNumber
+          ? undefined
+          : (invitation?.email ?? undefined),
+        phoneNumber: invitation?.phoneNumber ?? undefined,
+      },
     });
 
   const goToKaneo = (
@@ -129,7 +135,7 @@ function AcceptInvitation() {
                 invitedBy,
                 {
                   label: t("auth:invitation.sentTo"),
-                  value: invitation.email,
+                  value: invitation.phoneNumber || invitation.email || "",
                 },
                 expires,
               ]}
@@ -157,8 +163,10 @@ function AcceptInvitation() {
     );
   }
 
-  const isRecipient =
-    session.user.email.toLowerCase() === invitation.email.toLowerCase();
+  const isRecipient = invitation.phoneNumber
+    ? session.user.phoneNumberVerified &&
+      session.user.phoneNumber === invitation.phoneNumber
+    : session.user.email?.toLowerCase() === invitation.email?.toLowerCase();
 
   const accept = async () => {
     setIsAccepting(true);
@@ -215,7 +223,7 @@ function AcceptInvitation() {
                 invitedBy,
                 {
                   label: t("auth:invitation.signedInAs"),
-                  value: session.user.email,
+                  value: session.user.phoneNumber || session.user.email || "",
                 },
                 expires,
               ]}

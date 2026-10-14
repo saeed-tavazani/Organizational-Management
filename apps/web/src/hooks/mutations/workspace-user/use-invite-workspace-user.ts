@@ -1,3 +1,5 @@
+import { normalizeIranPhone } from "@kaneo/libs";
+import { createPhoneInvitation } from "@/fetchers/invitation/create-phone-invitation";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { track } from "@/lib/analytics/track";
@@ -24,6 +26,15 @@ function useInviteWorkspaceUser() {
       projectAccess,
       projectIds,
     }: InviteWorkspaceUserRequest) => {
+      if (normalizeIranPhone(email))
+        return createPhoneInvitation({
+          workspaceId,
+          phoneNumber: email,
+          role,
+          resend,
+          projectAccess,
+          projectIds,
+        });
       const { data, error } = await authClient.organization.inviteMember({
         email,
         role,

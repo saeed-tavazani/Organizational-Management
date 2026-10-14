@@ -6,6 +6,8 @@ import type {
 
 type ChannelPreferences = Pick<
   NotificationPreferences,
+  | "baleEnabled"
+  | "baleConfigured"
   | "emailAddress"
   | "emailEnabled"
   | "gotifyConfigured"
@@ -28,6 +30,11 @@ export function getChannelAvailability(
   preferences: ChannelPreferences,
 ): ChannelAvailabilityMap {
   return {
+    bale: preferences.baleConfigured
+      ? preferences.baleEnabled
+        ? "available"
+        : "off"
+      : "notConnected",
     email: !preferences.emailAddress
       ? "notConnected"
       : preferences.emailEnabled

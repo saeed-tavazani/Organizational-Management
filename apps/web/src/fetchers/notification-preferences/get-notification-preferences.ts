@@ -6,6 +6,7 @@ export type NotificationPreferenceWorkspaceRule = {
   workspaceId: string;
   workspaceName: string;
   isActive: boolean;
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   gotifyEnabled: boolean;
@@ -18,6 +19,9 @@ export type NotificationPreferenceWorkspaceRule = {
 
 export type NotificationPreferences = {
   emailAddress: string | null;
+  phoneNumber?: string | null;
+  baleConfigured?: boolean;
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   ntfyConfigured: boolean;

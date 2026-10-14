@@ -1,4 +1,4 @@
-# Kaneo on Coolify
+# Montask on Coolify
 #
 # Deploy this stack from a Git source with Coolify's "Docker Compose" build pack:
 #   Public Repository -> https://github.com/usekaneo/kaneo
@@ -10,7 +10,7 @@
 # The only required environment variable is KANEO_CLIENT_URL (your public URL, without :5173).
 # AUTH_SECRET and the PostgreSQL password are auto-generated via Coolify magic variables.
 # Do NOT set KANEO_API_URL — the entrypoint derives it from KANEO_CLIENT_URL (public URL + /api).
-# The Kaneo image tracks the latest release by default. Set KANEO_IMAGE_TAG to a
+# The Montask image tracks the latest release by default. Set KANEO_IMAGE_TAG to a
 # release tag to hold a deployment on a known version.
 
 services:
@@ -44,6 +44,7 @@ services:
       - POSTGRES_USER=kaneo
       - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
       # Optional: SMTP_*, SSO providers, GitHub integration, Sentry, Redis...
+      # Set BALE_SAFIR_API_ACCESS_KEY and BALE_SAFIR_BOT_ID to enable Bale OTP and messages.
       # add them here or in the Coolify UI for the kaneo service.
     depends_on:
       postgres:

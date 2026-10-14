@@ -4,6 +4,7 @@ import type { NotificationPreferences } from "./get-notification-preferences";
 
 export type UpsertNotificationWorkspaceRuleRequest = {
   isActive: boolean;
+  baleEnabled?: boolean;
   emailEnabled: boolean;
   ntfyEnabled: boolean;
   gotifyEnabled: boolean;

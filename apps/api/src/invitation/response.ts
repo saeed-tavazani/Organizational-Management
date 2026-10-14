@@ -3,7 +3,8 @@ import { responseTimestamp, z } from "../openapi";
 export const pendingInvitationSchema = z
   .object({
     id: z.string(),
-    email: z.string(),
+    email: z.string().nullable(),
+    phoneNumber: z.string().nullable(),
     workspaceId: z.string(),
     workspaceName: z.string(),
     inviterName: z.string(),
@@ -26,7 +27,8 @@ export const invitationDetailsSchema = z
     invitation: z
       .object({
         id: z.string(),
-        email: z.string(),
+        email: z.string().nullable(),
+        phoneNumber: z.string().nullable(),
         workspaceName: z.string(),
         inviterName: z.string(),
         expiresAt: responseTimestamp,

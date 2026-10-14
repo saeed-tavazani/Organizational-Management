@@ -1,3 +1,4 @@
+import { ContactSettings } from "./contact-settings";
 import { useTranslation } from "react-i18next";
 import PageTitle from "@/components/page-title";
 import useAuth from "@/components/providers/auth-provider/hooks/use-auth";
@@ -25,7 +26,10 @@ export function ProfilePage() {
           user={user ?? undefined}
           refetchUser={refetchUser}
         />
-        <DeleteAccountSection email={user?.email} />
+        <ContactSettings />
+        <DeleteAccountSection
+          email={user?.email || user?.phoneNumber || user?.name}
+        />
       </SettingsPage>
     </>
   );

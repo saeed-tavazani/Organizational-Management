@@ -782,6 +782,29 @@ subscribeToEvent<{
   );
 });
 
+subscribeToEvent<{ userId: string }>(
+  "user.identity.updated",
+  async ({ userId }) => {
+    if (!userId) return;
+    broadcastToUser(userId, { type: "USER_IDENTITY_UPDATED" });
+    const memberships = await db
+      .select({ workspaceId: workspaceUserTable.workspaceId })
+      .from(workspaceUserTable)
+      .where(eq(workspaceUserTable.userId, userId));
+    for (const membership of memberships) {
+      const members = await db
+        .select({ userId: workspaceUserTable.userId })
+        .from(workspaceUserTable)
+        .where(eq(workspaceUserTable.workspaceId, membership.workspaceId));
+      for (const member of members)
+        broadcastToUser(member.userId, {
+          type: "WORKSPACE_MEMBERS_UPDATED",
+          workspaceId: membership.workspaceId,
+        });
+    }
+  },
+);
+
 subscribeToEvent<{ notificationId: string; userId: string }>(
   "notification.created",
   async (data) => {

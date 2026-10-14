@@ -1,7 +1,7 @@
 import { SourceHttpError } from "../http.js";
 
 export const TOKEN_REJECTED =
-  "Trello rejected the token. Authorize Kaneo on Trello again and paste the new token.";
+  "Trello rejected the token. Authorize Montask on Trello again and paste the new token.";
 
 export const KEY_REJECTED = "Trello rejected the API key.";
 

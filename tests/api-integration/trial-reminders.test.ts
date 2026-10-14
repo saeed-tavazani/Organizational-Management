@@ -11,6 +11,7 @@ import {
 } from "vite-plus/test";
 
 const sendTrialReminderEmail = vi.fn();
+sendTrialReminderEmail.mockResolvedValue(true);
 
 vi.mock("@kaneo/email", () => ({
   isSmtpConfigured: () => true,

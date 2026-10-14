@@ -6,6 +6,7 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig, lazyPlugins } from "vite-plus";
 import packageJson from "../../package.json";
+import { VitePWA } from "vite-plugin-pwa";
 
 const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN;
 const sentryOrg = process.env.SENTRY_ORG;
@@ -54,6 +55,21 @@ export default defineConfig({
     tailwindcss(),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
+    VitePWA({
+      registerType: "prompt",
+      manifest: false,
+      workbox: {
+        globPatterns: [
+          "**/*.html",
+          "**/*.ico",
+          "**/*.svg",
+          "**/*.png",
+          "**/*.woff2",
+          "assets/**/*.{js,css}",
+        ],
+        navigateFallbackDenylist: [/^\/api(?:\/|$)/, /^\/\.well-known(?:\/|$)/],
+      },
+    }),
     // Hidden when Sentry env vars are absent so local dev does not depend on it.
     ...(uploadSourceMaps
       ? [

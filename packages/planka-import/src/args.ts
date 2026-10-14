@@ -104,7 +104,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
 export const DEFAULT_KANEO_URL = "https://cloud.kaneo.app";
 
-export const HELP_TEXT = `kaneo-planka-import: migrate PLANKA boards into Kaneo
+export const HELP_TEXT = `kaneo-planka-import: migrate PLANKA boards into Montask
 
 Usage:
   npx @kaneo/planka-import --planka-url <url> --kaneo-api-key <key> [options]
@@ -118,9 +118,9 @@ PLANKA source:
                             Best option for SSO-only accounts, which have no
                             password to log in with
 
-Kaneo target:
-  --kaneo-url <url>         Kaneo instance URL (default ${DEFAULT_KANEO_URL})
-  --kaneo-api-key <key>     Kaneo API key (env KANEO_API_KEY)
+Montask target:
+  --kaneo-url <url>         Montask instance URL (default ${DEFAULT_KANEO_URL})
+  --kaneo-api-key <key>     Montask API key (env KANEO_API_KEY)
   --workspace <id>          Target workspace ID (prompted if omitted)
 
 Selection:

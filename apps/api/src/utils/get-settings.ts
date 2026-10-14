@@ -1,3 +1,4 @@
+import { isBaleConfigured } from "../bale/config";
 import { isSmtpConfigured } from "@kaneo/email";
 import { config } from "dotenv-mono";
 import { isBillingEnabled } from "../billing/config";
@@ -18,6 +19,7 @@ function getSettings() {
     disableWorkspaceCreation: process.env.DISABLE_WORKSPACE_CREATION === "true",
     isDemoMode: process.env.DEMO_MODE === "true",
     hasSmtp: isSmtpConfigured(),
+    hasBale: isBaleConfigured(),
     hasImageUploads: isStorageConfigured(),
     hasGithubSignIn: isGithubSsoConfigured(),
     hasGoogleSignIn:

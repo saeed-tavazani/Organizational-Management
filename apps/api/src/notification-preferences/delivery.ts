@@ -1,3 +1,6 @@
+import { enqueueBale } from "../bale/outbox";
+import { isBaleConfigured } from "../bale/config";
+import { realEmail } from "@kaneo/contacts";
 import { createHmac } from "node:crypto";
 import { sendNotificationEmail } from "@kaneo/email";
 import { and, eq } from "drizzle-orm";
@@ -91,7 +94,7 @@ function buildDeliveryContent(notification: {
         title: "New task created",
         body: taskTitle
           ? `A new task was created: ${taskTitle}`
-          : "A new task was created in Kaneo.",
+          : "A new task was created in Montask.",
       };
     }
     case "workspace_created": {
@@ -103,7 +106,7 @@ function buildDeliveryContent(notification: {
         title: "Workspace created",
         body: workspaceName
           ? `Workspace created: ${workspaceName}`
-          : "A new workspace was created in Kaneo.",
+          : "A new workspace was created in Montask.",
       };
     }
     case "task_status_changed": {
@@ -115,7 +118,7 @@ function buildDeliveryContent(notification: {
         body:
           taskTitle && oldStatus && newStatus
             ? `${taskTitle} moved from ${oldStatus} to ${newStatus}.`
-            : "A task status changed in Kaneo.",
+            : "A task status changed in Montask.",
       };
     }
     case "task_assignee_changed": {
@@ -124,7 +127,7 @@ function buildDeliveryContent(notification: {
         title: "Task assigned to you",
         body: taskTitle
           ? `You were assigned to ${taskTitle}.`
-          : "A task was assigned to you in Kaneo.",
+          : "A task was assigned to you in Montask.",
       };
     }
     case "time_entry_created": {
@@ -133,7 +136,7 @@ function buildDeliveryContent(notification: {
         title: "Time entry created",
         body: taskTitle
           ? `A time entry was created for ${taskTitle}.`
-          : "A time entry was created in Kaneo.",
+          : "A time entry was created in Montask.",
       };
     }
     case "due_date_reminder": {
@@ -169,7 +172,7 @@ function buildDeliveryContent(notification: {
           : "You were mentioned",
         body: taskTitle
           ? `You were mentioned in ${taskTitle}.`
-          : "You were mentioned in a Kaneo task.",
+          : "You were mentioned in a Montask task.",
       };
     }
     case "task_comment": {
@@ -184,13 +187,13 @@ function buildDeliveryContent(notification: {
           : "New task comment",
         body: taskTitle
           ? `A new comment was added to ${taskTitle}.`
-          : "A new comment was added to a Kaneo task.",
+          : "A new comment was added to a Montask task.",
       };
     }
     default:
       return {
-        title: notification.title ?? "New Kaneo notification",
-        body: notification.content ?? "You have a new notification in Kaneo.",
+        title: notification.title ?? "New Montask notification",
+        body: notification.content ?? "You have a new notification in Montask.",
       };
   }
 }
@@ -382,6 +385,8 @@ export async function deliverNotification(
   const [user] = await db
     .select({
       email: userTable.email,
+      phoneNumber: userTable.phoneNumber,
+      phoneNumberVerified: userTable.phoneNumberVerified,
       name: userTable.name,
       locale: userTable.locale,
     })
@@ -472,33 +477,39 @@ export async function deliverNotification(
       : null,
     user: {
       id: notification.userId,
-      email: user.email,
+      email: realEmail(user.email),
       name: user.name,
     },
   };
 
   const deliveries: Array<Promise<void>> = [];
+  let emailDelivered = false;
+  let emailTask: Promise<void> | undefined;
 
-  if (decryptedPreference.emailEnabled && rule.emailEnabled && user.email) {
+  if (
+    decryptedPreference.emailEnabled &&
+    rule.emailEnabled &&
+    realEmail(user.email)
+  ) {
     const recipient = user.email;
-    deliveries.push(
-      (async () => {
-        const task = context.taskId
-          ? await resolveEmailTask(context.taskId)
-          : undefined;
-        await sendNotificationEmail(recipient, content.title, {
-          title: content.title,
-          message: content.body,
-          actionUrl: context.taskUrl,
-          locale: user.locale ?? null,
-          breadcrumb: context.projectName
-            ? `${context.workspaceName} / ${context.projectName}`
-            : context.workspaceName,
-          task,
-          settingsUrl: `${getClientUrl()}/dashboard/settings/account/notifications`,
-        });
-      })(),
-    );
+    emailTask = (async () => {
+      const task = context.taskId
+        ? await resolveEmailTask(context.taskId)
+        : undefined;
+      const result = await sendNotificationEmail(recipient, content.title, {
+        title: content.title,
+        message: content.body,
+        actionUrl: context.taskUrl,
+        locale: user.locale ?? null,
+        breadcrumb: context.projectName
+          ? `${context.workspaceName} / ${context.projectName}`
+          : context.workspaceName,
+        task,
+        settingsUrl: `${getClientUrl()}/dashboard/settings/account/notifications`,
+      });
+      emailDelivered = result.success;
+    })();
+    deliveries.push(emailTask);
   }
 
   if (
@@ -550,6 +561,37 @@ export async function deliverNotification(
     );
   }
 
+  if (
+    isBaleConfigured() &&
+    user.phoneNumberVerified &&
+    user.phoneNumber &&
+    preference.baleEnabled &&
+    rule.baleEnabled
+  ) {
+    const phoneNumber = user.phoneNumber;
+    deliveries.push(
+      (async () => {
+        await emailTask?.catch(() => undefined);
+        await enqueueBale({
+          id: `notification:${notification.id}`,
+          userId: notification.userId,
+          phoneNumber,
+          kind: "notification",
+          resourceId: notification.id,
+          message: {
+            text: `${content.title}\n${content.body}`,
+            url: context.taskUrl ?? undefined,
+          },
+          fallback: {
+            subject: content.title,
+            text: content.body,
+            url: context.taskUrl ?? undefined,
+          },
+          emailAlreadySent: emailDelivered,
+        });
+      })(),
+    );
+  }
   const results = await Promise.allSettled(deliveries);
   for (const result of results) {
     if (result.status === "rejected") {

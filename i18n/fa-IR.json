@@ -1,6 +1,11 @@
 {
 	"common": {
-		"appName": "Kaneo",
+		"appName": "Montask",
+		"pwa": {
+			"updateTitle": "نسخهٔ جدید Montask آماده است",
+			"updateDescription": "برای دریافت آخرین نسخه صفحه را تازه‌سازی کنید.",
+			"updateAction": "به‌روزرسانی"
+		},
 		"actions": {
 			"cancel": "انصراف",
 			"close": "بستن",
@@ -96,7 +101,7 @@
 				"errorToast": "ایجاد پروژه ناموفق بود"
 			},
 			"createWorkspace": {
-				"breadcrumbKaneo": "KANEO",
+				"breadcrumbKaneo": "MONTASK",
 				"title": "ایجاد فضای کاری جدید",
 				"description": "با واردکردن نام، فضای کاری جدیدی ایجاد کنید.",
 				"namePlaceholder": "نام فضای کاری",
@@ -182,7 +187,7 @@
 				"use_a_permanent_email_address_disposable_addresses_cannot_create_accounts_": "از نشانی ایمیل دائمی استفاده کنید. با ایمیل موقت نمی‌توان حساب ایجاد کرد."
 			},
 			"instanceStatusError": "سرور در دسترس نیست. کمی بعد دوباره تلاش کنید.",
-			"heading": "ورود به Kaneo",
+			"heading": "ورود به Montask",
 			"submitPassword": "ورود",
 			"invitation": {
 				"title": "{{inviterName}} شما را به {{workspaceName}} دعوت کرده است",
@@ -190,7 +195,7 @@
 				"description": "با ایمیلی که دعوت‌نامه را دریافت کرده وارد شوید. سپس به فضای کاری خواهید پیوست."
 			},
 			"footer": {
-				"newHere": "تازه با Kaneo آشنا شده‌اید؟",
+				"newHere": "تازه با Montask آشنا شده‌اید؟",
 				"createAccount": "ایجاد حساب",
 				"inviteOnly": "ایجاد حساب در اینجا فقط با دعوت‌نامه ممکن است. از مدیر درخواست دعوت‌نامه کنید.",
 				"providerSignUp": "تازه‌وارد هستید؟ برای ایجاد حساب، با یکی از سرویس‌های بالا وارد شوید.",
@@ -245,7 +250,7 @@
 			"toggleMessage": "از قبل حساب دارید؟",
 			"toggleLink": "ورود",
 			"instanceStatusError": "سرور در دسترس نیست. کمی بعد دوباره تلاش کنید.",
-			"instanceAdminTitle": "راه‌اندازی نمونهٔ Kaneo شما",
+			"instanceAdminTitle": "راه‌اندازی نمونهٔ Montask شما",
 			"instanceAdminSubtitle": "این حساب مدیر نمونه با دسترسی کامل خواهد شد.",
 			"heading": "حساب خود را ایجاد کنید",
 			"submitPassword": "ایجاد حساب",
@@ -297,7 +302,7 @@
 				"acceptFailed": "پذیرش دعوت‌نامه ناموفق بود",
 				"acceptSuccess": "دعوت‌نامه پذیرفته شد! به تیم خوش آمدید."
 			},
-			"description": "{{inviterName}} شما را به این فضای کاری در Kaneo دعوت کرده است.",
+			"description": "{{inviterName}} شما را به این فضای کاری در Montask دعوت کرده است.",
 			"invitedBy": "دعوت‌کننده",
 			"sentTo": "ارسال‌شده به",
 			"signedInAs": "واردشده با حساب",
@@ -305,7 +310,7 @@
 			"notNow": "فعلاً نه",
 			"join": "پیوستن به فضای کاری",
 			"switchAccount": "تغییر حساب",
-			"goToKaneo": "رفتن به Kaneo",
+			"goToKaneo": "رفتن به Montask",
 			"mismatch": {
 				"title": "با ایمیل دیگری وارد شده‌اید",
 				"description": "این دعوت‌نامه به {{invitedEmail}} فرستاده شده است. شما با {{email}} وارد شده‌اید."
@@ -324,7 +329,7 @@
 			}
 		},
 		"onboarding": {
-			"pageTitle": "به Kaneo خوش آمدید",
+			"pageTitle": "به Montask خوش آمدید",
 			"workspaceName": "نام فضای کاری",
 			"workspaceNamePlaceholder": "مثلاً شرکت آریا، تیم من",
 			"restrictedTitle": "به دعوت‌نامه نیاز دارید",
@@ -346,10 +351,13 @@
 				"invite": {
 					"emailLabel": "ایمیل هم‌تیمی {{index}}",
 					"emailPlaceholder": "teammate@company.com",
+					"emailOrPhoneLabel": "ایمیل یا شماره موبایل هم‌تیمی {{index}}",
+					"emailOrPhonePlaceholder": "teammate@company.com / 09123456789",
 					"addAnother": "افزودن مورد دیگر",
 					"remove": "حذف ایمیل {{index}}",
 					"skip": "فعلاً رد شدن",
 					"invalidEmail": "نشانی ایمیل معتبر وارد کنید",
+					"invalidEmailOrPhone": "ایمیل معتبر یا شماره موبایل ایران وارد کنید",
 					"sent_one": "دعوت‌نامه فرستاده شد",
 					"sent_other": "{{count}} دعوت‌نامه فرستاده شد",
 					"failed": "دعوت {{email}} ممکن نشد: {{message}}"
@@ -372,7 +380,7 @@
 				},
 				"invite": {
 					"title": "تیم خود را دعوت کنید",
-					"description": "Kaneo با حضور همهٔ اعضا بهتر کار می‌کند. برای دعوت افراد با ایمیل، **اعضا** را در نوار کناری باز کنید."
+					"description": "Montask با حضور همهٔ اعضا بهتر کار می‌کند. برای دعوت افراد با ایمیل، **اعضا** را در نوار کناری باز کنید."
 				},
 				"integrations": {
 					"title": "اتصال GitHub، GitLab یا Gitea",
@@ -502,7 +510,7 @@
 		"device": {
 			"connect": {
 				"title": "اتصال دستگاه",
-				"description": "کد نمایش‌داده‌شده در ترمینال یا برنامهٔ خود را وارد کنید تا به حساب Kaneo متصل شود.",
+				"description": "کد نمایش‌داده‌شده در ترمینال یا برنامهٔ خود را وارد کنید تا به حساب Montask متصل شود.",
 				"label": "کد دستگاه",
 				"submit": "ادامه",
 				"noCode": "هنوز کدی ندارید؟ ابتدا ورود را از برنامهٔ خود شروع کنید.",
@@ -558,6 +566,37 @@
 				"description": "برای بررسی دوباره به همین صفحه بازمی‌گردید.",
 				"submit": "ورود"
 			}
+		},
+		"phone": {
+			"number": "شماره موبایل ایران",
+			"invalid": "شماره موبایل ایران را به‌درستی وارد کنید.",
+			"code": "کد تأیید",
+			"continue": "دریافت کد در بله",
+			"verify": "تأیید کد",
+			"sent": "کد در بله ارسال می‌شود. کد شش‌رقمی را تا پنج دقیقه وارد کنید.",
+			"failed": "عملیات انجام نشد. دوباره تلاش کنید.",
+			"change": "تغییر اطلاعات",
+			"resend": "ارسال مجدد",
+			"wait": "برای ارسال مجدد یک دقیقه صبر کنید.",
+			"fallback": "اگر ورود از بله ممکن نباشد و ایمیل تأییدشده داشته باشید، کد جداگانه به ایمیل شما ارسال می‌شود؛ از فرم ورود ایمیلی استفاده کنید.",
+			"contacts": "روش‌های ورود و اطلاعات تماس",
+			"bale": "بله",
+			"unavailable": "برای استفاده از بله شماره تأییدشده و تنظیمات فعال لازم است.",
+			"removePhone": "حذف شماره موبایل",
+			"verifyEmail": "تأیید ایمیل",
+			"removeEmail": "حذف ایمیل",
+			"deliveries": "وضعیت ارسال‌های بله",
+			"loading": "در حال دریافت…",
+			"status": {
+				"pending": "در صف",
+				"retry": "تلاش مجدد",
+				"accepted": "پذیرفته‌شده توسط بله",
+				"failed": "ناموفق",
+				"email_fallback": "ارسال از طریق ایمیل",
+				"expired": "منقضی یا لغوشده"
+			},
+			"recover": "بازیابی شماره",
+			"recoverDescription": "پس از بررسی هویت {{name}}، شماره جدید را وارد کنید. نشست‌های قبلی باطل می‌شوند و کاربر باید شماره جدید را در بله تأیید کند."
 		}
 	},
 	"settings": {
@@ -566,10 +605,10 @@
 		"syncRules": {
 			"title": "موارد همگام‌شونده",
 			"sharedHint": "این قوانین برای همهٔ کاربران پروژه اعمال می‌شوند. پنهان‌کردن تنظیمات پیشرفته آن‌ها را غیرفعال نمی‌کند.",
-			"outgoing": "Kaneo ← مخزن",
-			"incoming": "مخزن ← Kaneo",
-			"outgoingHint": "انتخاب کنید کدام کارهای Kaneo همگام شوند. حذف برچسب منطبق، همگام‌سازی دوطرفهٔ کار موجود را متوقف می‌کند.",
-			"incomingHint": "انتخاب کنید کدام ایشوها وارد شوند یا کار ایجاد کنند. نام دقیق برچسب‌های مخزن را استفاده کنید. پیوندهای موجود از قانون کار Kaneo پیروی می‌کنند.",
+			"outgoing": "Montask ← مخزن",
+			"incoming": "مخزن ← Montask",
+			"outgoingHint": "انتخاب کنید کدام کارهای Montask همگام شوند. حذف برچسب منطبق، همگام‌سازی دوطرفهٔ کار موجود را متوقف می‌کند.",
+			"incomingHint": "انتخاب کنید کدام ایشوها وارد شوند یا کار ایجاد کنند. نام دقیق برچسب‌های مخزن را استفاده کنید. پیوندهای موجود از قانون کار Montask پیروی می‌کنند.",
 			"all": "همهٔ کارها و ایشوها",
 			"filtered": "فقط برچسب‌های منطبق",
 			"any": "هر برچسب انتخاب‌شده",
@@ -612,7 +651,7 @@
 			"closed": "بسته",
 			"noDescription": "بدون توضیحات",
 			"useRepository": "نگه‌داشتن مقادیر مخزن",
-			"useKaneo": "نگه‌داشتن مقادیر Kaneo",
+			"useKaneo": "نگه‌داشتن مقادیر Montask",
 			"exportPending": "صدور کارهای منطبق",
 			"inactiveHint": "این اتصال متوقف است. تا فعال‌سازی دوباره، هیچ کاری صادر نمی‌شود.",
 			"allIssues": "همهٔ ایشوها",
@@ -622,10 +661,10 @@
 			"issuesLabelled": "ایشوهای دارای برچسب",
 			"joinAnd": "و",
 			"joinOr": "یا",
-			"kaneoToProvider": "Kaneo به {{provider}}",
+			"kaneoToProvider": "Montask به {{provider}}",
 			"pausedSummary_one": "همگام‌سازی {{count}} کار متوقف شد چون دیگر با قوانین همگام‌سازی مطابقت نداشت.",
 			"pausedSummary_other": "همگام‌سازی {{count}} کار متوقف شد چون دیگر با قوانین همگام‌سازی مطابقت نداشتند.",
-			"providerToKaneo": "{{provider}} به Kaneo",
+			"providerToKaneo": "{{provider}} به Montask",
 			"reviewPaused": "بررسی",
 			"tasksLabelled": "کارهای دارای برچسب"
 		},
@@ -638,7 +677,7 @@
 		"apiKeys": "کلیدهای API",
 		"adminUsers": {
 			"title": "کاربران",
-			"subtitle": "همهٔ افرادی که در این نمونهٔ Kaneo حساب دارند.",
+			"subtitle": "همهٔ افرادی که در این نمونهٔ Montask حساب دارند.",
 			"directoryTitle": "همهٔ کاربران",
 			"searchCount_one": "{{count}} کاربر منطبق",
 			"searchCount_other": "{{count}} کاربر منطبق",
@@ -714,7 +753,7 @@
 		},
 		"adminWorkspaces": {
 			"title": "فضاهای کاری",
-			"subtitle": "همهٔ فضاهای کاری این نمونهٔ Kaneo، حتی آن‌هایی که عضو آن‌ها نیستید.",
+			"subtitle": "همهٔ فضاهای کاری این نمونهٔ Montask، حتی آن‌هایی که عضو آن‌ها نیستید.",
 			"directoryTitle": "همهٔ فضاهای کاری",
 			"searchCount_one": "{{count}} فضای کاری منطبق",
 			"searchCount_other": "{{count}} فضای کاری منطبق",
@@ -831,7 +870,7 @@
 		"notificationsPage": {
 			"pageTitle": "اعلان‌ها",
 			"title": "اعلان‌ها",
-			"subtitle": "Kaneo دربارهٔ چه چیزهایی و از چه راهی به شما اطلاع دهد.",
+			"subtitle": "Montask دربارهٔ چه چیزهایی و از چه راهی به شما اطلاع دهد.",
 			"statusConnected": "متصل",
 			"statusPaused": "متوقف",
 			"emailTitle": "ایمیل",
@@ -864,7 +903,7 @@
 			"webhookUrlPlaceholder": "https://example.com/webhooks/kaneo",
 			"webhookSecretPlaceholder": "کلید محرمانهٔ مشترک اختیاری",
 			"webhookSecretHintConfigured": "کلید امضا از قبل تنظیم شده است ({{masked}}). برای جایگزینی، کلید جدیدی وارد کنید.",
-			"webhookSecretHintOptional": "اگر کلید محرمانه تنظیم شود، Kaneo بدنهٔ درخواست را امضا می‌کند.",
+			"webhookSecretHintOptional": "اگر کلید محرمانه تنظیم شود، Montask بدنهٔ درخواست را امضا می‌کند.",
 			"connectWebhook": "اتصال وب‌هوک",
 			"eventPreferencesTitle": "به من اطلاع بده دربارهٔ",
 			"eventPreferencesDescription": "دیدگاه‌ها، اشاره‌ها و تغییرات وضعیتی که خودتان انجام می‌دهید برایتان اعلان ایجاد نمی‌کنند.",
@@ -910,7 +949,7 @@
 			"reminderLeadTimeUnitDaysBefore_one": "روز قبل",
 			"reminderLeadTimeUnitDaysBefore_other": "روز قبل",
 			"channelsTitle": "کانال‌ها",
-			"channelsDescription": "اعلان‌ها همیشه در Kaneo نمایش داده می‌شوند. برای دریافت آن‌ها در جای دیگر، یک کانال متصل کنید.",
+			"channelsDescription": "اعلان‌ها همیشه در Montask نمایش داده می‌شوند. برای دریافت آن‌ها در جای دیگر، یک کانال متصل کنید.",
 			"statusOn": "روشن",
 			"emailToggleLabel": "ارسال اعلان‌ها با ایمیل",
 			"connect": "اتصال",
@@ -927,7 +966,7 @@
 			"workspacesTitle": "فضاهای کاری",
 			"workspacesDescription": "انتخاب کنید کدام فضاهای کاری و پروژه‌ها از کانال‌های شما استفاده کنند.",
 			"statusSending": "در حال ارسال",
-			"onlyInKaneo": "فقط در Kaneo",
+			"onlyInKaneo": "فقط در Montask",
 			"projectCount_one": "{{count}} پروژه",
 			"projectCount_other": "{{count}} پروژه",
 			"ruleSummary": "{{channels}} · {{projects}}",
@@ -946,12 +985,12 @@
 			"save": "ذخیره",
 			"stopSending": "توقف ارسال",
 			"stopSendingTitle": "ارسال از {{workspaceName}} متوقف شود؟",
-			"stopSendingDescription": "اعلان‌های این فضای کاری فقط در Kaneo نمایش داده می‌شوند.",
+			"stopSendingDescription": "اعلان‌های این فضای کاری فقط در Montask نمایش داده می‌شوند.",
 			"stopping": "در حال توقف..."
 		},
 		"preferencesPage": {
 			"title": "ترجیحات",
-			"subtitle": "ظاهر و رفتار Kaneo برای شما.",
+			"subtitle": "ظاهر و رفتار Montask برای شما.",
 			"appearanceTitle": "عمومی",
 			"theme": "پوسته",
 			"selectTheme": "انتخاب پوسته",
@@ -988,7 +1027,7 @@
 		"developerPage": {
 			"pageTitle": "کلیدهای API",
 			"title": "کلیدهای API",
-			"subtitle": "به اسکریپت‌ها، CLI و کلاینت‌های MCP اجازه دهید از طرف شما از Kaneo استفاده کنند.",
+			"subtitle": "به اسکریپت‌ها، CLI و کلاینت‌های MCP اجازه دهید از طرف شما از Montask استفاده کنند.",
 			"unnamedKey": "بدون نام",
 			"newKey": "کلید جدید",
 			"keysTitle": "کلیدها",
@@ -1330,7 +1369,7 @@
 		"workspaceImport": {
 			"pageTitle": "ورود داده",
 			"title": "ورود داده",
-			"subtitle": "پروژه‌هایتان را از ابزار دیگری به {{workspace}} منتقل کنید. Kaneo فقط داده‌های مبدأ را می‌خواند.",
+			"subtitle": "پروژه‌هایتان را از ابزار دیگری به {{workspace}} منتقل کنید. Montask فقط داده‌های مبدأ را می‌خواند.",
 			"opensInNewTab": "(در زبانهٔ جدید باز می‌شود)",
 			"retry": "تلاش مجدد",
 			"notAllowed": {
@@ -1363,8 +1402,8 @@
 					"intro": "هر برد PLANKA به یک پروژه تبدیل می‌شود و فهرست‌هایش ستون‌ها را تشکیل می‌دهند."
 				},
 				"kaneo": {
-					"pickerName": "Kaneo دیگر",
-					"description": "انتقال پروژه‌ها بین Kaneo Cloud و نمونهٔ خودمیزبان.",
+					"pickerName": "Montask دیگر",
+					"description": "انتقال پروژه‌ها بین Montask Cloud و نمونهٔ خودمیزبان.",
 					"intro": "پروژه‌های همهٔ فضاهای کاری که کلید به آن‌ها دسترسی دارد. هر پروژهٔ انتخابی اینجا کپی می‌شود."
 				}
 			},
@@ -1397,7 +1436,7 @@
 			"connect": {
 				"title": "ورود از {{source}}",
 				"sectionTitle": "اتصال",
-				"sectionDescription": "Kaneo فقط داده‌های {{source}} را می‌خواند. کلید فقط برای این ورود استفاده می‌شود و ذخیره نمی‌شود.",
+				"sectionDescription": "Montask فقط داده‌های {{source}} را می‌خواند. کلید فقط برای این ورود استفاده می‌شود و ذخیره نمی‌شود.",
 				"cancel": "انصراف",
 				"continue": "ادامه",
 				"whereToFind": "از کجا پیدا کنیم",
@@ -1431,7 +1470,7 @@
 				"apiKeyLabel": "کلید API",
 				"apiKeyDescription": "در Power-Up متعلق به خود، زبانهٔ Trello Auth را باز کنید و کلید API بسازید (نه زبانهٔ OAuth 2.0) در",
 				"apiKeyPlaceholder": "کلید API را بچسبانید",
-				"authorizeLabel": "اعطای دسترسی به Kaneo",
+				"authorizeLabel": "اعطای دسترسی به Montask",
 				"authorizeDescription": "Trello را در زبانهٔ جدید باز می‌کند. فقط خواندن؛ پس از یک روز منقضی می‌شود.",
 				"authorizeNeedsKey": "ابتدا کلید API را وارد کنید. فقط خواندن؛ پس از یک روز منقضی می‌شود.",
 				"authorizeButton": "اعطای دسترسی در Trello",
@@ -1463,10 +1502,10 @@
 				"adminTip": "از حساب مدیر PLANKA استفاده کنید. PLANKA ایمیل‌ها را فقط به مدیران نشان می‌دهد و اعضای کارت با ایمیل به افراد اینجا تطبیق داده می‌شوند."
 			},
 			"kaneo": {
-				"urlLabel": "نشانی Kaneo",
+				"urlLabel": "نشانی Montask",
 				"urlDescription": "نمونه‌ای که از آن منتقل می‌شوید.",
 				"apiKeyLabel": "کلید API",
-				"apiKeyDescription": "در آن Kaneo، تنظیمات و سپس کلیدهای API را باز کنید.",
+				"apiKeyDescription": "در آن Montask، تنظیمات و سپس کلیدهای API را باز کنید.",
 				"apiKeyPlaceholder": "کلید API را بچسبانید"
 			},
 			"select": {
@@ -1805,11 +1844,11 @@
 				"removeError": "حذف اتصال GitHub ناموفق بود",
 				"issuesImported": "ایشوها با موفقیت وارد شدند",
 				"importError": "ورود ایشوها ناموفق بود",
-				"commentOnEnabled": "Kaneo روی ایشوهای جدید دیدگاهی با پیوند کار می‌نویسد",
+				"commentOnEnabled": "Montask روی ایشوهای جدید دیدگاهی با پیوند کار می‌نویسد",
 				"commentOnDisabled": "دیدگاه پیوند کار روی ایشوهای جدید خاموش است",
 				"settingsUpdateError": "به‌روزرسانی اتصال GitHub ناموفق بود"
 			},
-			"commentTaskLinkTitle": "در ایشوهای جدید، پیوند Kaneo بنویس",
+			"commentTaskLinkTitle": "در ایشوهای جدید، پیوند Montask بنویس",
 			"commentTaskLinkHint": "تا کاربران GitHub بتوانند به کار بروند.",
 			"updatePermissions": "به‌روزرسانی مجوزها",
 			"installGithubApp": "نصب برنامهٔ GitHub",
@@ -1826,9 +1865,9 @@
 			"linkAccountTitle": "اتصال حساب GitHub شما",
 			"linkGithub": "اتصال GitHub",
 			"linked": "پیوندخورده",
-			"verifyMissingPermissions": "برنامهٔ GitHub متعلق به Kaneo این مجوزها را ندارد: {{list}}.",
-			"verifyNotInstalled": "برنامهٔ GitHub متعلق به Kaneo روی این مخزن نصب نشده است.",
-			"verifyReady": "برنامهٔ GitHub متعلق به Kaneo با مجوزهای لازم نصب شده است.",
+			"verifyMissingPermissions": "برنامهٔ GitHub متعلق به Montask این مجوزها را ندارد: {{list}}.",
+			"verifyNotInstalled": "برنامهٔ GitHub متعلق به Montask روی این مخزن نصب نشده است.",
+			"verifyReady": "برنامهٔ GitHub متعلق به Montask با مجوزهای لازم نصب شده است.",
 			"workflowHint": "جابه‌جایی کارها هنگام بازشدن یا ادغام درخواست‌های ادغام در",
 			"workflowLink": "گردش کار"
 		},
@@ -1846,13 +1885,13 @@
 				"removeError": "حذف اتصال Gitea ناموفق بود",
 				"issuesImported": "ایشوها با موفقیت وارد شدند",
 				"importError": "ورود ایشوها ناموفق بود",
-				"commentOnEnabled": "Kaneo روی ایشوهای جدید دیدگاهی با پیوند کار می‌نویسد",
+				"commentOnEnabled": "Montask روی ایشوهای جدید دیدگاهی با پیوند کار می‌نویسد",
 				"commentOnDisabled": "دیدگاه پیوند کار روی ایشوهای جدید خاموش است",
 				"settingsUpdateError": "به‌روزرسانی اتصال Gitea ناموفق بود"
 			},
-			"commentTaskLinkTitle": "در ایشوهای جدید، پیوند Kaneo بنویس",
+			"commentTaskLinkTitle": "در ایشوهای جدید، پیوند Montask بنویس",
 			"commentTaskLinkHint": "تا کاربران Gitea بتوانند به کار بروند.",
-			"webhookHint": "این وب‌هوک را در تنظیمات مخزن اضافه کنید تا تغییرات به Kaneo بازگردند.",
+			"webhookHint": "این وب‌هوک را در تنظیمات مخزن اضافه کنید تا تغییرات به Montask بازگردند.",
 			"baseUrlLabel": "نشانی Gitea",
 			"tokenLabel": "توکن دسترسی شخصی",
 			"tokenPlaceholder": "توکن را بچسبانید",
@@ -1880,13 +1919,13 @@
 				"removeError": "حذف اتصال GitLab ناموفق بود",
 				"issuesImported": "ایشوها با موفقیت وارد شدند",
 				"importError": "ورود ایشوها ناموفق بود",
-				"commentOnEnabled": "Kaneo روی ایشوهای بازشده در GitLab دیدگاهی با پیوند کار می‌نویسد",
+				"commentOnEnabled": "Montask روی ایشوهای بازشده در GitLab دیدگاهی با پیوند کار می‌نویسد",
 				"commentOnDisabled": "دیدگاه پیوند کار روی ایشوهای بازشده در GitLab خاموش است",
 				"settingsUpdateError": "به‌روزرسانی اتصال GitLab ناموفق بود"
 			},
-			"commentTaskLinkTitle": "در ایشوهای بازشدهٔ GitLab، پیوند Kaneo بنویس",
+			"commentTaskLinkTitle": "در ایشوهای بازشدهٔ GitLab، پیوند Montask بنویس",
 			"commentTaskLinkHint": "تا کاربران GitLab بتوانند به کار بروند.",
-			"webhookHint": "این وب‌هوک را در تنظیمات پروژه اضافه کنید تا تغییرات به Kaneo بازگردند.",
+			"webhookHint": "این وب‌هوک را در تنظیمات پروژه اضافه کنید تا تغییرات به Montask بازگردند.",
 			"baseUrlLabel": "نشانی GitLab",
 			"tokenTypeLabel": "نوع توکن",
 			"tokenTypePrivate": "توکن دسترسی شخصی، پروژه یا گروه",
@@ -1978,10 +2017,10 @@
 			},
 			"webhookLabel": "نشانی مقصد",
 			"webhookPlaceholder": "https://example.com/webhooks/kaneo",
-			"webhookHint": "Kaneo برای هر رویداد فعال، درخواست POST با دادهٔ JSON می‌فرستد.",
+			"webhookHint": "Montask برای هر رویداد فعال، درخواست POST با دادهٔ JSON می‌فرستد.",
 			"secretLabel": "کلید محرمانهٔ امضا",
 			"secretPlaceholder": "کلید محرمانهٔ مشترک",
-			"secretHint": "Kaneo هر درخواست را با آن امضا می‌کند و چکیده را در سرآیند X-Kaneo-Signature می‌فرستد.",
+			"secretHint": "Montask هر درخواست را با آن امضا می‌کند و چکیده را در سرآیند X-Kaneo-Signature می‌فرستد.",
 			"secretHintConfigured": "کلید فعلی: {{secret}}. برای جایگزینی، کلید جدید وارد کنید.",
 			"eventsTitle": "ارسال هنگام",
 			"events": {
@@ -2004,7 +2043,7 @@
 			"reminderLeadTimeBefore": "ارسال یادآوری‌ها",
 			"reminderLeadTimeAfter": "ساعت قبل از موعد کار",
 			"disconnectTitle": "اتصال وب‌هوک قطع شود؟",
-			"disconnectDescription": "Kaneo ارسال رویدادها را متوقف و نشانی و کلید محرمانهٔ ذخیره‌شده را حذف می‌کند."
+			"disconnectDescription": "Montask ارسال رویدادها را متوقف و نشانی و کلید محرمانهٔ ذخیره‌شده را حذف می‌کند."
 		},
 		"telegramIntegration": {
 			"validation": {
@@ -2037,7 +2076,7 @@
 		},
 		"repositoryBrowser": {
 			"title": "انتخاب مخزن",
-			"description": "مخزن‌هایی که برنامهٔ GitHub متعلق به Kaneo به آن‌ها دسترسی دارد.",
+			"description": "مخزن‌هایی که برنامهٔ GitHub متعلق به Montask به آن‌ها دسترسی دارد.",
 			"searchPlaceholder": "جستجوی مخزن‌ها",
 			"loadError": "بارگذاری مخزن‌ها ممکن نشد.",
 			"tryAgain": "تلاش مجدد",
@@ -2112,7 +2151,7 @@
 		"securityPage": {
 			"pageTitle": "امنیت",
 			"title": "امنیت",
-			"subtitle": "روش ورود شما به Kaneo.",
+			"subtitle": "روش ورود شما به Montask.",
 			"sectionTitle": "ورود",
 			"currentPassword": "گذرواژهٔ فعلی",
 			"newPassword": "گذرواژهٔ جدید",
@@ -2181,14 +2220,14 @@
 		"billing": {
 			"pageTitle": "صورتحساب",
 			"subtitle": "طرح شما برای {{workspace}}.",
-			"disabled": "صورتحساب در این نمونه فعال نیست. Kaneo خودمیزبان همهٔ قابلیت‌ها را برای همیشه رایگان ارائه می‌کند.",
+			"disabled": "صورتحساب در این نمونه فعال نیست. Montask خودمیزبان همهٔ قابلیت‌ها را برای همیشه رایگان ارائه می‌کند.",
 			"currentPlan": {
 				"title": "طرح فعلی"
 			},
 			"foundingFree": {
 				"title": "رایگان برای حامیان اولیه",
 				"badge": "رایگان",
-				"description": "این فضای کاری به‌عنوان حامی اولیه، به Kaneo Cloud دسترسی رایگان دارد. از همراهی شما از ابتدا سپاسگزاریم."
+				"description": "این فضای کاری به‌عنوان حامی اولیه، به Montask Cloud دسترسی رایگان دارد. از همراهی شما از ابتدا سپاسگزاریم."
 			},
 			"seats_one": "{{count}} جایگاه کاربر",
 			"seats_other": "{{count}} جایگاه کاربر",
@@ -2301,7 +2340,7 @@
 			"disconnect": "قطع اتصال",
 			"disconnecting": "در حال قطع اتصال…",
 			"disconnectTitle": "اتصال {{provider}} قطع شود؟",
-			"disconnectDescription": "Kaneo ارسال به {{provider}} را متوقف و تنظیمات ذخیره‌شده را حذف می‌کند.",
+			"disconnectDescription": "Montask ارسال به {{provider}} را متوقف و تنظیمات ذخیره‌شده را حذف می‌کند.",
 			"retry": "تلاش مجدد"
 		},
 		"codeHosting": {
@@ -3275,14 +3314,14 @@
 	},
 	"invitations": {
 		"email": {
-			"subject": "{{inviterName}} شما را به پیوستن به {{workspaceName}} در Kaneo دعوت کرده است",
-			"preview": "شما به {{workspaceName}} در Kaneo دعوت شده‌اید",
+			"subject": "{{inviterName}} شما را به پیوستن به {{workspaceName}} در Montask دعوت کرده است",
+			"preview": "شما به {{workspaceName}} در Montask دعوت شده‌اید",
 			"title": "پیوستن به {{workspaceName}}",
-			"subtitle": "{{inviterName}} ({{inviterEmail}}) شما را به همکاری در Kaneo دعوت کرده است.",
+			"subtitle": "{{inviterName}} ({{inviterEmail}}) شما را به همکاری در Montask دعوت کرده است.",
 			"cta": "پذیرش دعوت‌نامه",
 			"sameEmail": "می‌توانید با همان ایمیلی که این پیام را دریافت کرده دعوت‌نامه را بپذیرید.",
 			"ignore": "اگر منتظر این دعوت‌نامه نبودید، می‌توانید این ایمیل را نادیده بگیرید.",
-			"footer": "دعوت‌نامهٔ فضای کاری Kaneo",
+			"footer": "دعوت‌نامهٔ فضای کاری Montask",
 			"details": {
 				"title": "جزئیات دعوت‌نامه",
 				"sentTo": "ارسال‌شده به",
@@ -3444,14 +3483,17 @@
 			"pendingBadge": "در انتظار",
 			"expires": "منقضی می‌شود در {{date}}",
 			"linkLabel": "پیوند دعوت‌نامه",
+			"resend": "ارسال دوبارهٔ دعوت‌نامه",
+			"resent": "دعوت‌نامه دوباره فرستاده شد",
+			"resendFailed": "ارسال دوبارهٔ دعوت‌نامه ممکن نشد",
 			"copyLink": "کپی پیوند",
 			"linkCopied": "پیوند دعوت‌نامه کپی شد",
 			"copyFailed": "کپی خودکار ممکن نشد. پیوند را انتخاب کنید و Ctrl+C بزنید."
 		},
 		"inviteModal": {
 			"title": "دعوت عضو تیم",
-			"emailLabel": "ایمیل",
-			"emailPlaceholder": "colleague@company.com",
+			"emailLabel": "ایمیل یا شماره موبایل ایران",
+			"emailPlaceholder": "name@example.com / 09123456789",
 			"sendInvitation": "ارسال دعوت‌نامه",
 			"success": "دعوت‌نامه با موفقیت فرستاده شد",
 			"error": "دعوت عضو تیم ناموفق بود",

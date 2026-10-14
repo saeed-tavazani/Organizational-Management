@@ -37,3 +37,16 @@ export async function sendPasswordResetEmail(
 ): Promise<void> {
   return undefined;
 }
+
+export async function sendNotificationEmail(
+  _to: string,
+  _subject: string,
+  _data: unknown,
+): Promise<EmailResult> {
+  return { success: true };
+}
+export async function sendTrialReminderEmail(
+  _to: string,
+  _subject: string,
+  _data: unknown,
+): Promise<void> {}

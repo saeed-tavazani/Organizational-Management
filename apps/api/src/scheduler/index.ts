@@ -1,3 +1,4 @@
+import { processBaleOutbox } from "../bale/outbox";
 import { retryStorageCleanup } from "../storage/cleanup-queue";
 import { cleanupDraftUploads } from "./draft-upload-cleanup";
 import { replayDeferredIssueEdits } from "../plugins/github/services/deferred-issue-edits";
@@ -48,6 +49,13 @@ function withCheckIn<T>(name: string, fn: () => Promise<T>) {
 }
 
 export function initializeScheduler(): void {
+  jobs.push(
+    new Cron(
+      "*/5 * * * * *",
+      { protect: true },
+      withCheckIn("bale-outbox", processBaleOutbox),
+    ),
+  );
   jobs.push(
     new Cron(
       "* * * * *",

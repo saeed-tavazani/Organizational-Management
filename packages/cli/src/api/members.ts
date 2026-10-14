@@ -10,7 +10,8 @@ export const OrganizationMember = Schema.Struct({
   createdAt: Schema.Unknown,
   user: Schema.Struct({
     name: Schema.String,
-    email: Schema.String,
+    email: Schema.NullOr(Schema.String),
+    phoneNumber: Schema.optionalKey(Schema.NullOr(Schema.String)),
   }),
 });
 export type OrganizationMember = typeof OrganizationMember.Type;

@@ -1,3 +1,4 @@
+import { contactRoutes } from "../phone/contact-routes";
 import { HTTPException } from "hono/http-exception";
 import {
   apiRouter,
@@ -71,6 +72,7 @@ const deleteAvatarRoute = createRoute({
 });
 
 const user = apiRouter()
+  .route("/", contactRoutes)
   .openapi(getCurrentUserRoute, async (c) =>
     c.json(await getCurrentUser(c.get("userId")), 200),
   )

@@ -179,7 +179,7 @@ async function migrateBoard(context: {
   for (const column of columns) {
     if (column.renamedFrom) {
       report.warnings.push(
-        `List "${column.renamedFrom}" was imported as column "${column.name}" to avoid a naming conflict in Kaneo.`,
+        `List "${column.renamedFrom}" was imported as column "${column.name}" to avoid a naming conflict in Montask.`,
       );
     }
   }
@@ -236,7 +236,7 @@ async function migrateBoard(context: {
   });
   report.kaneoProjectId = project.id;
 
-  // Kaneo seeds four default columns on create; drop them while still empty.
+  // Montask seeds four default columns on create; drop them while still empty.
   for (const existing of await kaneo.listColumns(project.id)) {
     await kaneo.deleteColumn(existing.id);
   }
@@ -369,7 +369,7 @@ async function migrateBoard(context: {
   }
   if (notAWorkspaceMember > 0) {
     report.warnings.push(
-      `${notAWorkspaceMember} card assignment(s) were skipped because no member of this Kaneo workspace has a matching email. Invite those people to the workspace first, then re-run.`,
+      `${notAWorkspaceMember} card assignment(s) were skipped because no member of this Montask workspace has a matching email. Invite those people to the workspace first, then re-run.`,
     );
   }
 }
@@ -385,7 +385,7 @@ function resolveAssignee(
   usersById: Map<string, PlankaUser>,
   membersByEmail: Map<string, string>,
 ): AssigneeResolution {
-  // Kaneo has a single assignee; take the first member present in the workspace.
+  // Montask has a single assignee; take the first member present in the workspace.
   let reason: AssigneeResolution["reason"];
 
   for (const membership of memberships) {

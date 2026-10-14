@@ -18,6 +18,7 @@ function config(overrides: Partial<GetConfigResponse> = {}) {
     disableWorkspaceCreation: false,
     isDemoMode: false,
     hasSmtp: true,
+    hasBale: false,
     hasImageUploads: false,
     hasGithubSignIn: false,
     hasGoogleSignIn: false,

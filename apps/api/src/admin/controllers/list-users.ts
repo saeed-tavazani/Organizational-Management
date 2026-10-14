@@ -13,7 +13,11 @@ export async function listUsers({ search, page, limit }: ListUsersInput) {
   const term = search?.trim() ?? "";
   const pattern = `%${escapeLikePattern(term)}%`;
   const where = term
-    ? or(ilike(userTable.name, pattern), ilike(userTable.email, pattern))
+    ? or(
+        ilike(userTable.name, pattern),
+        ilike(userTable.email, pattern),
+        ilike(userTable.phoneNumber, pattern),
+      )
     : undefined;
 
   const [rows, [totalRow]] = await Promise.all([
@@ -22,6 +26,8 @@ export async function listUsers({ search, page, limit }: ListUsersInput) {
         id: userTable.id,
         name: userTable.name,
         email: userTable.email,
+        phoneNumber: userTable.phoneNumber,
+        phoneNumberVerified: userTable.phoneNumberVerified,
         emailVerified: userTable.emailVerified,
         image: userTable.image,
         createdAt: userTable.createdAt,

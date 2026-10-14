@@ -1,6 +1,8 @@
-# Contributing to Kaneo
+# Contributing to Montask
 
-Thanks for wanting to contribute to Kaneo! Whether you're fixing bugs, adding features, or improving docs, we appreciate your help.
+Thanks for wanting to contribute to Montask! Whether you're fixing bugs, adding features, or improving docs, we appreciate your help.
+
+Montask is a fork of [Kaneo](https://github.com/usekaneo/kaneo). This repository continues that project under the Montask name; compatibility-sensitive package, CLI, and deployment identifiers may still use `kaneo`.
 
 ## Table of Contents
 
@@ -40,7 +42,7 @@ Follow the [local development setup guide](ENVIRONMENT_SETUP.md) for prerequisit
 - **Browse [issues ready for contribution](https://github.com/usekaneo/kaneo/issues?q=is%3Aissue%20is%3Aopen%20label%3Aready-for-contribution)** - the "good first issue" ones are a nice place to start
 - **Check our [Discord](https://discord.gg/rU4tSyhXXU)** - we often discuss features and bugs there
 - **Found a bug?** Open an issue first and wait for a maintainer to give the go-ahead before sending a PR (unless you're [exempt](#contribution-eligibility))
-- **Have a feature idea?** Submit it at [Kaneo Feedback](https://feedback.kaneo.app). Accepted requests become GitHub issues for implementation.
+- **Have a feature idea?** Submit it at [Montask Feedback](https://feedback.kaneo.app). Accepted requests become GitHub issues for implementation.
 
 ### Contribution Eligibility
 
@@ -193,7 +195,7 @@ We use [conventional commits](https://www.conventionalcommits.org/) to keep our 
 
 ### Localization (i18n)
 
-Kaneo uses [i18next](https://www.i18next.com/) with [react-i18next](https://react.i18next.com/) in the web app. We want user-facing copy to stay consistent, translatable, and easy to maintain.
+Montask uses [i18next](https://www.i18next.com/) with [react-i18next](https://react.i18next.com/) in the web app. We want user-facing copy to stay consistent, translatable, and easy to maintain.
 
 #### Approach
 
@@ -283,15 +285,15 @@ Please read and follow our [AI Contribution Policy](AI_POLICY.md), which adopts 
 
 - **Discord**: Join our [Discord server](https://discord.gg/rU4tSyhXXU) for real-time help
 - **Bugs**: Open a [GitHub issue](https://github.com/usekaneo/kaneo/issues)
-- **Feature requests**: Submit and vote on ideas at [Kaneo Feedback](https://feedback.kaneo.app)
+- **Feature requests**: Submit and vote on ideas at [Montask Feedback](https://feedback.kaneo.app)
 - **Discussions**: Use GitHub Discussions for questions about contributing
 
 ## Types of Contributions We Love
 
 - **Bug fixes** - Found something broken? Open an issue so we can agree on the fix
 - **New features** - Have an idea? Let's discuss it first
-- **Documentation** - Help others understand how to use Kaneo
+- **Documentation** - Help others understand how to use Montask
 - **Performance improvements** - Make things faster
-- **Accessibility** - Help make Kaneo usable for everyone
+- **Accessibility** - Help make Montask usable for everyone
 
-Thanks for contributing to Kaneo! 🚀
+Thanks for contributing to Montask! 🚀

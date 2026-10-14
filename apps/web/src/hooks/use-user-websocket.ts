@@ -166,6 +166,20 @@ export function useUserWebSocket() {
           ) {
             void queryClient.invalidateQueries({ queryKey: ["attendance"] });
           }
+          if (message.type === "WORKSPACE_MEMBERS_UPDATED") {
+            void queryClient.invalidateQueries({
+              queryKey: ["workspace-users", message.workspaceId],
+            });
+            void queryClient.invalidateQueries({
+              queryKey: ["project-members"],
+            });
+          }
+          if (message.type === "USER_IDENTITY_UPDATED") {
+            authClient.$store.notify("$sessionSignal");
+            void queryClient.invalidateQueries({
+              queryKey: ["notification-preferences"],
+            });
+          }
           if (message.type === "NOTIFICATION_CREATED") {
             queryClient.invalidateQueries({ queryKey: ["notifications"] });
           }

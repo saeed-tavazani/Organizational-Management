@@ -137,11 +137,11 @@ const authorizeRoute = createRoute({
   tags: ["MCP"],
   summary: "Start MCP authorization",
   description:
-    "Begin an MCP OAuth authorization. Redirects the browser to the Kaneo consent page, which then approves or denies the request.",
+    "Begin an MCP OAuth authorization. Redirects the browser to the Montask consent page, which then approves or denies the request.",
   security: [],
   request: { query: authorizationQuerySchema },
   responses: {
-    302: { description: "Redirect to the Kaneo consent page" },
+    302: { description: "Redirect to the Montask consent page" },
     400: jsonError("Invalid authorization request"),
   },
 });

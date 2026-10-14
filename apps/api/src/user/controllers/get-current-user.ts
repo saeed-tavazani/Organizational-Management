@@ -1,3 +1,4 @@
+import { realEmail } from "@kaneo/contacts";
 import { eq } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import db from "../../database";
@@ -9,6 +10,8 @@ export async function getCurrentUser(userId: string) {
       id: userTable.id,
       name: userTable.name,
       email: userTable.email,
+      phoneNumber: userTable.phoneNumber,
+      phoneNumberVerified: userTable.phoneNumberVerified,
       image: userTable.image,
       role: userTable.role,
     })
@@ -20,7 +23,7 @@ export async function getCurrentUser(userId: string) {
     throw new HTTPException(404, { message: "User not found" });
   }
 
-  return user;
+  return { ...user, email: realEmail(user.email) };
 }
 
 export default getCurrentUser;

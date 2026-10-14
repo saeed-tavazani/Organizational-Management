@@ -95,6 +95,15 @@ spec:
               value: {{ .Values.kaneo.env.disablePasswordRegistration | quote }}
             - name: DISABLE_EMAIL_OTP_SIGN_IN
               value: {{ .Values.kaneo.env.disableEmailOtpSignIn | quote }}
+            - name: BALE_SAFIR_BOT_ID
+              value: {{ .Values.kaneo.env.bale.botId | quote }}
+            {{- if .Values.kaneo.env.bale.existingSecret.name }}
+            - name: BALE_SAFIR_API_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.kaneo.env.bale.existingSecret.name }}
+                  key: {{ .Values.kaneo.env.bale.existingSecret.key }}
+            {{- end }}
             {{- with .Values.kaneo.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

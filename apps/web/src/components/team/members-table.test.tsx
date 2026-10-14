@@ -47,6 +47,10 @@ vi.mock("@/hooks/mutations/workspace-user/use-cancel-invitation", () => ({
   default: () => ({ mutateAsync: vi.fn(), isPending: false }),
 }));
 
+vi.mock("@/hooks/mutations/workspace-user/use-invite-workspace-user", () => ({
+  default: () => ({ mutateAsync: vi.fn() }),
+}));
+
 vi.mock("@/hooks/mutations/workspace-user/use-delete-workspace-user", () => ({
   default: () => ({ mutateAsync: vi.fn(), isPending: false }),
 }));

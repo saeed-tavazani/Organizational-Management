@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://kaneo.app">
-    <img src="https://assets.kaneo.app/logo-text.png" alt="Kaneo's logo" width="450" />
+    <img src="apps/web/public/logo-dark.svg" alt="Montask's logo" width="450" />
   </a>
 </p>
 
@@ -29,8 +29,10 @@
   Fast, simple, open-source project management.
 </p>
 
+> **Project lineage:** Montask is a fork of [Kaneo](https://github.com/usekaneo/kaneo). It keeps building on Kaneo's open-source project-management app under a new name and visual identity; legacy technical identifiers remain where existing installations depend on them.
+
 <p align="center">
-  <img src="screenshots/readme@1x.png" srcset="screenshots/readme@1x.png 1x, screenshots/readme.png 2x" alt="Kaneo project board with the Kaneo logo and tagline" />
+  <img src="screenshots/readme@1x.png" srcset="screenshots/readme@1x.png 1x, screenshots/readme.png 2x" alt="Montask project board with the Montask logo and tagline" />
 </p>
 
 ## Built for your team's work
@@ -44,18 +46,18 @@
 
 ## Installation
 
-- **Cloud:** [Get started with Kaneo Cloud](https://cloud.kaneo.app).
+- **Cloud:** [Get started with Montask Cloud](https://cloud.kaneo.app).
 - **Self-hosted:** Follow the [installation guide](https://kaneo.app/docs/core/installation).
 
 ## Contributing
 
 Code, translations, documentation, and bug reports are welcome. Start with the [contributing guide](CONTRIBUTING.md) and [local development setup](ENVIRONMENT_SETUP.md). Pay particular attention to [contribution eligibility](https://github.com/usekaneo/kaneo/blob/main/CONTRIBUTING.md#contribution-eligibility).
 
-Join us on [Discord](https://discord.gg/rU4tSyhXXU), report bugs in [GitHub Issues](https://github.com/usekaneo/kaneo/issues), or submit and vote on feature requests at [Kaneo Feedback](https://feedback.kaneo.app).
+Join us on [Discord](https://discord.gg/rU4tSyhXXU), report bugs in [GitHub Issues](https://github.com/usekaneo/kaneo/issues), or submit and vote on feature requests at [Montask Feedback](https://feedback.kaneo.app).
 
 ## Sponsors
 
-Kaneo is open source. If you find it useful, consider [sponsoring the project](https://github.com/sponsors/andrejsshell) to help support ongoing development.
+Montask is open source. If you find it useful, consider [sponsoring the project](https://github.com/sponsors/andrejsshell) to help support ongoing development.
 
 ### Partners
 
@@ -78,5 +80,9 @@ MIT License - see [LICENSE](LICENSE) for details.
 </div>
 
 <p align="center">
-  Built with ❤️ by the Kaneo team and <a href="https://github.com/usekaneo/kaneo/graphs/contributors">contributors</a>
+  Built with ❤️ by the Montask team and <a href="https://github.com/usekaneo/kaneo/graphs/contributors">contributors</a>
 </p>
+
+### Phone sign-in with Bale
+
+Iranian mobile accounts can use Safir Bale for verification codes, invitations and notifications alongside existing email accounts. See the [configuration guide](docs/bale.md).

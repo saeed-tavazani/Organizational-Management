@@ -1,3 +1,6 @@
+import db, { schema } from "../database";
+import { phoneInvitationRoutes } from "./phone-route";
+import { eq } from "drizzle-orm";
 import { apiRouter, createRoute, jsonResponse } from "../openapi";
 import getInvitationDetailsController from "./controllers/get-invitation-details";
 import getUserPendingInvitations from "./controllers/get-user-pending-invitations";
@@ -38,12 +41,24 @@ const getInvitationRoute = createRoute({
 });
 
 const invitation = apiRouter()
+  .route("/", phoneInvitationRoutes)
   .openapi(getPendingRoute, async (c) => {
     const user = c.get("user");
-    if (!user?.emailVerified) {
+    const contact = user
+      ? await db.query.userTable.findFirst({
+          where: eq(schema.userTable.id, user.id),
+        })
+      : null;
+    if (!contact?.emailVerified && !contact?.phoneNumberVerified) {
       return c.json([], 200);
     }
-    return c.json(await getUserPendingInvitations(c.get("userEmail")), 200);
+    return c.json(
+      await getUserPendingInvitations(
+        contact?.emailVerified ? c.get("userEmail") : "",
+        contact?.phoneNumberVerified ? contact.phoneNumber : null,
+      ),
+      200,
+    );
   })
   .openapi(getInvitationRoute, async (c) =>
     c.json(await getInvitationDetailsController(c.req.valid("param").id), 200),

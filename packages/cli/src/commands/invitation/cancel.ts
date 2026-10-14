@@ -46,13 +46,15 @@ export const runInvitationCancel = Effect.fn("command.invitation.cancel")(
       ? pending.find(
           (invitation) =>
             invitation.id === wanted.value ||
-            invitation.email === wanted.value.toLowerCase(),
+            (invitation.email || invitation.phoneNumber) ===
+              wanted.value.toLowerCase(),
         )
       : pending.length > 0
         ? yield* pick(
             "Cancel which invitation?",
             pending.map((invitation) => ({
-              title: invitation.email,
+              title:
+                invitation.email || invitation.phoneNumber || invitation.id,
               value: invitation,
               description: roleLabel(invitation.role),
             })),
@@ -69,13 +71,13 @@ export const runInvitationCancel = Effect.fn("command.invitation.cancel")(
 
     yield* confirmDestructive({
       yes: options.yes,
-      action: `Canceling the invitation for ${target.email}`,
-      question: `Cancel the invitation for ${target.email}? Its link stops working.`,
+      action: `Canceling the invitation for ${target.email || target.phoneNumber}`,
+      question: `Cancel the invitation for ${target.email || target.phoneNumber}? Its link stops working.`,
     });
 
-    yield* withSpinner(`Canceling the invitation for ${target.email}`)(
-      cancelInvitation(target.id),
-    );
+    yield* withSpinner(
+      `Canceling the invitation for ${target.email || target.phoneNumber}`,
+    )(cancelInvitation(target.id));
     yield* emit(
       { ...target, status: "canceled", canceled: true },
       renderInvitationCanceled,

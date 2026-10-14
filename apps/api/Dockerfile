@@ -13,6 +13,7 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml vite.config.ts ./
 COPY packages/typescript-config/package.json ./packages/typescript-config/
 COPY packages/email/package.json ./packages/email/
 COPY packages/libs/package.json ./packages/libs/
+COPY packages/contacts/package.json ./packages/contacts/
 COPY packages/permissions/package.json ./packages/permissions/
 COPY packages/importers/package.json ./packages/importers/
 COPY packages/mcp/package.json ./packages/mcp/
@@ -25,6 +26,7 @@ RUN pnpm install --frozen-lockfile
 COPY packages/typescript-config ./packages/typescript-config
 COPY packages/email ./packages/email
 COPY packages/libs ./packages/libs
+COPY packages/contacts ./packages/contacts
 COPY packages/permissions ./packages/permissions
 COPY packages/importers ./packages/importers
 COPY packages/mcp ./packages/mcp
@@ -32,6 +34,9 @@ COPY i18n ./i18n
 COPY apps/api ./apps/api
 
 # Build email package first
+WORKDIR /app/packages/contacts
+RUN pnpm run build
+
 WORKDIR /app/packages/email
 RUN pnpm run build
 
@@ -60,6 +65,7 @@ WORKDIR /app
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml vite.config.ts ./
 COPY packages/typescript-config/package.json ./packages/typescript-config/
 COPY packages/libs/package.json ./packages/libs/
+COPY packages/contacts/package.json ./packages/contacts/
 COPY packages/email/package.json ./packages/email/
 COPY packages/permissions/package.json ./packages/permissions/
 COPY packages/importers/package.json ./packages/importers/
@@ -88,6 +94,7 @@ COPY --from=prod-deps --chown=appuser:appuser /app ./
 COPY --from=builder --chown=appuser:appuser /app/apps/api/dist ./apps/api/dist
 COPY --from=builder --chown=appuser:appuser /app/apps/api/drizzle ./apps/api/drizzle
 COPY --from=builder --chown=appuser:appuser /app/packages/email ./packages/email
+COPY --from=builder --chown=appuser:appuser /app/packages/contacts/dist ./packages/contacts/dist
 COPY --from=builder --chown=appuser:appuser /app/packages/permissions ./packages/permissions
 COPY --from=builder --chown=appuser:appuser /app/packages/importers/dist ./packages/importers/dist
 COPY --from=builder --chown=appuser:appuser /app/packages/mcp/dist ./packages/mcp/dist

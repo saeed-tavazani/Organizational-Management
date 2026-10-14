@@ -138,7 +138,7 @@ async function sendMattermostMessage(
           },
           {
             title: "Triggered by",
-            value: data.actorName ? escapeText(data.actorName) : "Kaneo",
+            value: data.actorName ? escapeText(data.actorName) : "Montask",
             short: true,
           },
         ],

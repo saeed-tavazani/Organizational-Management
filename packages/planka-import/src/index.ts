@@ -101,7 +101,7 @@ async function main(): Promise<number> {
   const kaneoApiKey = args.kaneoApiKey ?? process.env.KANEO_API_KEY;
   if (!kaneoApiKey && !args.dryRun) {
     throw new Error(
-      "A Kaneo API key is required. Pass --kaneo-api-key or set KANEO_API_KEY.",
+      "A Montask API key is required. Pass --kaneo-api-key or set KANEO_API_KEY.",
     );
   }
 
@@ -129,14 +129,14 @@ async function main(): Promise<number> {
 
   if (args.dryRun) {
     await writeReport(args.report, preview);
-    log("Dry run. Nothing was written to Kaneo.");
+    log("Dry run. Nothing was written to Montask.");
     return 0;
   }
 
   if (!args.yes) {
     const confirmed = await confirm(
       interactive,
-      `Import ${targets.length} board(s) into Kaneo workspace ${workspaceId}?`,
+      `Import ${targets.length} board(s) into Montask workspace ${workspaceId}?`,
     );
     if (!confirmed) {
       log("Aborted.");
@@ -209,7 +209,7 @@ async function selectWorkspace(
   const workspaces = await kaneo.listWorkspaces();
 
   if (workspaces.length === 0) {
-    throw new Error("This Kaneo account has no workspaces.");
+    throw new Error("This Montask account has no workspaces.");
   }
 
   const first = workspaces[0];
@@ -226,7 +226,7 @@ async function selectWorkspace(
   const answer = await prompts({
     type: "select",
     name: "value",
-    message: "Target Kaneo workspace",
+    message: "Target Montask workspace",
     choices: workspaces.map((workspace) => ({
       title: workspace.name,
       value: workspace.id,

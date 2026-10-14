@@ -5,7 +5,9 @@ import {
   drizzleAdapter,
 } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
-import { count, sql } from "drizzle-orm";
+import { count, sql, eq } from "drizzle-orm";
+import { realEmail } from "@kaneo/contacts";
+import { isContactConflict } from "../phone/is-contact-conflict";
 import {
   hasInstanceAdminRole,
   instanceAdminRoleSql,
@@ -17,7 +19,84 @@ export function authDatabaseAdapter(config: DrizzleAdapterConfig) {
     const adapter = drizzleAdapter(db, config)(options);
     return {
       ...adapter,
+      async create<T extends Record<string, any>, R = T>(data: {
+        model: string;
+        data: Omit<T, "id">;
+        select?: string[];
+        forceAllowId?: boolean;
+      }): Promise<R> {
+        if (data.model === "session" && typeof data.data.userId === "string") {
+          const [user] = await db
+            .select({
+              phoneNumberVerified: schema.userTable.phoneNumberVerified,
+            })
+            .from(schema.userTable)
+            .where(eq(schema.userTable.id, data.data.userId));
+          if (user && !user.phoneNumberVerified) {
+            const [recovery] = await db
+              .select({ id: schema.phoneRecoveryAuditTable.id })
+              .from(schema.phoneRecoveryAuditTable)
+              .where(
+                eq(schema.phoneRecoveryAuditTable.userId, data.data.userId),
+              )
+              .limit(1);
+            if (recovery)
+              throw new APIError("FORBIDDEN", {
+                message: "Verify the recovered phone before signing in",
+              });
+          }
+        }
+        try {
+          return await adapter.create<T, R>(data);
+        } catch (error) {
+          if (
+            data.model === "user" &&
+            data.data.phoneNumber &&
+            isContactConflict(error)
+          )
+            throw new APIError("CONFLICT", {
+              message: "Phone number already belongs to an account",
+            });
+          throw error;
+        }
+      },
       async update<T>(data: Parameters<DBAdapter["update"]>[0]) {
+        if (
+          data.model === "user" &&
+          typeof data.update.phoneNumber === "string"
+        ) {
+          try {
+            return await adapter.update<T>(data);
+          } catch (error) {
+            if (isContactConflict(error))
+              throw new APIError("CONFLICT", {
+                message: "Phone number already belongs to an account",
+              });
+            throw error;
+          }
+        }
+        if (data.model === "user" && data.update.phoneNumber === null) {
+          return db.transaction(async (tx) => {
+            const transactionAdapter = drizzleAdapter(tx, config)(options);
+            const found = await transactionAdapter.findOne<{ id: string }>({
+              model: "user",
+              where: data.where,
+            });
+            const [user] = found
+              ? await tx
+                  .select()
+                  .from(schema.userTable)
+                  .where(eq(schema.userTable.id, found.id))
+                  .for("update")
+              : [];
+            if (!user?.emailVerified || !realEmail(user.email)) {
+              throw new APIError("BAD_REQUEST", {
+                message: "Keep at least one verified sign-in method",
+              });
+            }
+            return transactionAdapter.update<T>(data);
+          });
+        }
         if (
           data.model !== "user" ||
           !Object.hasOwn(data.update, "role") ||

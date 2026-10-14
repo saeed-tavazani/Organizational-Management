@@ -22,6 +22,7 @@ async function listWorkspaceMembers(workspaceId: string) {
       userId: userTable.id,
       name: userTable.name,
       email: userTable.email,
+      phoneNumber: userTable.phoneNumber,
       image: userTable.image,
       role: workspaceUserTable.role,
       joinedAt: workspaceUserTable.joinedAt,

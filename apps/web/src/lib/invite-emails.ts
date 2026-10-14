@@ -1,3 +1,4 @@
+import { normalizeIranPhone } from "@kaneo/libs";
 import { z } from "zod/v4";
 
 const emailSchema = z.email();
@@ -12,7 +13,10 @@ export function parseInviteEmails(values: string[]): ParsedInviteEmails {
     .filter(({ email }) => email);
 
   const invalidIndexes = filled
-    .filter(({ email }) => !emailSchema.safeParse(email).success)
+    .filter(
+      ({ email }) =>
+        !emailSchema.safeParse(email).success && !normalizeIranPhone(email),
+    )
     .map(({ index }) => index);
 
   if (invalidIndexes.length > 0) {
@@ -21,6 +25,12 @@ export function parseInviteEmails(values: string[]): ParsedInviteEmails {
 
   return {
     ok: true,
-    emails: [...new Set(filled.map(({ email }) => email.toLowerCase()))],
+    emails: [
+      ...new Set(
+        filled.map(
+          ({ email }) => normalizeIranPhone(email) ?? email.toLowerCase(),
+        ),
+      ),
+    ],
   };
 }

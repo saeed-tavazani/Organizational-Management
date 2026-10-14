@@ -60,7 +60,7 @@ postgresql:
   #   requests:
   #     cpu: 100m
   #     memory: 128Mi
-# Kaneo application configuration (combined API + web frontend)
+    # Montask application configuration (combined API + web frontend)
 kaneo:
   image:
     repository: ghcr.io/usekaneo/kaneo
@@ -83,7 +83,7 @@ kaneo:
   #     memory: 128Mi
 
   env:
-    # Public URL of this Kaneo instance (e.g. https://kaneo.example.com)
+    # Public URL of this Montask instance (e.g. https://kaneo.example.com)
     # Required public HTTP(S) origin, e.g. https://kaneo.example.com.
     # KANEO_API_URL is derived automatically as clientUrl/api if not set
     clientUrl: ""
@@ -100,6 +100,12 @@ kaneo:
     disableRegistration: false
     disablePasswordRegistration: false
     disableEmailOtpSignIn: false
+    # Optional Safir Bale configuration. The operator supplies the Secret.
+    bale:
+      botId: ""
+      existingSecret:
+        name: ""
+        key: api-access-key
     # Database configuration
     database:
       # Use external PostgreSQL (set postgresql.enabled to false)

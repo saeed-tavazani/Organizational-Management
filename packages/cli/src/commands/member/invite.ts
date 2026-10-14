@@ -41,7 +41,9 @@ export const runMemberInvite = Effect.fn("command.member.invite")(
       ),
     );
     const memberEmails = new Set(
-      members.map((member) => member.user.email.toLowerCase()),
+      members.map((member) =>
+        (member.user.email ?? member.user.phoneNumber ?? "").toLowerCase(),
+      ),
     );
     const already = emails.filter((email) => memberEmails.has(email));
     if (already.length > 0) {
@@ -56,7 +58,9 @@ export const runMemberInvite = Effect.fn("command.member.invite")(
     const pending = new Set(
       sent
         .filter((invitation) => invitation.status === "pending")
-        .map((invitation) => invitation.email.toLowerCase()),
+        .map((invitation) =>
+          (invitation.email ?? invitation.phoneNumber ?? "").toLowerCase(),
+        ),
     );
 
     const invites: InviteJson[] = [];
@@ -112,7 +116,11 @@ export const runMemberInvite = Effect.fn("command.member.invite")(
                 const found = latest.find(
                   (invitation) =>
                     invitation.status === "pending" &&
-                    invitation.email.toLowerCase() === invite.email,
+                    (
+                      invitation.email ||
+                      invitation.phoneNumber ||
+                      ""
+                    ).toLowerCase() === invite.email,
                 );
                 return found
                   ? {

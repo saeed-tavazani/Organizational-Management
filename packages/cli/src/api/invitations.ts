@@ -3,7 +3,8 @@ import { KaneoApi } from "./kaneo-api.js";
 
 export const SentInvitation = Schema.Struct({
   id: Schema.String,
-  email: Schema.String,
+  email: Schema.NullOr(Schema.String),
+  phoneNumber: Schema.optionalKey(Schema.NullOr(Schema.String)),
   role: Schema.String,
   status: Schema.String,
   expiresAt: Schema.Unknown,
@@ -15,7 +16,8 @@ const SentInvitationList = Schema.Array(SentInvitation);
 
 export const ReceivedInvitation = Schema.Struct({
   id: Schema.String,
-  email: Schema.String,
+  email: Schema.NullOr(Schema.String),
+  phoneNumber: Schema.optionalKey(Schema.NullOr(Schema.String)),
   workspaceId: Schema.String,
   workspaceName: Schema.String,
   inviterName: Schema.String,
@@ -84,12 +86,15 @@ export const inviteMember = Effect.fnUntraced(function* (body: {
   const api = yield* KaneoApi;
   return yield* api.request(
     "POST",
-    "/api/auth/organization/invite-member",
+    /^\+989\d{9}$/.test(body.email)
+      ? "/api/invitation/phone"
+      : "/api/auth/organization/invite-member",
     SentInvitation,
     {
       body: {
-        organizationId: body.workspaceId,
-        email: body.email,
+        ...(/^\+989\d{9}$/.test(body.email)
+          ? { workspaceId: body.workspaceId, phoneNumber: body.email }
+          : { organizationId: body.workspaceId, email: body.email }),
         role: body.role,
         ...(body.resend ? { resend: true } : {}),
       },

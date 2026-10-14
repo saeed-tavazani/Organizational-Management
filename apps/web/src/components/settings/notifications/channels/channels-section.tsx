@@ -1,3 +1,4 @@
+import { BaleChannelRow } from "./bale-channel-row";
 import { BellIcon, SquareTerminalIcon, WebhookIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -33,6 +34,7 @@ export function ChannelsSection({ preferences }: ChannelsSectionProps) {
       description={t("settings:notificationsPage.channelsDescription")}
     >
       <SettingsCard>
+        <BaleChannelRow preferences={preferences} />
         <EmailChannelRow preferences={preferences} />
         <ChannelRow
           availability={availability.gotify}

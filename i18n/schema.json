@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://kaneo.app/i18n/schema.json",
-	"title": "Kaneo locale schema",
+	"title": "Montask locale schema",
 	"type": "object",
 	"additionalProperties": false,
 	"properties": {
@@ -11,6 +11,22 @@
 			"properties": {
 				"appName": {
 					"type": "string"
+				},
+				"pwa": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"updateTitle": {
+							"type": "string"
+						},
+						"updateDescription": {
+							"type": "string"
+						},
+						"updateAction": {
+							"type": "string"
+						}
+					},
+					"required": ["updateTitle", "updateDescription", "updateAction"]
 				},
 				"actions": {
 					"type": "object",
@@ -631,6 +647,7 @@
 			},
 			"required": [
 				"appName",
+				"pwa",
 				"actions",
 				"a11y",
 				"sidebar",
@@ -1339,6 +1356,12 @@
 										"emailPlaceholder": {
 											"type": "string"
 										},
+										"emailOrPhoneLabel": {
+											"type": "string"
+										},
+										"emailOrPhonePlaceholder": {
+											"type": "string"
+										},
 										"addAnother": {
 											"type": "string"
 										},
@@ -1349,6 +1372,9 @@
 											"type": "string"
 										},
 										"invalidEmail": {
+											"type": "string"
+										},
+										"invalidEmailOrPhone": {
 											"type": "string"
 										},
 										"sent_one": {
@@ -1376,10 +1402,13 @@
 									"required": [
 										"emailLabel",
 										"emailPlaceholder",
+										"emailOrPhoneLabel",
+										"emailOrPhonePlaceholder",
 										"addAnother",
 										"remove",
 										"skip",
 										"invalidEmail",
+										"invalidEmailOrPhone",
 										"failed"
 									]
 								},
@@ -2206,6 +2235,131 @@
 						}
 					},
 					"required": ["authorize", "expired", "signIn"]
+				},
+				"phone": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"number": {
+							"type": "string"
+						},
+						"invalid": {
+							"type": "string"
+						},
+						"code": {
+							"type": "string"
+						},
+						"continue": {
+							"type": "string"
+						},
+						"verify": {
+							"type": "string"
+						},
+						"sent": {
+							"type": "string"
+						},
+						"failed": {
+							"type": "string"
+						},
+						"change": {
+							"type": "string"
+						},
+						"resend": {
+							"type": "string"
+						},
+						"wait": {
+							"type": "string"
+						},
+						"fallback": {
+							"type": "string"
+						},
+						"contacts": {
+							"type": "string"
+						},
+						"bale": {
+							"type": "string"
+						},
+						"unavailable": {
+							"type": "string"
+						},
+						"removePhone": {
+							"type": "string"
+						},
+						"verifyEmail": {
+							"type": "string"
+						},
+						"removeEmail": {
+							"type": "string"
+						},
+						"deliveries": {
+							"type": "string"
+						},
+						"loading": {
+							"type": "string"
+						},
+						"status": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"pending": {
+									"type": "string"
+								},
+								"retry": {
+									"type": "string"
+								},
+								"accepted": {
+									"type": "string"
+								},
+								"failed": {
+									"type": "string"
+								},
+								"email_fallback": {
+									"type": "string"
+								},
+								"expired": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"pending",
+								"retry",
+								"accepted",
+								"failed",
+								"email_fallback",
+								"expired"
+							]
+						},
+						"recover": {
+							"type": "string"
+						},
+						"recoverDescription": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"number",
+						"invalid",
+						"code",
+						"continue",
+						"verify",
+						"sent",
+						"failed",
+						"change",
+						"resend",
+						"wait",
+						"fallback",
+						"contacts",
+						"bale",
+						"unavailable",
+						"removePhone",
+						"verifyEmail",
+						"removeEmail",
+						"deliveries",
+						"loading",
+						"status",
+						"recover",
+						"recoverDescription"
+					]
 				}
 			},
 			"required": [
@@ -2223,7 +2377,8 @@
 				"passwordReset",
 				"page",
 				"device",
-				"mcp"
+				"mcp",
+				"phone"
 			]
 		},
 		"settings": {
@@ -14294,6 +14449,15 @@
 						"linkLabel": {
 							"type": "string"
 						},
+						"resend": {
+							"type": "string"
+						},
+						"resent": {
+							"type": "string"
+						},
+						"resendFailed": {
+							"type": "string"
+						},
 						"copyLink": {
 							"type": "string"
 						},
@@ -14308,6 +14472,9 @@
 						"pendingBadge",
 						"expires",
 						"linkLabel",
+						"resend",
+						"resent",
+						"resendFailed",
 						"copyLink",
 						"linkCopied",
 						"copyFailed"

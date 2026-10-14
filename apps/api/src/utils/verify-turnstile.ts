@@ -6,6 +6,7 @@ export type TurnstileResult = { ok: true } | { ok: false; reason: string };
 
 export const authCaptchaPaths = new Set([
   "/sign-in/email",
+  "/phone-number/send-otp",
   "/sign-up/email",
   "/sign-in/social",
   "/sign-in/oauth2",

@@ -1,3 +1,4 @@
+import { PhoneCodeForm } from "@/components/auth/phone-code-form";
 import {
   createFileRoute,
   useNavigate,
@@ -41,6 +42,7 @@ import { toast } from "@/lib/toast";
 const signInSearchSchema = z.object({
   invitationId: z.string().optional(),
   email: z.string().optional(),
+  phoneNumber: z.string().optional(),
   redirect: z.string().optional(),
   error: z.string().optional(),
 });
@@ -177,6 +179,15 @@ function SignIn() {
           ) : null
         }
       >
+        {config?.hasBale && !config.disableLoginForm ? (
+          <div className="mb-6">
+            <PhoneCodeForm
+              defaultPhone={search.phoneNumber}
+              disabled={busy}
+              onSuccess={() => navigate({ to: destination })}
+            />
+          </div>
+        ) : null}
         {emailMethod === "code" ? (
           <EmailCodeForm
             defaultEmail={search.email}

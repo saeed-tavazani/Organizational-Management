@@ -39,7 +39,7 @@ export const importRunProjectSchema = z
     name: z.string(),
     status: z.enum(IMPORT_RUN_PROJECT_STATUSES),
     projectId: z.string().nullable().openapi({
-      description: "The Kaneo project created by the import, once completed.",
+      description: "The Montask project created by the import, once completed.",
     }),
     projectSlug: z.string().nullable(),
     counts: importCountsSchema,
@@ -80,7 +80,7 @@ export const trelloAuthorizeUrlSchema = z
   .object({
     authorizeUrl: z.string().nullable().openapi({
       description:
-        "Trello page where the user approves read access for Kaneo and copies a token. null when the server has no TRELLO_API_KEY; the user then sends their own Trello API key with the token.",
+        "Trello page where the user approves read access for Montask and copies a token. null when the server has no TRELLO_API_KEY; the user then sends their own Trello API key with the token.",
     }),
   })
   .openapi("TrelloAuthorizeUrl");

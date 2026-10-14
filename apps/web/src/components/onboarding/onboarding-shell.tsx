@@ -41,7 +41,7 @@ export function OnboardingShell({
       >
         <header className="flex items-center justify-between gap-4">
           <img
-            src="/favicon.svg"
+            src="/favicon.ico"
             alt=""
             className="size-8 rounded-lg border border-border"
           />
